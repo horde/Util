@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2016-07-01</date>
+ <date>2017-10-17</date>
  <version>
   <release>2.5.9</release>
   <api>2.5.0</api>
@@ -41,7 +41,6 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Util">
-      <file name="COPYING" role="doc" />
       <file name="UPGRADING" role="doc" />
      </dir> <!-- /doc/Horde/Util -->
     </dir> <!-- /doc/Horde -->
@@ -84,6 +83,7 @@
      </dir> <!-- /test/Horde/Util -->
     </dir> <!-- /test/Horde -->
    </dir> <!-- /test -->
+   <file name="LICENSE" role="doc" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -140,27 +140,27 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="COPYING" name="doc/Horde/Util/COPYING" />
    <install as="UPGRADING" name="doc/Horde/Util/UPGRADING" />
    <install as="Horde/Array.php" name="lib/Horde/Array.php" />
+   <install as="Horde/Array/Sort/Helper.php" name="lib/Horde/Array/Sort/Helper.php" />
    <install as="Horde/Domhtml.php" name="lib/Horde/Domhtml.php" />
    <install as="Horde/String.php" name="lib/Horde/String.php" />
+   <install as="Horde/String/Transliterate.php" name="lib/Horde/String/Transliterate.php" />
    <install as="Horde/Util.php" name="lib/Horde/Util.php" />
    <install as="Horde/Variables.php" name="lib/Horde/Variables.php" />
-   <install as="Horde/Array/Sort/Helper.php" name="lib/Horde/Array/Sort/Helper.php" />
-   <install as="Horde/String/Transliterate.php" name="lib/Horde/String/Transliterate.php" />
+   <install as="LICENSE" name="LICENSE" />
    <install as="Horde/Util/AllTests.php" name="test/Horde/Util/AllTests.php" />
    <install as="Horde/Util/ArrayTest.php" name="test/Horde/Util/ArrayTest.php" />
    <install as="Horde/Util/bootstrap.php" name="test/Horde/Util/bootstrap.php" />
    <install as="Horde/Util/DomhtmlTest.php" name="test/Horde/Util/DomhtmlTest.php" />
+   <install as="Horde/Util/fixtures/domhtml_test.html" name="test/Horde/Util/fixtures/domhtml_test.html" />
+   <install as="Horde/Util/Mock/Transliterate.php" name="test/Horde/Util/Mock/Transliterate.php" />
    <install as="Horde/Util/phpunit.xml" name="test/Horde/Util/phpunit.xml" />
    <install as="Horde/Util/StringTest.php" name="test/Horde/Util/StringTest.php" />
    <install as="Horde/Util/TransliterateTest.php" name="test/Horde/Util/TransliterateTest.php" />
    <install as="Horde/Util/UtilTest.php" name="test/Horde/Util/UtilTest.php" />
    <install as="Horde/Util/VariablesTest.php" name="test/Horde/Util/VariablesTest.php" />
-   <install as="Horde/Util/fixtures/domhtml_test.html" name="test/Horde/Util/fixtures/domhtml_test.html" />
-   <install as="Horde/Util/Mock/Transliterate.php" name="test/Horde/Util/Mock/Transliterate.php" />
-   </filelist>
+  </filelist>
  </phprelease>
  <changelog>
   <release>
@@ -800,7 +800,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-07-01</date>
+   <date>2017-10-17</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
