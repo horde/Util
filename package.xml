@@ -41,7 +41,7 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Util">
-      <file name="UPGRADING" role="doc" />
+      <file name="UPGRADING.rst" role="doc" />
      </dir> <!-- /doc/Horde/Util -->
     </dir> <!-- /doc/Horde -->
    </dir> <!-- /doc -->
@@ -140,7 +140,7 @@
  </dependencies>
  <phprelease>
   <filelist>
-   <install as="UPGRADING" name="doc/Horde/Util/UPGRADING" />
+   <install as="UPGRADING.rst" name="doc/Horde/Util/UPGRADING.rst" />
    <install as="Horde/Array.php" name="lib/Horde/Array.php" />
    <install as="Horde/Array/Sort/Helper.php" name="lib/Horde/Array/Sort/Helper.php" />
    <install as="Horde/Domhtml.php" name="lib/Horde/Domhtml.php" />
