@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>2.5.9</release>
   <api>2.5.0</api>
@@ -75,7 +75,6 @@
       <file name="ArrayTest.php" role="test" />
       <file name="bootstrap.php" role="test" />
       <file name="DomhtmlTest.php" role="test" />
-      <file name="phpunit.xml" role="test" />
       <file name="StringTest.php" role="test" />
       <file name="TransliterateTest.php" role="test" />
       <file name="UtilTest.php" role="test" />
@@ -155,7 +154,6 @@
    <install as="Horde/Util/DomhtmlTest.php" name="test/Horde/Util/DomhtmlTest.php" />
    <install as="Horde/Util/fixtures/domhtml_test.html" name="test/Horde/Util/fixtures/domhtml_test.html" />
    <install as="Horde/Util/Mock/Transliterate.php" name="test/Horde/Util/Mock/Transliterate.php" />
-   <install as="Horde/Util/phpunit.xml" name="test/Horde/Util/phpunit.xml" />
    <install as="Horde/Util/StringTest.php" name="test/Horde/Util/StringTest.php" />
    <install as="Horde/Util/TransliterateTest.php" name="test/Horde/Util/TransliterateTest.php" />
    <install as="Horde/Util/UtilTest.php" name="test/Horde/Util/UtilTest.php" />
@@ -800,7 +798,7 @@ Converted to package.xml 2.0 for pear.horde.org
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * 
