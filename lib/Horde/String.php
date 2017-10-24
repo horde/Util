@@ -624,8 +624,9 @@ class Horde_String
                 : '(.*)';
 
             if (preg_match('/^' . $sub . '(\s+)(.*)$/u', $line, $match)) {
-                $wrapped .= $match[1] . $break;
-                $string = ($line_folding ? $match[2] : '') . $match[3] . $string;
+                $wrapped .= $match[1];
+                $string = $break . ($line_folding ? $match[2] : '')
+                    . $match[3] . $string;
                 continue;
             }
 
