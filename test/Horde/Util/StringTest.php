@@ -170,7 +170,7 @@ class Horde_Util_StringTest extends PHPUnit_Framework_TestCase
             39,
             Horde_String::length('I can eat glass and it doesn\'t hurt me.', 'utf-8'));
 
-        // Norsk/Norwegian/Nynorsk 33 
+        // Norsk/Norwegian/Nynorsk 33
         $this->assertEquals(
             33,
             Horde_String::length('Eg kan eta glas utan å skada meg.', 'utf-8'));
@@ -485,7 +485,16 @@ Lörem ipsüm dölör sit ämet,
   mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 30, "\n  "));
+            Horde_String::wordwrap($string, 31, "\n  "));
+        $this->assertEquals(
+<<<EOT
+Lörem ipsüm dölör sit ämet,
+  cönsectetüer ädipiscing
+  elit. Aliqüäm söllicitüdin
+  fäücibüs mäüris ämet.
+EOT
+,
+            Horde_String::wordwrap($string, 29, "\n  "));
 
         // Test existing line breaks.
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit.\nAliqüäm söllicitüdin fäücibüs mäüris ämet.";
