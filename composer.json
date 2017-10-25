@@ -1,5 +1,5 @@
 {
-    "name": "horde/horde-util",
+    "name": "horde/util",
     "description": "Horde Utility Libraries",
     "type": "library",
     "homepage": "https://pear.horde.org",
@@ -22,7 +22,7 @@
         }
     ],
     "version": "2.5.9",
-    "time": "2016-07-01",
+    "time": "2017-10-20",
     "repositories": [
         {
             "type": "pear",
@@ -34,8 +34,8 @@
         "ext-dom": "*"
     },
     "suggest": {
-        "pear-pear.horde.org/Horde_Imap_Client": "^2@stable",
-        "pear-pear.horde.org/Horde_Test": "^2.1@stable",
+        "pear-pear.horde.org/Horde_Imap_Client": "^2",
+        "pear-pear.horde.org/Horde_Test": "^2.1",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
