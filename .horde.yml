@@ -5,3 +5,43 @@ full: Utility library
 description: These classes provide functionality useful for all kind of applications.
 list: dev
 type: library
+homepage: https://www.horde.org/libraries/Horde_Util
+authors:
+  -
+    name: Chuck Hagenbuch
+    user: chuck
+    email: chuck@horde.org
+    active: true
+    role: lead
+  -
+    name: Jan Schneider
+    user: jan
+    email: jan@horde.org
+    active: true
+    role: lead
+version:
+  release: 2.5.9
+  api: 2.5.0
+state:
+  release: stable
+  api: stable
+license:
+  identifier: LGPL-2.1
+  uri: http://www.horde.org/licenses/lgpl21
+dependencies:
+  required:
+    php: ^5.3 || ^7
+    ext:
+      dom: '*'
+  optional:
+    pear:
+      pear.horde.org/Horde_Imap_Client: ^2
+      pear.horde.org/Horde_Test: ^2.1
+    ext:
+      ctype: '*'
+      filter: '*'
+      iconv: '*'
+      intl: '*'
+      json: '*'
+      mbstring: '*'
+      xml: '*'
