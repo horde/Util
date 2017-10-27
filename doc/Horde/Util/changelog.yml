@@ -1,0 +1,535 @@
+---
+2.5.9:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2017-10-20
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix wrapping if the wrapping break adds indention.
+2.5.8:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2016-07-01
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Fix detecting certain types of broken UTF-8 strings.
+2.5.7:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2016-02-02
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Mark PHP 7 as supported.
+2.5.6:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-07-31
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix test that could fail due to changes in glibc.
+    [jan] Fix Composer file.
+2.5.5:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-04-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix handling broken text input with all multibyte drivers.
+2.5.4:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-03-03
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix error detection when using Horde_String::substr() with mb_substr().
+2.5.3:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2015-02-10
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Use grapheme functions in Horde_String if intl extension is available.
+2.5.2:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-12-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix deleting multi-level temporary directories in Horde_Util::deleteAtShutdown().
+2.5.1:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-08-14
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix another issue with older versions of PHP in Horde_String_Transliterate.
+2.5.0:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-08-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix regression in Horde_String_Transliterate for PHP 5.3 (Bug #13419).
+    [mms] Added Horde_String::ipos() and Horde_String::ripos().
+2.4.1:
+  api: 2.4.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-08-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fallback to lesser priority transliterator driver when an error is encountered.
+2.4.0:
+  api: 2.4.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-05-02
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Add Horde_String_Transliterate class.
+    [mms] Support deeply nested HTML documents (requires PHP 5.4.0+ and libxml 2.7.0+) (Bug #13086).
+2.3.0:
+  api: 2.3.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-06-27
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] SECURITY: '_formvars' form input must now be JSON encoded, not PHP serialized.
+2.2.2:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-05-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix Horde_Domhtml#returnBody().
+2.2.1:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-03-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Simplify Horde_Variables iterator.
+2.2.0:
+  api: 2.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-02-17
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Can't add charset directly to HTML document or else DOM will alter document when generating HTML.
+    [mms] Added Horde_Domhtml#getBody().
+2.1.0:
+  api: 2.1.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-02-11
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Added 'charset' and 'metacharset' parameters to returnHtml().
+    [mms] Added Horde_Domhtml#getCharset() to get best-guess charset of current encoding within the DOM object.
+    [mms] Fix inserting HEAD into HTML document with Horde_Domhtml#getHead() if it doesn't already exist in the document.
+2.0.3:
+  api: 2.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2013-01-09
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix validating certain strings of UTF-8 data (Bug #11930).
+2.0.2:
+  api: 2.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-12-20
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Convert Horde_String#validUtf8() from a preg-regex to a string iterator to eliminate PCRE issues relating to stack sizes (Bug #11899).
+2.0.1:
+  api: 2.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-11-19
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Use new Horde_Test layout.
+2.0.0:
+  api: 2.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-10-30
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 5.
+2.0.0beta2:
+  api: 2.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-10-12
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Remove Horde_Util::addParameter() and Horde_Util::removeParameter().
+    [mms] Remove Horde_Util::cloneObject().
+2.0.0beta1:
+  api: 2.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-07-19
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First beta release for Horde 5.
+2.0.0alpha1:
+  api: 2.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2012-07-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First alpha release for Horde 5.
+    [mms] Removed e-mail array manipulation methods (Horde_Mail package now provides this feature).
+    [mms] Removed Horde_Util::getCsv() (moved to Horde_Data package).
+    [mms] Add iteration to Horde_Domhtml object.
+    [jan] Remove Horde_Util::getTempDir().
+    [jan] Remove Horde_Array::replaceRecursive().
+1.4.1:
+  api: 1.4.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-06-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes:
+1.4.0:
+  api: 1.4.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-06-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Add Horde_String::trimUtf8Bom().
+1.3.1:
+  api: 1.3.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-05-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Fix Horde_String::validUtf8() to workaround PHP/PCRE bug where segfault will occur on input strings > ~5000 characters
+1.3.0:
+  api: 1.3.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-03-20
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Implement ArrayAccess in Horde_Variables.
+1.2.0:
+  api: 1.2.0
+  state:
+    release: stable
+    api: stable
+  date: 2012-01-17
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Add Horde_Variables#filter().
+1.1.0:
+  api: 1.1.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-12-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Add Horde_String::validUtf8().
+1.0.6:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-10-11
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Speed up Horde_String::substr() (Evert Pot, Request #8627).
+1.0.5:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-07-27
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix removing too many backslashes with magic quotes enabled (Bug #10149).
+    [jan] Fix reading CSV data with PHP < 5.3.
+1.0.4:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-06-14
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Unescape escaped quotes when importing CSV data.
+1.0.3:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-06-01
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] Don't try to use dl() in PHP 5.3+.
+1.0.2:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-05-03
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mms] In Horde_Variables, operate on a copy of the $_REQUEST variable.
+1.0.1:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-04-20
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [jan] Fix wrapping of several follow-up lines with existing line breaks.
+    [jan] Fix creating temporary files with open_basedir restrictions.
+1.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-04-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 4.
+1.0.0RC2:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Second release candidate for Horde 4.
+    Fix parsing ISO-8859-15 data with Horde_Domhtml (Bug #9714).
+1.0.0RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-22
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First release candidate for Horde 4.
+    [mms] Tweak loading HTML documents (encodings) in Horde_Domhtml.
+    [mms] Added Horde_Domhtml#returnBody().
+    [mms] Added Domhtml unit tests.
+1.0.0beta1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-16
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First beta release for Horde 4.
+1.0.0alpha1:
+  api: 1.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2011-03-08
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First alpha release for Horde 4.
+    Added Horde_String::rpos().
+    Renamed Horde_Array::array_merge_recursive_overwrite() to Horde_Array::replaceRecursive().
+    Added Horde_String::common().
+    Added Horde_Domhtml::.
+    Removed Horde_Util::assertDriverConfig().
+    Removed Horde_Util::bufferOutput().
+    Removed Horde_Util::uriB64Encode() and Horde_Util::uriB64Decode().
+    Removed Horde_Util::strftime2date() and Horde_Util::date2strftime().
+    Removed Horde_Util::closeWindowJs() and Horde_Util::nocacheUrl().
+    Added Horde_String::convertToUtf8().
+    Added Horde_Util::abbreviate().
+    Removed Horde_Array::combine() and Horde_Util::hmac().
+0.1.0:
+  api: 0.1.0
+  state:
+    release: beta
+    api: beta
+  date: 2008-09-25
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Added magic PHP5 methods to the Variables class.
+    Added array_merge_recursive_overwrite() to Horde_Array().
+    Fixed a bug in Horde_Array::arraySort where auto-detecting the first key failed.
+    Added sorter functions for array keys.
+    Removed use of array_unique().
+    Cleaned up addParameter() in the Util class.
+    Implemented a much more efficient, yet safer file wiping algorithm.
+    Fixed Util::addParameter when it is passed a base URL that contains an urlencoded ampersand.
+    Added a parameter to Util::nocacheUrl() to not encode url.
+    Added Util::getPathInfo().
+    Signed parameters to go.php with an HMAC based on a new secret key configuration value, to prevent using go.php as an open referrer.
+    Made logout tokens only valid for a configurable length of time.
+    Made it possible to use String.php without having any other files available.
+    Use utf8_decode() in String::length() if possible.
+    Always use preg_match() in String::regexMatch().
+    Workaround for korean messages in a non-standard charset.
+    Fixed String::substr() length calculations.
+    Added multibyte-safe String::wordwrap() method.
+    Added parameter to use wordwrap() for line folding.
+    Use C as the portable locale (Bug #6194).
+    Don't use utf8_encode/decode on very large strings if other options are available. (Bug #6660)
+    Fixed order of checks in String::convertCharset (Bug #6794).
+0.0.2:
+  api: 0.0.2
+  state:
+    release: alpha
+    api: alpha
+  date: 2006-05-08
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Converted to package.xml 2.0 for pear.horde.org
+0.0.1:
+  api: 0.0.1
+  state:
+    release: alpha
+    api: alpha
+  date: 2003-10-28
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Initial release as a PEAR package
