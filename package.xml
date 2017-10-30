@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>yes</active>
  </developer>
- <date>2016-07-01</date>
+ <date>2017-10-30</date>
  <version>
   <release>2.5.9</release>
   <api>2.5.0</api>
@@ -41,6 +41,7 @@
    <dir name="doc">
     <dir name="Horde">
      <dir name="Util">
+      <file name="CHANGES" role="doc" />
       <file name="COPYING" role="doc" />
       <file name="UPGRADING" role="doc" />
      </dir> <!-- /doc/Horde/Util -->
@@ -140,6 +141,7 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="CHANGES" name="doc/Horde/Util/CHANGES" />
    <install as="COPYING" name="doc/Horde/Util/COPYING" />
    <install as="UPGRADING" name="doc/Horde/Util/UPGRADING" />
    <install as="Horde/Array.php" name="lib/Horde/Array.php" />
@@ -800,7 +802,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2016-07-01</date>
+   <date>2017-10-30</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [jan] Fix wrapping if the wrapping break adds indention.
