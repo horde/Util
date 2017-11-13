@@ -1,8 +1,8 @@
 {
     "name": "horde/util",
-    "description": "Horde Utility Libraries",
+    "description": "Utility library",
     "type": "library",
-    "homepage": "https://pear.horde.org",
+    "homepage": "https://www.horde.org/libraries/Horde_Util",
     "license": "LGPL-2.1",
     "authors": [
         {
@@ -22,7 +22,7 @@
         }
     ],
     "version": "2.5.9",
-    "time": "2017-10-20",
+    "time": "2017-11-11",
     "repositories": [
         {
             "type": "pear",
