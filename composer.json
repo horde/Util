@@ -1,18 +1,18 @@
 {
     "name": "horde/util",
-    "description": "Horde Utility Libraries",
+    "description": "Utility library",
     "type": "library",
-    "homepage": "https://pear.horde.org",
+    "homepage": "https://www.horde.org/libraries/Horde_Util",
     "license": "LGPL-2.1",
     "authors": [
         {
-            "name": "Chuck Hagenbuch",
-            "email": "chuck@horde.org",
+            "name": "Jan Schneider",
+            "email": "jan@horde.org",
             "role": "lead"
         },
         {
-            "name": "Jan Schneider",
-            "email": "jan@horde.org",
+            "name": "Chuck Hagenbuch",
+            "email": "chuck@horde.org",
             "role": "lead"
         },
         {
@@ -22,7 +22,7 @@
         }
     ],
     "version": "2.5.9",
-    "time": "2016-07-01",
+    "time": "2017-11-14",
     "repositories": [
         {
             "type": "pear",

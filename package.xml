@@ -3,27 +3,27 @@
  <name>Horde_Util</name>
  <channel>pear.horde.org</channel>
  <extends>Util</extends>
- <summary>Horde Utility Libraries</summary>
+ <summary>Utility library</summary>
  <description>These classes provide functionality useful for all kind of applications.</description>
- <lead>
-  <name>Chuck Hagenbuch</name>
-  <user>chuck</user>
-  <email>chuck@horde.org</email>
-  <active>yes</active>
- </lead>
  <lead>
   <name>Jan Schneider</name>
   <user>jan</user>
   <email>jan@horde.org</email>
   <active>yes</active>
  </lead>
+ <lead>
+  <name>Chuck Hagenbuch</name>
+  <user>chuck</user>
+  <email>chuck@horde.org</email>
+  <active>no</active>
+ </lead>
  <developer>
   <name>Michael Slusarz</name>
   <user>slusarz</user>
   <email>slusarz@horde.org</email>
-  <active>yes</active>
+  <active>no</active>
  </developer>
- <date>2017-10-30</date>
+ <date>2017-11-14</date>
  <version>
   <release>2.5.9</release>
   <api>2.5.0</api>
@@ -802,7 +802,7 @@
    <stability>
     <release>stable</release>
     <api>stable</api></stability>
-   <date>2017-10-30</date>
+   <date>2017-11-14</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
 * [jan] Fix wrapping if the wrapping break adds indention.
