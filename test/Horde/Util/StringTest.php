@@ -634,6 +634,16 @@ Lörem ipsüm dölör sit;
 EOT
 ,
             Horde_String::wordwrap($string, 31, "\n", false, true));
+
+        $string = 'the path to the configuration file for the components script (default : /Users/janschneider/Source/horde/components/lib/Components/../../config/conf.php)."';
+        $this->assertEquals(
+            <<<EOT
+the path to the configuration file for the components script (default :
+      /Users/janschneider/Source/horde/components/lib/Components/../../config/conf.php)."
+EOT
+            ,
+            Horde_String::wordwrap($string, 75, "\n      ")
+        );
     }
 
     public function testCommon()
