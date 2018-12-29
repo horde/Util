@@ -581,7 +581,7 @@ sitämet,
 ipiscingelit.
 EOT
 ,
-            Horde_String::wordwrap($string, 15, "\n", true, 'utf-8', true));
+            Horde_String::wordwrap($string, 15, "\n", true, true));
         $string = "Lörem ipsüm dölör sit ämet,  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
 <<<EOT
@@ -591,7 +591,7 @@ Lörem ipsüm dölör sit ämet,
  mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 31, "\n", false, 'utf-8', true));
+            Horde_String::wordwrap($string, 31, "\n", false, true));
         $string = "Lörem ipsüm dölör sit; ämet:  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
 <<<EOT
@@ -602,7 +602,7 @@ Lörem ipsüm dölör sit;
  mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 31, "\n", false, 'utf-8', true));
+            Horde_String::wordwrap($string, 31, "\n", false, true));
         $string = "Lörem ipsüm dölör sit; ämet:cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
 <<<EOT
@@ -612,7 +612,7 @@ Lörem ipsüm dölör sit;
  fäücibüs mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 31, "\n", false, 'utf-8', true));
+            Horde_String::wordwrap($string, 31, "\n", false, true));
         $string = "Lörem ipsüm dölör sit; ämet;  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
 <<<EOT
@@ -623,7 +623,7 @@ Lörem ipsüm dölör sit;
  mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 31, "\n", false, 'utf-8', true));
+            Horde_String::wordwrap($string, 31, "\n", false, true));
         $string = "Lörem ipsüm dölör sit; ämet;cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
 <<<EOT
@@ -633,7 +633,7 @@ Lörem ipsüm dölör sit;
  fäücibüs mäüris ämet.
 EOT
 ,
-            Horde_String::wordwrap($string, 31, "\n", false, 'utf-8', true));
+            Horde_String::wordwrap($string, 31, "\n", false, true));
     }
 
     public function testCommon()
