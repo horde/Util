@@ -589,10 +589,18 @@ class Horde_String
     public static function wordwrap($string, $width = 75, $break = "\n",
                                     $cut = false, $line_folding = false)
     {
+        $breakRegex = '(?:' . preg_quote($break) . ')';
+        $rpos = self::rpos($break, "\n");
+        if ($rpos === false) {
+            $rpos = 0;
+        } else {
+            $rpos++;
+        }
         $wrapped = '';
+        $hasWrapped = false;
 
         while (self::length($string, 'UTF-8') > $width) {
-            $line = self::substr($string, 0, $width, 'UTF-8');
+            $line = self::substr($string, 0, $width + ($hasWrapped ? $rpos : 0), 'UTF-8');
             $string = self::substr($string, self::length($line, 'UTF-8'), null, 'UTF-8');
 
             // Make sure we didn't cut a word, unless we want hard breaks
@@ -603,40 +611,47 @@ class Horde_String
             }
 
             // Wrap at existing line breaks.
-            if (preg_match('/^(.*?)(\r?\n)(.*)$/su', $line, $match)) {
+            $regex = '/^(' . ($hasWrapped ? $breakRegex : '') . '.*?)(\r?\n)(.*)$/us';
+            if (preg_match($regex, $line, $match)) {
                 $wrapped .= $match[1] . $match[2];
                 $string = $match[3] . $string;
+                $hasWrapped = false;
                 continue;
             }
 
             // Wrap at the last colon or semicolon followed by a whitespace if
             // doing line folding.
             if ($line_folding &&
-                preg_match('/^(.*?)(;|:)(\s+.*)$/u', $line, $match)) {
-                $wrapped .= $match[1] . $match[2] . $break;
-                $string = $match[3] . $string;
+                preg_match('/^(.*?)(;|:)(\s+.*)$/us', $line, $match)) {
+                $wrapped .= $match[1] . $match[2];
+                $string = $break . $match[3] . $string;
+                $hasWrapped = true;
                 continue;
             }
 
             // Wrap at the last whitespace of $line.
             $sub = $line_folding
-                ? '(.+[^\s])'
-                : '(.*)';
+                ? '(' . ($hasWrapped ? $breakRegex : '') . '.+[^\s])'
+                : '(' . ($hasWrapped ? $breakRegex : '') . '.*)';
 
             if (preg_match('/^' . $sub . '(\s+)(.*)$/u', $line, $match)) {
                 $wrapped .= $match[1];
                 $string = $break . ($line_folding ? $match[2] : '')
                     . $match[3] . $string;
+                $hasWrapped = true;
                 continue;
             }
 
             // Hard wrap if necessary.
             if ($cut) {
-                $wrapped .= $line . $break;
+                $wrapped .= $line;
+                $string = $break . $string;
+                $hasWrapped = true;
                 continue;
             }
 
             $wrapped .= $line;
+            $hasWrapped = false;
         }
 
         return $wrapped . $string;
