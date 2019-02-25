@@ -45,8 +45,8 @@
         "ext-xml": "*"
     },
     "replace": {
-        "pear-pear.horde.org/Horde_Util": "2.*",
-        "pear-horde/Horde_Util": "2.*"
+        "pear-pear.horde.org/Horde_Util": "self.version",
+        "pear-horde/Horde_Util": "self.version"
     },
     "autoload": {
         "psr-0": {
