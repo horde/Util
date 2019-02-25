@@ -50,7 +50,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Horde_Util": "lib/"
+            "Horde": "lib/"
         }
     }
 }
