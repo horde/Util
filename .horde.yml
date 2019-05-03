@@ -2,7 +2,7 @@
 id: Util
 name: Util
 full: Utility library
-description: These classes provide functionality useful for all kind of applications.
+description: A library that provides functionality useful for all kind of applications.
 list: dev
 type: library
 homepage: https://www.horde.org/libraries/Horde_Util
