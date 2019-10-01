@@ -114,7 +114,7 @@ class Horde_Util
     public static function dispelMagicQuotes($var)
     {
         if (is_null(self::$_magicquotes)) {
-            self::$_magicquotes = get_magic_quotes_gpc();
+            self::$_magicquotes = function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc();
         }
 
         if (self::$_magicquotes) {
