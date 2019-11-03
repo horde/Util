@@ -9,6 +9,7 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    [mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR #2).
     [jan] Fix wrapping if the wrapping break adds indention.
 2.5.8:
   api: 2.5.0
