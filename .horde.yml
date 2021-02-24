@@ -26,11 +26,11 @@ authors:
     active: false
     role: developer
 version:
-  release: 2.5.9
-  api: 2.5.0
+  release: 3.0.0alpha1
+  api: 3.0.0alpha1
 state:
-  release: stable
-  api: stable
+  release: alpha
+  api: alpha
 license:
   identifier: LGPL-2.1
   uri: http://www.horde.org/licenses/lgpl21
@@ -52,4 +52,5 @@ dependencies:
       mbstring: '*'
       xml: '*'
 autoload:
-  classmap: ['lib/']
+  classmap:
+    - lib/
