@@ -31,12 +31,12 @@
     ],
     "require": {
         "horde/horde-installer-plugin": "*",
-        "php": "^5.3 || ^7",
+        "php": "^7",
         "ext-dom": "*"
     },
     "suggest": {
-        "horde/imap_client": "^2",
-        "horde/test": "^2.1",
+        "horde/imap_client": "^3",
+        "horde/test": "^3",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
