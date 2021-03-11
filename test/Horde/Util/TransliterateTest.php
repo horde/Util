@@ -6,7 +6,11 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
+namespace Horde\Util;
+use PHPUnit\Framework\TestCase;
+use Horde_Util_Mock_Transliterate;
+
+class TransliterateTest extends TestCase
 {
     /**
      * @dataProvider fallbackDataProvider

@@ -6,7 +6,11 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_UtilTest extends PHPUnit_Framework_TestCase
+namespace Horde\Util;
+use PHPUnit\Framework\TestCase;
+use Horde_Util;
+
+class UtilTest extends TestCase
 {
     public function testGetPathInfo()
     {

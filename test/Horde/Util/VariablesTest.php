@@ -6,8 +6,11 @@
  * @package    Util
  * @subpackage UnitTests
  */
+namespace Horde\Util;
+use PHPUnit\Framework\TestCase;
+use Horde_Variables;
 
-class Horde_Util_VariablesTest extends PHPUnit_Framework_TestCase
+class VariablesTest extends TestCase
 {
     public function testRemove()
     {
