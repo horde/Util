@@ -671,6 +671,8 @@ EOT
 
         /* Failing test will cause a PHP segfault here. */
         Horde_String::validUtf8($string);
+
+        $this->markTestIncomplete();
     }
 
     /**
