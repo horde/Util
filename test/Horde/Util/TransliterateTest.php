@@ -6,7 +6,11 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
+namespace Horde\Util;
+use PHPUnit\Framework\TestCase;
+use Horde_Util_Mock_Transliterate;
+
+class TransliterateTest extends TestCase
 {
     /**
      * @dataProvider fallbackDataProvider
@@ -82,9 +86,9 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
             // Note: We removed the 'Þ' character from the test explicitly,
             // since different versions of glibc transliterate it differently.
             // See https://github.com/horde/horde/pull/144
-            array('AÀBEÉSß', 'AABEESss'),
             // Some non-ascii cannot be transliterated
-            array('AÀ黾B', 'AA?B')
+            array('AÀBEÉSß', 'A?BE?Sss'),
+            array('AÀ黾B', 'A??B')
         );
     }
 
