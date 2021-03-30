@@ -86,9 +86,9 @@ class TransliterateTest extends TestCase
             // Note: We removed the 'Þ' character from the test explicitly,
             // since different versions of glibc transliterate it differently.
             // See https://github.com/horde/horde/pull/144
+            array('AÀBEÉSß', 'AABEESss'),
             // Some non-ascii cannot be transliterated
-            array('AÀBEÉSß', 'A?BE?Sss'),
-            array('AÀ黾B', 'A??B')
+            array('AÀ黾B', 'AA?B')
         );
     }
 
