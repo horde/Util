@@ -30,7 +30,8 @@
         }
     ],
     "require": {
-        "php": "^7"
+        "php": "^7",
+        "horde/support:" "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
