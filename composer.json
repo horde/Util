@@ -30,9 +30,7 @@
         }
     ],
     "require": {
-        "php": "^7",
-        "ext-dom": "*",
-        "horde/test": "^3"
+        "php": "^7"
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
@@ -43,7 +41,8 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-xml": "*"
+        "ext-xml": "*",
+        "ext-dom": "*"
     },
     "autoload": {
         "classmap": [
