@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "name": "horde/util",
     "description": "Utility library",
     "type": "horde-library",
@@ -32,7 +33,8 @@
     "require": {
         "horde/horde-installer-plugin": "*",
         "php": "^7",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "horde/test": "^3"
     },
     "suggest": {
         "horde/imap_client": "^3",
