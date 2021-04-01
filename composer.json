@@ -31,7 +31,8 @@
     ],
     "require": {
         "php": "^7",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "horde/test": "^3"
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
