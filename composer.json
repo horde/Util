@@ -30,12 +30,11 @@
         }
     ],
     "require": {
-        "php": "^7",
-        "horde/util": "^3 || dev-FRAMEWORK_6_0",
-        "horde/support": "^3 || dev-FRAMEWORK_6_0"
+        "php": "^7"
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/support": "^3 || dev-FRAMEWORK_6_0",
         "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
