@@ -39,7 +39,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-        extensions: bcmath, ctype, curl, dom, gd, gettext, iconv, imagick, json, ldap, mbstring, mysql, opcache, openssl, pcntl, pdo, posix, redis, soap, sockets, sqlite, tokenizer, xmlwriter
+        extensions: bcmath, ctype, curl, dom, gd, gettext, iconv, imagick, json, ldap, mbstring, mysql, intl, opcache, openssl, pcntl, pdo, posix, redis, soap, sockets, sqlite, tokenizer, xmlwriter
         ini-values: post_max_size=512M, max_execution_time=360
         coverage: xdebug
         tools: php-cs-fixer, phpunit:${{ matrix.phpunit-versions }}, composer:v2
@@ -51,4 +51,4 @@ jobs:
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer install
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer require --dev horde/test dev-FRAMEWORK_6_0 horde/log dev-FRAMEWORK_6_0
     - name: run phpunit
-      run: phpunit --bootstrap test/Horde/Util/bootstrap.php test/Horde/Util/
+      run: phpunit -v --bootstrap test/Horde/Util/bootstrap.php test/Horde/Util/
