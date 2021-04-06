@@ -34,7 +34,6 @@
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
-        "horde/support": "^3 || dev-FRAMEWORK_6_0",
         "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
@@ -43,6 +42,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-xml": "*",
+        "horde/support": "^3 || dev-FRAMEWORK_6_0",
         "ext-dom": "*"
     },
     "autoload": {
