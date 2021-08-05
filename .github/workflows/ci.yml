@@ -27,8 +27,8 @@ jobs:
     strategy:
       matrix:
         operating-system: ['ubuntu-20.04']
-        php-versions: ['7.4']
-        phpunit-versions: ['latest', '9.5', '9.0']
+        php-versions: ['7.4', '8.0']
+        phpunit-versions: ['latest', '9.5']
     steps:
     - name: Setup github ssh key
       run:  mkdir -p ~/.ssh/ && ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
@@ -48,7 +48,8 @@ jobs:
     - name: Install horde/test dependency and other dependencies
       run: |
         ## For unclear reasons, github action fails randomly if we do not install before we require.
+        COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer config minimum-stability dev
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer install
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer require --dev horde/test dev-FRAMEWORK_6_0 horde/log dev-FRAMEWORK_6_0
     - name: run phpunit
-      run: phpunit -v --bootstrap test/Horde/Util/bootstrap.php test/Horde/Util/
+      run: phpunit -v --bootstrap test/bootstrap.php

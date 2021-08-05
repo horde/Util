@@ -6,7 +6,7 @@
  * @package    Util
  * @subpackage UnitTests
  */
-namespace Horde\Util;
+namespace Horde\Util\Test;
 use PHPUnit\Framework\TestCase;
 use Horde_Domhtml;
 use Horde_String;

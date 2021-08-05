@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/util",
     "description": "Utility library",
     "type": "library",
@@ -22,7 +21,7 @@
             "role": "developer"
         }
     ],
-    "time": "2021-03-13",
+    "time": "2021-08-05",
     "repositories": [
         {
             "type": "composer",
@@ -30,8 +29,10 @@
         }
     ],
     "require": {
-        "php": "^7"
+        "php": "^7 || ^8",
+        "ext-dom": "*"
     },
+    "require-dev": {},
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
         "horde/test": "^3 || dev-FRAMEWORK_6_0",
@@ -41,13 +42,16 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "ext-xml": "*",
-        "horde/support": "^3 || dev-FRAMEWORK_6_0",
-        "ext-dom": "*"
+        "ext-xml": "*"
     },
     "autoload": {
         "classmap": [
             "lib/"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Util\\Test\\": "test/"
+        }
     }
 }

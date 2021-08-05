@@ -6,9 +6,9 @@
  * @package    Util
  * @subpackage UnitTests
  */
-namespace Horde\Util;
+namespace Horde\Util\Test;
 use PHPUnit\Framework\TestCase;
-use Horde_Util_Mock_Transliterate;
+use Horde\Util\Test\Mock\Transliterate;
 
 class TransliterateTest extends TestCase
 {
