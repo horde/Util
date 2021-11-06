@@ -8,12 +8,12 @@ on:
   push:
     branches:
       - master
-      - maintaina-composerfixed
+      - main
       - FRAMEWORK_6_0
   pull_request:
     branches:
       - master
-      - maintaina-composerfixed
+      - main
       - FRAMEWORK_6_0
 
 
@@ -34,22 +34,25 @@ jobs:
       run:  mkdir -p ~/.ssh/ && ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
     - name: Checkout
       uses: actions/checkout@v2
-
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
-        extensions: bcmath, ctype, curl, dom, gd, gettext, iconv, imagick, json, ldap, mbstring, mysql, intl, opcache, openssl, pcntl, pdo, posix, redis, soap, sockets, sqlite, tokenizer, xmlwriter
+        extensions: bcmath, ctype, curl, dom, gd, gettext, iconv, imagick, json, ldap, mbstring, mysql, opcache, openssl, pcntl, pdo, posix, redis, soap, sockets, sqlite, tokenizer, xmlwriter, apcu
         ini-values: post_max_size=512M, max_execution_time=360
         coverage: xdebug
-        tools: php-cs-fixer, phpunit:${{ matrix.phpunit-versions }}, composer:v2
+        tools: php-cs-fixer, phpunit:${{ matrix.phpunit-versions }}, composer:v2, phpstan
     - name: Setup Github Token as composer credential
       run: composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
     - name: Install horde/test dependency and other dependencies
       run: |
-        ## For unclear reasons, github action fails randomly if we do not install before we require.
+        ## For unclear reasons, github action fails randomly if we do not install twice or add a requirement.
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer config minimum-stability dev
         COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer install
-        COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer require --dev horde/test dev-FRAMEWORK_6_0 horde/log dev-FRAMEWORK_6_0
+        #COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer require horde/cli "dev-FRAMEWWORK_6_0 || ^3"
+    - name: Setup problem matchers for PHPUnit
+      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
     - name: run phpunit
-      run: phpunit -v --bootstrap test/bootstrap.php
+      run: phpunit --bootstrap test/bootstrap.php
+    - name: run phpstan
+      run: phpstan analyze src/ --level 1

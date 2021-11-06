@@ -21,7 +21,7 @@
             "role": "developer"
         }
     ],
-    "time": "2021-08-05",
+    "time": "2021-11-06",
     "repositories": [
         {
             "type": "composer",
@@ -29,13 +29,16 @@
         }
     ],
     "require": {
-        "php": "^7 || ^8",
+        "php": "^7.4 || ^8",
         "ext-dom": "*"
     },
-    "require-dev": {},
+    "require-dev": {
+        "horde/imap_client": "^3",
+        "horde/test": "^3"
+    },
     "suggest": {
-        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
-        "horde/test": "^3 || dev-FRAMEWORK_6_0",
+        "horde/imap_client": "^3",
+        "horde/test": "^3",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
@@ -47,7 +50,10 @@
     "autoload": {
         "classmap": [
             "lib/"
-        ]
+        ],
+        "psr-4": {
+            "Horde\\Util\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {

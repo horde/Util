@@ -36,7 +36,7 @@ license:
   uri: http://www.horde.org/licenses/lgpl21
 dependencies:
   required:
-    php: ^7 || ^8
+    php: ^7.4 || ^8
     ext:
       dom: '*'
   optional:
@@ -51,6 +51,12 @@ dependencies:
       json: '*'
       mbstring: '*'
       xml: '*'
+  dev:
+    composer:
+      horde/imap_client: ^3
+      horde/test: ^3
 autoload:
   classmap:
     - lib/
+  psr-4:
+    Horde\Util\: src/
