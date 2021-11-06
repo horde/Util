@@ -1,4 +1,5 @@
 {
+    "minimum-stability": "dev",
     "name": "horde/util",
     "description": "Utility library",
     "type": "library",
@@ -33,12 +34,12 @@
         "ext-dom": "*"
     },
     "require-dev": {
-        "horde/imap_client": "^3",
-        "horde/test": "^3"
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
-        "horde/imap_client": "^3",
-        "horde/test": "^3",
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
