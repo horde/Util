@@ -4,7 +4,7 @@
     "description": "Utility library",
     "type": "library",
     "homepage": "https://www.horde.org/libraries/Horde_Util",
-    "license": "LGPL-2.1",
+    "license": "LGPL-2.1-only",
     "authors": [
         {
             "name": "Jan Schneider",
