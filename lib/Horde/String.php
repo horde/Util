@@ -890,6 +890,10 @@ class Horde_String
      */
     protected static function _mbstringCharset($charset)
     {
+        if ($charset === "") {
+            return null;
+        }
+
         /* mbstring functions do not handle the 'ks_c_5601-1987' &
          * 'ks_c_5601-1989' charsets. However, these charsets are used, for
          * example, by various versions of Outlook to send Korean characters.
