@@ -93,6 +93,10 @@ class Horde_String
             return $input;
         }
 
+        if(strlen($input) === 0) {
+            return $input;
+        }
+
         return self::_convertCharset($input, $from, $to);
     }
 
@@ -145,12 +149,7 @@ class Horde_String
 
         /* Try iconv with transliteration. */
         if (Horde_Util::extensionExists('iconv')) {
-            unset($php_errormsg);
-            ini_set('track_errors', 1);
-            $out = @iconv($from, $to . '//TRANSLIT', $input);
-            $errmsg = isset($php_errormsg);
-            ini_restore('track_errors');
-            if (!$errmsg && $out !== false) {
+            if (($out = self::_convertCharsetIconv($input, $from, $to)) !== false) {
                 return $out;
             }
         }
@@ -168,6 +167,25 @@ class Horde_String
         }
 
         return $input;
+    }
+
+    /**
+     * Internal function used to do charset transliteration with iconv.
+     *
+     * @param string $input  See self::convertCharset().
+     * @param string $from   See self::convertCharset().
+     * @param string $to     See self::convertCharset().
+     *
+     * @return mixed  The converted string, or false on error.
+     */
+    protected static function _convertCharsetIconv(string $input, string $from, string $to): string
+    {
+        error_clear_last();
+        $out = @iconv($from, $to . '//TRANSLIT', $input);
+        if (is_null(error_get_last()) && $out !== false) {
+            return $out;
+        }
+        return false;
     }
 
     /**
@@ -488,35 +506,75 @@ class Horde_String
     )
     {
         if (Horde_Util::extensionExists('mbstring')) {
-            unset($php_errormsg);
-            $track_errors = ini_set('track_errors', 1);
-            $ret = @call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
-            ini_set('track_errors', $track_errors);
-            if (!isset($php_errormsg)) {
-                return $ret;
+            if (($out = @self::_posMbstring($haystack, $needle, $offset, $charset, $func)) !== false) {
+                return $out;
             }
         }
 
         if (Horde_Util::extensionExists('intl')) {
-            unset($php_errormsg);
-            $track_errors = ini_set('track_errors', 1);
-            $ret = self::convertCharset(
-                @call_user_func(
-                    'grapheme_' . $func,
-                    self::convertCharset($haystack, $charset, 'UTF-8'),
-                    self::convertCharset($needle, $charset, 'UTF-8'),
-                    $offset
-                ),
-                'UTF-8',
-                $charset
-            );
-            ini_set('track_errors', $track_errors);
-            if (!isset($php_errormsg)) {
-                return $ret;
+            if(($out = @self::_posIntl($haystack, $needle, $offset, $charset, $func)) !== false) {
+                return $out;
             }
         }
 
         return $func($haystack, $needle, $offset);
+    }
+
+    /**
+     * Internal function to perform string position searches using mbstring.
+     *
+     * @param string $haystack  See self::_pos
+     * @param string $needle    See self::_pos
+     * @param integer $offset   See self::_pos
+     * @param string $charset   See self::_pos
+     * @param string $func      See self::_pos
+     *
+     * @return mixed  The position of occurrence, or false on error.
+     */
+    protected static function _posMbstring(
+        $haystack, $needle, $offset, $charset, $func
+    )
+    {
+        error_clear_last();
+        $ret = @call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
+        if (is_null(error_get_last())) {
+            return $ret;
+        }
+
+        return false;
+    }
+
+    /**
+     * Internal function to perform string position searches using intl.
+     *
+     * @param string $haystack  See self::_pos
+     * @param string $needle    See self::_pos
+     * @param integer $offset   See self::_pos
+     * @param string $charset   See self::_pos
+     * @param string $func      See self::_pos
+     *
+     * @return mixed  The position of occurrence, or false on error.
+     */
+    protected static function _posIntl(
+        $haystack, $needle, $offset, $charset, $func
+    )
+    {
+        error_clear_last();
+        $ret = self::convertCharset(
+            @call_user_func(
+                'grapheme_' . $func,
+                self::convertCharset($haystack, $charset, 'UTF-8'),
+                self::convertCharset($needle, $charset, 'UTF-8'),
+                $offset
+            ),
+            'UTF-8',
+            $charset
+        );
+        if (is_null(error_get_last())) {
+            return $ret;
+        }
+
+        return false;
     }
 
     /**
