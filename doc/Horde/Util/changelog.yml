@@ -10,7 +10,6 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [jan] Fix error with invalid charsets on PHP 8 (Ralf Becker <RalfBecker@outdoor-training.de>, PR #5).
-    |+
 2.5.9:
   api: 2.5.0
   state:
