@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </developer>
- <date>2021-03-13</date>
+ <date>2022-03-10</date>
  <version>
   <release>3.0.0alpha5</release>
   <api>3.0.0alpha1</api>
@@ -32,12 +32,20 @@
   <release>alpha</release>
   <api>alpha</api>
  </stability>
- <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
+ <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1-only</license>
  <notes>
-* 
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
+   <dir name=".github">
+    <dir name="workflows">
+     <file name="ci.yml" role="php" />
+     <file name="phpdoc.yml" role="php" />
+     <file name="release.yml" role="php" />
+     <file name="update-satis.yml" role="php" />
+    </dir> <!-- /.github/workflows -->
+   </dir> <!-- /.github -->
    <dir name="doc">
     <dir name="Horde">
      <dir name="Util">
@@ -45,6 +53,7 @@
       <file name="UPGRADING.rst" role="doc" />
      </dir> <!-- /doc/Horde/Util -->
     </dir> <!-- /doc/Horde -->
+    <file name="components.conf" role="doc" />
    </dir> <!-- /doc -->
    <dir name="lib">
     <dir name="Horde">
@@ -63,25 +72,30 @@
      <file name="Variables.php" role="php" />
     </dir> <!-- /lib/Horde -->
    </dir> <!-- /lib -->
+   <dir name="src">
+    <file name="ArraySortHelper.php" role="php" />
+    <file name="ArrayUtils.php" role="php" />
+    <file name="Domhtml.php" role="php" />
+    <file name="HordeString.php" role="php" />
+    <file name="StringTransliterate.php" role="php" />
+    <file name="Util.php" role="php" />
+    <file name="Variables.php" role="php" />
+   </dir> <!-- /src -->
    <dir name="test">
-    <dir name="Horde">
-     <dir name="Util">
-      <dir name="fixtures">
-       <file name="domhtml_test.html" role="test" />
-      </dir> <!-- /test/Horde/Util/fixtures -->
-      <dir name="Mock">
-       <file name="Transliterate.php" role="test" />
-      </dir> <!-- /test/Horde/Util/Mock -->
-      <file name="AllTests.php" role="test" />
-      <file name="ArrayTest.php" role="test" />
-      <file name="bootstrap.php" role="test" />
-      <file name="DomhtmlTest.php" role="test" />
-      <file name="StringTest.php" role="test" />
-      <file name="TransliterateTest.php" role="test" />
-      <file name="UtilTest.php" role="test" />
-      <file name="VariablesTest.php" role="test" />
-     </dir> <!-- /test/Horde/Util -->
-    </dir> <!-- /test/Horde -->
+    <dir name="fixtures">
+     <file name="domhtml_test.html" role="test" />
+    </dir> <!-- /test/fixtures -->
+    <dir name="Mock">
+     <file name="Transliterate.php" role="test" />
+    </dir> <!-- /test/Mock -->
+    <file name="AllTests.php" role="test" />
+    <file name="ArrayTest.php" role="test" />
+    <file name="bootstrap.php" role="test" />
+    <file name="DomhtmlTest.php" role="test" />
+    <file name="StringTest.php" role="test" />
+    <file name="TransliterateTest.php" role="test" />
+    <file name="UtilTest.php" role="test" />
+    <file name="VariablesTest.php" role="test" />
    </dir> <!-- /test -->
    <file name="LICENSE" role="doc" />
   </dir> <!-- / -->
@@ -126,6 +140,11 @@
  </dependencies>
  <phprelease>
   <filelist>
+   <install as="workflows/ci.yml" name=".github/workflows/ci.yml" />
+   <install as="workflows/phpdoc.yml" name=".github/workflows/phpdoc.yml" />
+   <install as="workflows/release.yml" name=".github/workflows/release.yml" />
+   <install as="workflows/update-satis.yml" name=".github/workflows/update-satis.yml" />
+   <install as="components.conf" name="doc/components.conf" />
    <install as="CHANGES" name="doc/Horde/Util/CHANGES" />
    <install as="UPGRADING.rst" name="doc/Horde/Util/UPGRADING.rst" />
    <install as="Horde/Array.php" name="lib/Horde/Array.php" />
@@ -136,16 +155,23 @@
    <install as="Horde/Util.php" name="lib/Horde/Util.php" />
    <install as="Horde/Variables.php" name="lib/Horde/Variables.php" />
    <install as="LICENSE" name="LICENSE" />
-   <install as="Horde/Util/AllTests.php" name="test/Horde/Util/AllTests.php" />
-   <install as="Horde/Util/ArrayTest.php" name="test/Horde/Util/ArrayTest.php" />
-   <install as="Horde/Util/bootstrap.php" name="test/Horde/Util/bootstrap.php" />
-   <install as="Horde/Util/DomhtmlTest.php" name="test/Horde/Util/DomhtmlTest.php" />
-   <install as="Horde/Util/fixtures/domhtml_test.html" name="test/Horde/Util/fixtures/domhtml_test.html" />
-   <install as="Horde/Util/Mock/Transliterate.php" name="test/Horde/Util/Mock/Transliterate.php" />
-   <install as="Horde/Util/StringTest.php" name="test/Horde/Util/StringTest.php" />
-   <install as="Horde/Util/TransliterateTest.php" name="test/Horde/Util/TransliterateTest.php" />
-   <install as="Horde/Util/UtilTest.php" name="test/Horde/Util/UtilTest.php" />
-   <install as="Horde/Util/VariablesTest.php" name="test/Horde/Util/VariablesTest.php" />
+   <install as="ArraySortHelper.php" name="src/ArraySortHelper.php" />
+   <install as="ArrayUtils.php" name="src/ArrayUtils.php" />
+   <install as="Domhtml.php" name="src/Domhtml.php" />
+   <install as="HordeString.php" name="src/HordeString.php" />
+   <install as="StringTransliterate.php" name="src/StringTransliterate.php" />
+   <install as="Util.php" name="src/Util.php" />
+   <install as="Variables.php" name="src/Variables.php" />
+   <install as="AllTests.php" name="test/AllTests.php" />
+   <install as="ArrayTest.php" name="test/ArrayTest.php" />
+   <install as="bootstrap.php" name="test/bootstrap.php" />
+   <install as="DomhtmlTest.php" name="test/DomhtmlTest.php" />
+   <install as="fixtures/domhtml_test.html" name="test/fixtures/domhtml_test.html" />
+   <install as="Mock/Transliterate.php" name="test/Mock/Transliterate.php" />
+   <install as="StringTest.php" name="test/StringTest.php" />
+   <install as="TransliterateTest.php" name="test/TransliterateTest.php" />
+   <install as="UtilTest.php" name="test/UtilTest.php" />
+   <install as="VariablesTest.php" name="test/VariablesTest.php" />
   </filelist>
  </phprelease>
  <changelog>
@@ -917,9 +943,9 @@
     <api>alpha</api>
    </stability>
    <date>2021-03-13</date>
-   <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
+   <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1-only</license>
    <notes>
-* 
+* |+
    </notes>
   </release>
  </changelog>
