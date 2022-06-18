@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </developer>
- <date>2019-11-03</date>
+ <date>2022-06-18</date>
  <version>
   <release>2.5.10</release>
   <api>2.5.0</api>
@@ -34,7 +34,8 @@
  </stability>
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
-* 
+* [mjr] Silence deprecation notices for PHP 8.1 tentative return types (PR #8).
+* [jan] Fix error with invalid charsets on PHP 8 (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #5).
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -887,7 +888,8 @@
    <date>2019-11-03</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-* 
+* [mjr] Silence deprecation notices for PHP 8.1 tentative return types (PR #8).
+* [jan] Fix error with invalid charsets on PHP 8 (Ralf Becker &lt;RalfBecker@outdoor-training.de&gt;, PR #5).
    </notes>
   </release>
  </changelog>

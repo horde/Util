@@ -2,7 +2,9 @@
 v2.5.10
 -------
 
-
+[mjr] Silence deprecation notices for PHP 8.1 tentative return types (PR #8).
+[jan] Fix error with invalid charsets on PHP 8 (Ralf Becker
+      <RalfBecker@outdoor-training.de>, PR #5).
 
 
 ------
