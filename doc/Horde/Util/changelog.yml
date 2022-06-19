@@ -1,4 +1,26 @@
 ---
+2.5.12:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2022-06-18
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] Fix deprecation warning when passing null to strtolower (PR #9).
+    |+
+2.5.11:
+  api: 2.5.0
+  state:
+    release: stable
+    api: stable
+  date: 2022-06-18
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
 2.5.10:
   api: 2.5.0
   state:
