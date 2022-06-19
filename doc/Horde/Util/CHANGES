@@ -2,7 +2,8 @@
 v2.5.12
 -------
 
-
+[mjr] Fix deprecation warning when passing null to strtolower (PR #9).
+|+
 
 
 -------

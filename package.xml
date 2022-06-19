@@ -23,7 +23,7 @@
   <email>slusarz@horde.org</email>
   <active>no</active>
  </developer>
- <date>2022-06-18</date>
+ <date>2022-06-19</date>
  <version>
   <release>2.5.12</release>
   <api>2.5.0</api>
@@ -34,7 +34,8 @@
  </stability>
  <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
  <notes>
-* 
+* [mjr] Fix deprecation warning when passing null to strtolower (PR #9).
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -163,52 +164,6 @@
    </filelist>
  </phprelease>
  <changelog>
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   <release>
    <version>
     <release>0.0.1</release>
@@ -961,10 +916,11 @@
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2022-06-18</date>
+   <date>2022-06-19</date>
    <license uri="http://www.horde.org/licenses/lgpl21">LGPL-2.1</license>
    <notes>
-* 
+* [mjr] Fix deprecation warning when passing null to strtolower (PR #9).
+* |+
    </notes>
   </release>
  </changelog>
