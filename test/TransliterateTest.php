@@ -6,7 +6,12 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
+namespace Horde\Util\Test;
+use PHPUnit\Framework\TestCase;
+use Transliterator;
+use Horde\Util\Test\Mock\Transliterate;
+
+class TransliterateTest extends TestCase
 {
     /**
      * @dataProvider fallbackDataProvider
@@ -15,7 +20,7 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testFallback($str)
+            Transliterate::testFallback($str)
         );
     }
 
@@ -42,7 +47,7 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testIntl($str)
+            Transliterate::testIntl($str)
         );
     }
 
@@ -69,7 +74,7 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testIconv($str)
+            Transliterate::testIconv($str)
         );
     }
 

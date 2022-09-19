@@ -10,7 +10,8 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Util
  */
-
+namespace Horde\Util\Test\Mock;
+use Horde_String_Transliterate;
 /**
  * Wrapper to test individual transliteration backends.
  *
@@ -21,7 +22,7 @@
  * @package   Util
  * @since     2.4.0
  */
-class Horde_Util_Mock_Transliterate extends Horde_String_Transliterate
+class Transliterate extends Horde_String_Transliterate
 {
     public static function testIntl($str)
     {

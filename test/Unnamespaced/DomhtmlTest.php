@@ -6,7 +6,15 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_DomhtmlTest extends PHPUnit_Framework_TestCase
+namespace Horde\Util\Test\Unnamespaced;
+
+use DOMElement;
+use DOMNode;
+use PHPUnit\Framework\TestCase;
+use Horde_Domhtml;
+use Horde_String;
+
+class DomhtmlTest extends TestCase
 {
     public function testBug9567()
     {
@@ -100,7 +108,7 @@ EOT;
 
     public function testIterator()
     {
-        $text = file_get_contents(__DIR__ . '/fixtures/domhtml_test.html');
+        $text = file_get_contents(__DIR__ . '/../fixtures/domhtml_test.html');
         $dom = new Horde_Domhtml($text);
 
         $tags = array(
@@ -112,6 +120,7 @@ EOT;
         );
 
         foreach ($dom as $node) {
+            $this->assertInstanceOf(DOMNode::class, $node);
             if ($node instanceof DOMElement) {
                 if ($node->tagName != reset($tags)) {
                     $this->fail('Wrong tag name.');
@@ -192,7 +201,7 @@ EOT;
     {
         $dom = new Horde_Domhtml('<html><body><div>foo</div></body></html>', 'UTF-8');
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/"text\/html; charset=utf-8"/',
             $dom->returnHtml(array('metacharset' => true))
         );
