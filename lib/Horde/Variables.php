@@ -122,6 +122,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return boolean  Does $varname form variable exist?
      */
+    #[\ReturnTypeWillChange]
     public function __isset($varname)
     {
         return count($this->_expected)
@@ -134,6 +135,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __isset()
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($field)
     {
         return $this->__isset($field);
@@ -172,6 +174,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __get()
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($field)
     {
         return $this->__get($field);
@@ -209,6 +212,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      * @param string $varname  The form variable name.
      * @param mixed $value     The value to set.
      */
+    #[\ReturnTypeWillChange]
     public function __set($varname, $value)
     {
         $keys = array();
@@ -237,6 +241,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __set()
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($field, $value)
     {
         $this->__set($field, $value);
@@ -284,6 +289,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __unset()
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($field)
     {
         $this->__unset($field);
@@ -388,13 +394,14 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->_vars);
     }
 
     /* IteratorAggregate method. */
-
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->_vars);
