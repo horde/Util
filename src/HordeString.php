@@ -167,8 +167,10 @@ class HordeString
 
         /* Try mbstring. */
         if (Util::extensionExists('mbstring')) {
+            $mbTo = CharacterSets::toMbstring($to);
+            $mbFrom = CharacterSets::toMbstring($from);
             try {
-                $out = @mb_convert_encoding($input, $to, self::_mbstringCharset($from));
+                $out = @mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
                 if (!empty($out)) {
                     return $out;
                 }

@@ -15,6 +15,7 @@
  * @license  http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package  Util
  */
+use Horde\Util\CharacterSets;
 class Horde_String
 {
     /**
@@ -157,8 +158,10 @@ class Horde_String
 
         /* Try mbstring. */
         if (Horde_Util::extensionExists('mbstring')) {
+            $mbTo = CharacterSets::toMbstring($to);
+            $mbFrom = CharacterSets::toMbstring($from);
             try {
-                $out = @mb_convert_encoding($input, $to, self::_mbstringCharset($from));
+                $out = @mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
                 if (!empty($out)) {
                     return $out;
                 }
