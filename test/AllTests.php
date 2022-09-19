@@ -1,4 +1,5 @@
 <?php
+
 if (!class_exists(\Horde_Test_AllTests::class)) {
     require_once 'Horde/Test/AllTests.php';
 }

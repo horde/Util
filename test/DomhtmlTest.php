@@ -6,10 +6,12 @@
  * @package    Util
  * @subpackage UnitTests
  */
+
 namespace Horde\Util\Test;
+
 use PHPUnit\Framework\TestCase;
-use Horde_Domhtml;
-use Horde_String;
+use Horde\Util\Domhtml;
+use Horde\Util\HordeString;
 use DOMElement;
 use DOMNode;
 
@@ -30,10 +32,10 @@ EOT;
 
         $expected = "préparer à vendre d’août ;";
 
-        $dom = new Horde_Domhtml(quoted_printable_decode($text), 'iso-8859-1');
+        $dom = new Domhtml(quoted_printable_decode($text), 'iso-8859-1');
 
         $this->assertEquals(
-            Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-1'),
+            HordeString::convertCharset($expected, 'UTF-8', 'iso-8859-1'),
             trim($dom->returnBody())
         );
 
@@ -43,10 +45,10 @@ EOT;
         );
 
         /* Test auto-detect. */
-        $dom = new Horde_Domhtml(quoted_printable_decode($text));
+        $dom = new Domhtml(quoted_printable_decode($text));
 
         $this->assertEquals(
-            Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-1'),
+            HordeString::convertCharset($expected, 'UTF-8', 'iso-8859-1'),
             trim($dom->returnBody())
         );
 
@@ -61,9 +63,9 @@ EOT;
         $text = "<html><body>J'ai r=E9ussi J ai r=E9ussi</body></html>";
         $expected = "J'ai réussi J ai réussi";
 
-        $dom = new Horde_Domhtml(quoted_printable_decode($text), 'iso-8859-15');
+        $dom = new Domhtml(quoted_printable_decode($text), 'iso-8859-15');
         $this->assertEquals(
-            Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-15'),
+            HordeString::convertCharset($expected, 'UTF-8', 'iso-8859-15'),
             trim($dom->returnBody())
         );
 
@@ -74,10 +76,10 @@ EOT;
         );
 
         /* Test auto-detect. */
-        $dom = new Horde_Domhtml(quoted_printable_decode($text));
+        $dom = new Domhtml(quoted_printable_decode($text));
 
         $this->assertEquals(
-            Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-15'),
+            HordeString::convertCharset($expected, 'UTF-8', 'iso-8859-15'),
             trim($dom->returnBody())
         );
 
@@ -93,10 +95,10 @@ EOT;
         $text = base64_decode('dGVzdDogtbno6bvtu+nt/eHpu7797Txicj4K');
         $expected = '<p>test: ľščéťíťéíýáéťžýí<br/></p>';
 
-        $dom = new Horde_Domhtml($text, 'iso-8859-2');
+        $dom = new Domhtml($text, 'iso-8859-2');
         $this->assertEquals(
-            Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-2'),
-            strtr(trim($dom->returnBody()), array("\n" => ''))
+            HordeString::convertCharset($expected, 'UTF-8', 'iso-8859-2'),
+            strtr(trim($dom->returnBody()), ["\n" => ''])
         );
 
         $this->assertEquals(
@@ -108,15 +110,15 @@ EOT;
     public function testIterator()
     {
         $text = file_get_contents(__DIR__ . '/fixtures/domhtml_test.html');
-        $dom = new Horde_Domhtml($text);
+        $dom = new Domhtml($text);
 
-        $tags = array(
+        $tags = [
             'html',
             'body',
             'div',
             'head',
             'title'
-        );
+        ];
 
         foreach ($dom as $node) {
             $this->assertInstanceOf(DOMNode::class, $node);
@@ -139,7 +141,7 @@ EOT;
 </html>
 EOT;
 
-        $dom = new Horde_Domhtml($text, 'UTF-8');
+        $dom = new Domhtml($text, 'UTF-8');
 
         foreach ($dom as $val) {
             if (($val instanceof DOMElement) &&
@@ -159,7 +161,7 @@ EOT;
 
     public function testHeadGeneration()
     {
-        $dom = new Horde_Domhtml('<div>foo</div>');
+        $dom = new Domhtml('<div>foo</div>');
         $head = $dom->getHead();
 
         $this->assertNull($head->previousSibling);
@@ -172,7 +174,7 @@ EOT;
 
     public function testBodyGeneration()
     {
-        $dom = new Horde_Domhtml('<div>foo</div>');
+        $dom = new Domhtml('<div>foo</div>');
         $body = $dom->getBody();
 
         $this->assertEquals(
@@ -188,22 +190,21 @@ EOT;
 
     public function testReturnHtmlCharset()
     {
-        $dom = new Horde_DomHtml('<html><body><div>préparer à vendre d’août</div></body></html>', 'UTF-8');
+        $dom = new DomHtml('<html><body><div>préparer à vendre d’août</div></body></html>', 'UTF-8');
 
         $this->assertEquals(
             $dom->returnHtml(),
-            $dom->returnHtml(array('charset' => 'iso-8859-1'))
+            $dom->returnHtml(['charset' => 'iso-8859-1'])
         );
     }
 
     public function testReturnHtmlMetaCharset()
     {
-        $dom = new Horde_Domhtml('<html><body><div>foo</div></body></html>', 'UTF-8');
+        $dom = new Domhtml('<html><body><div>foo</div></body></html>', 'UTF-8');
 
         $this->assertMatchesRegularExpression(
             '/"text\/html; charset=utf-8"/',
-            $dom->returnHtml(array('metacharset' => true))
+            $dom->returnHtml(['metacharset' => true])
         );
     }
-
 }

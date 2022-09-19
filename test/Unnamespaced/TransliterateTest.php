@@ -6,7 +6,9 @@
  * @package    Util
  * @subpackage UnitTests
  */
+
 namespace Horde\Util\Test\Unnamespaced;
+
 use PHPUnit\Framework\TestCase;
 use Transliterator;
 use Horde\Util\Test\Mock\Transliterate;
@@ -26,14 +28,14 @@ class TransliterateTest extends TestCase
 
     public function fallbackDataProvider()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
-            array('AÀBÞEÉSß', 'AABTHEESss'),
+            ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            array('AÀ黾BÞ', 'AA黾BTH')
-        );
+            ['AÀ黾BÞ', 'AA黾BTH']
+        ];
     }
 
     /**
@@ -53,14 +55,14 @@ class TransliterateTest extends TestCase
 
     public function intlDataProvider()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
-            array('AÀBÞEÉSß', 'AABTHEESss'),
+            ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            array('AÀ黾BÞ', 'AA mianBTH')
-        );
+            ['AÀ黾BÞ', 'AA mianBTH']
+        ];
     }
 
     /**
@@ -68,7 +70,6 @@ class TransliterateTest extends TestCase
      */
     public function testTransliterateToAsciiIconv($str, $expected)
     {
-
         if (!extension_loaded('iconv')) {
             $this->markTestSkipped('iconv extension not installed');
         }
@@ -81,17 +82,16 @@ class TransliterateTest extends TestCase
 
     public function iconvDataProvider()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
             // Note: We removed the 'Þ' character from the test explicitly,
             // since different versions of glibc transliterate it differently.
             // See https://github.com/horde/horde/pull/144
-            array('AÀBEÉSß', 'AABEESss'),
+            ['AÀBEÉSß', 'AABEESss'],
             // Some non-ascii cannot be transliterated
-            array('AÀ黾B', 'AA?B')
-        );
+            ['AÀ黾B', 'AA?B']
+        ];
     }
-
 }

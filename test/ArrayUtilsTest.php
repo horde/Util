@@ -7,12 +7,12 @@
  * @subpackage UnitTests
  */
 
-namespace Horde\Util\Test\Unnamespaced;
+namespace Horde\Util\Test;
 
 use PHPUnit\Framework\TestCase;
-use Horde_Array;
+use Horde\Util\ArrayUtils;
 
-class ArrayTest extends TestCase
+class ArrayUtilsTest extends TestCase
 {
     public function setUp(): void
     {
@@ -27,7 +27,7 @@ class ArrayTest extends TestCase
 
     public function testArraySort()
     {
-        Horde_Array::arraySort($this->array);
+        ArrayUtils::arraySort($this->array);
         $this->assertEquals(
             [
                 1 => ['name' => 'aaaa', 'desc' => 'aaa foo long desc'],
@@ -42,7 +42,7 @@ class ArrayTest extends TestCase
 
     public function testArraySortKey()
     {
-        Horde_Array::arraySort($this->array, 'desc');
+        ArrayUtils::arraySort($this->array, 'desc');
         $this->assertEquals(
             [
                 1 => ['name' => 'aaaa', 'desc' => 'aaa foo long desc'],

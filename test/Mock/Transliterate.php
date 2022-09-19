@@ -10,8 +10,11 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Util
  */
+
 namespace Horde\Util\Test\Mock;
+
 use Horde_String_Transliterate;
+
 /**
  * Wrapper to test individual transliteration backends.
  *

@@ -6,7 +6,9 @@
  * @package    Util
  * @subpackage UnitTests
  */
+
 namespace Horde\Util\Test\Unnamespaced;
+
 use PHPUnit\Framework\TestCase;
 use Horde_Variables;
 
@@ -14,28 +16,28 @@ class VariablesTest extends TestCase
 {
     public function testRemove()
     {
-        $vars = new Horde_Variables(array(
+        $vars = new Horde_Variables([
            'a' => 'a',
            'b' => 'b',
-           'c' => array(1, 2, 3),
-           'd' => array(
+           'c' => [1, 2, 3],
+           'd' => [
                'z' => 'z',
-               'y' => array(
+               'y' => [
                    'f' => 'f',
                    'g' => 'g'
-               )
-           )
-        ));
+               ]
+           ]
+        ]);
 
         $vars->remove('a');
         $vars->remove('d[y][g]');
 
         $this->assertNull($vars->a);
         $this->assertEquals('b', $vars->b);
-        $this->assertEquals(array(1, 2, 3), $vars->c);
+        $this->assertEquals([1, 2, 3], $vars->c);
         $this->assertEquals(
-            array('z' => 'z',
-                  'y' => array('f' => 'f')),
+            ['z' => 'z',
+                  'y' => ['f' => 'f']],
             $vars->d
         );
     }

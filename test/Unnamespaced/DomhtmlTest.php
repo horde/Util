@@ -6,6 +6,7 @@
  * @package    Util
  * @subpackage UnitTests
  */
+
 namespace Horde\Util\Test\Unnamespaced;
 
 use DOMElement;
@@ -97,7 +98,7 @@ EOT;
         $dom = new Horde_Domhtml($text, 'iso-8859-2');
         $this->assertEquals(
             Horde_String::convertCharset($expected, 'UTF-8', 'iso-8859-2'),
-            strtr(trim($dom->returnBody()), array("\n" => ''))
+            strtr(trim($dom->returnBody()), ["\n" => ''])
         );
 
         $this->assertEquals(
@@ -111,13 +112,13 @@ EOT;
         $text = file_get_contents(__DIR__ . '/../fixtures/domhtml_test.html');
         $dom = new Horde_Domhtml($text);
 
-        $tags = array(
+        $tags = [
             'html',
             'body',
             'div',
             'head',
             'title'
-        );
+        ];
 
         foreach ($dom as $node) {
             $this->assertInstanceOf(DOMNode::class, $node);
@@ -193,7 +194,7 @@ EOT;
 
         $this->assertEquals(
             $dom->returnHtml(),
-            $dom->returnHtml(array('charset' => 'iso-8859-1'))
+            $dom->returnHtml(['charset' => 'iso-8859-1'])
         );
     }
 
@@ -203,8 +204,7 @@ EOT;
 
         $this->assertMatchesRegularExpression(
             '/"text\/html; charset=utf-8"/',
-            $dom->returnHtml(array('metacharset' => true))
+            $dom->returnHtml(['metacharset' => true])
         );
     }
-
 }
