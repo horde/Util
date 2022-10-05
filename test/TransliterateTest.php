@@ -66,9 +66,9 @@ class TransliterateTest extends TestCase
     }
 
     /**
-     * @dataProvider iconvDataProvider
+     * @dataProvider iconvDataProviderGood
      */
-    public function testTransliterateToAsciiIconv($str, $expected)
+    public function testTransliterateToAsciiIconvGood($str, $expected)
     {
         if (!extension_loaded('iconv')) {
             $this->markTestSkipped('iconv extension not installed');
@@ -79,8 +79,23 @@ class TransliterateTest extends TestCase
             Transliterate::testIconv($str)
         );
     }
+    /**
+     * @dataProvider iconvDataProviderBad
+     */
+    public function testTransliterateToAsciiIconvBad($str, $expected)
+    {
+        if (!extension_loaded('iconv')) {
+            $this->markTestSkipped('iconv extension not installed');
+        }
 
-    public function iconvDataProvider()
+        $this->expectNotice();
+        $this->assertFalse(
+            Transliterate::testIconv($str),
+            "Cannot convert to: " . $expected
+        );
+    }
+
+    public function iconvDataProviderGood()
     {
         return [
             // No normalization
@@ -90,6 +105,11 @@ class TransliterateTest extends TestCase
             // since different versions of glibc transliterate it differently.
             // See https://github.com/horde/horde/pull/144
             ['AÀBEÉSß', 'AABEESss'],
+        ];
+    }
+    public function iconvDataProviderBad()
+    {
+        return [
             // Some non-ascii cannot be transliterated
             ['AÀ黾B', 'AA?B']
         ];
