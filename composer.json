@@ -21,7 +21,7 @@
             "role": "developer"
         }
     ],
-    "time": "2022-03-10",
+    "time": "2022-10-05",
     "repositories": [
         {
             "type": "composer",
@@ -60,5 +60,9 @@
             "Horde\\Util\\Test\\": "test/"
         }
     },
-    "minimum-stability": "dev"
+    "config": {
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
+        }
+    }
 }
