@@ -1,4 +1,16 @@
 ---
+3.0.0alpha8:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2022-10-08
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+    
+  [rla] Static analysis: Reach PHPStan Level 2 for src/.
 3.0.0alpha7:
   api: 3.0.0alpha1
   state:
