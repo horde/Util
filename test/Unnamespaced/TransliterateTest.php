@@ -6,7 +6,14 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
+
+namespace Horde\Util\Test\Unnamespaced;
+
+use PHPUnit\Framework\TestCase;
+use Transliterator;
+use Horde\Util\Test\Mock\Transliterate;
+
+class TransliterateTest extends TestCase
 {
     /**
      * @dataProvider fallbackDataProvider
@@ -15,20 +22,20 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testFallback($str)
+            Transliterate::testFallback($str)
         );
     }
 
     public function fallbackDataProvider()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
-            array('AÀBÞEÉSß', 'AABTHEESss'),
+            ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            array('AÀ黾BÞ', 'AA黾BTH')
-        );
+            ['AÀ黾BÞ', 'AA黾BTH']
+        ];
     }
 
     /**
@@ -42,26 +49,26 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testIntl($str)
+            Transliterate::testIntl($str)
         );
     }
 
     public function intlDataProvider()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
-            array('AÀBÞEÉSß', 'AABTHEESss'),
+            ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            array('AÀ黾BÞ', 'AA mianBTH')
-        );
+            ['AÀ黾BÞ', 'AA mianBTH']
+        ];
     }
 
     /**
-     * @dataProvider iconvDataProvider
+     * @dataProvider iconvDataProviderGood
      */
-    public function testTransliterateToAsciiIconv($str, $expected)
+    public function testTransliterateToAsciiIconvGood($str, $expected)
     {
         if (!extension_loaded('iconv')) {
             $this->markTestSkipped('iconv extension not installed');
@@ -69,23 +76,42 @@ class Horde_Util_TransliterateTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             $expected,
-            Horde_Util_Mock_Transliterate::testIconv($str)
+            Transliterate::testIconv($str)
+        );
+    }
+    /**
+     * @dataProvider iconvDataProviderBad
+     */
+    public function testTransliterateToAsciiIconvBad($str, $expected)
+    {
+        if (!extension_loaded('iconv')) {
+            $this->markTestSkipped('iconv extension not installed');
+        }
+
+        $this->expectNotice();
+        $this->assertFalse(
+            Transliterate::testIconv($str),
+            "Cannot convert to: " . $expected
         );
     }
 
-    public function iconvDataProvider()
+    public function iconvDataProviderGood()
     {
-        return array(
+        return [
             // No normalization
-            array('ABC123abc', 'ABC123abc'),
+            ['ABC123abc', 'ABC123abc'],
             // Non-ascii can all be transliterated
             // Note: We removed the 'Þ' character from the test explicitly,
             // since different versions of glibc transliterate it differently.
             // See https://github.com/horde/horde/pull/144
-            array('AÀBEÉSß', 'AABEESss'),
-            // Some non-ascii cannot be transliterated
-            array('AÀ黾B', 'AA?B')
-        );
+            ['AÀBEÉSß', 'AABEESss'],
+        ];
     }
-
+    public function iconvDataProviderBad()
+    {
+        return [
+            // Some non-ascii cannot be transliterated
+            ['AÀ黾B', 'AA?B']
+        ];
+    }
 }

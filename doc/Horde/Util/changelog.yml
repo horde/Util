@@ -1,4 +1,79 @@
 ---
+3.0.0alpha7:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2022-10-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+  [rla] Static analysis: Reach PHPStan Level 2 for src/.
+3.0.0alpha6:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2022-10-05
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+  [rla] Static analysis: Reach PHPStan Level 2 for src/.
+3.0.0alpha5:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2022-03-10
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+3.0.0alpha4:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2021-03-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [rla] Enable PHP 8, add namespaced version
+3.0.0alpha3:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2021-03-13
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+3.0.0alpha2:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2021-02-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |+
+3.0.0alpha1:
+  api: 3.0.0alpha1
+  state:
+    release: stable
+    api: stable
+  date: 2021-02-24
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    [mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR #2).
+    [jan] Fix wrapping if the wrapping break adds indention.
 2.5.12:
   api: 2.5.0
   state:

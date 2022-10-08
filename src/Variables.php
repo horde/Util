@@ -10,6 +10,14 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Util
  */
+declare(strict_types=1);
+
+namespace Horde\Util;
+
+use ArrayAccess;
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 
 /**
  * An OO-way to access form variables.
@@ -29,37 +37,37 @@
  * @license   http://www.horde.org/licenses/lgpl21 LGPL 2.1
  * @package   Util
  */
-class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
+class Variables implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The list of expected variables.
      *
      * @var array
      */
-    protected $_expected = array();
+    protected array $expected = [];
 
     /**
      * Has the input been sanitized?
      *
-     * @var boolean
+     * @var bool
      */
-    protected $_sanitized = false;
+    protected bool $sanitized = false;
 
     /**
      * Array of form variables.
      *
      * @var array
      */
-    protected $_vars;
+    protected $vars;
 
     /**
      * Returns a Horde_Variables object populated with the form input.
      *
-     * @param string $sanitize  Sanitize the input variables?
+     * @param bool $sanitize  Sanitize the input variables?
      *
-     * @return Horde_Variables  Variables object.
+     * @return Variables  Variables object.
      */
-    public static function getDefaultVariables($sanitize = false)
+    public static function getDefaultVariables($sanitize = false): Variables
     {
         return new self(null, $sanitize);
     }
@@ -71,21 +79,21 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      *                          to PHP's $_REQUEST value). If '_formvars'
      *                          exists, it must be a JSON encoded array that
      *                          contains the list of allowed form variables.
-     * @param string $sanitize  Sanitize the input variables?
+     * @param bool $sanitize  Sanitize the input variables?
      */
-    public function __construct($vars = array(), $sanitize = false)
+    public function __construct($vars = [], bool $sanitize = false)
     {
         if (is_null($vars)) {
             $request_copy = $_REQUEST;
-            $vars = Horde_Util::dispelMagicQuotes($request_copy);
+            $vars = $request_copy;
         }
 
         if (isset($vars['_formvars'])) {
-            $this->_expected = @json_decode($vars['_formvars'], true);
+            $this->expected = @json_decode($vars['_formvars'], true);
             unset($vars['_formvars']);
         }
 
-        $this->_vars = $vars;
+        $this->vars = $vars;
 
         if ($sanitize) {
             $this->sanitize();
@@ -97,11 +105,11 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     public function sanitize()
     {
-        if (!$this->_sanitized) {
-            foreach (array_keys($this->_vars) as $key) {
+        if (!$this->sanitized) {
+            foreach (array_keys($this->vars) as $key) {
                 $this->$key = $this->filter($key);
             }
-            $this->_sanitized = true;
+            $this->sanitized = true;
         }
     }
 
@@ -125,9 +133,9 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
     #[\ReturnTypeWillChange]
     public function __isset($varname)
     {
-        return count($this->_expected)
-            ? $this->_getExists($this->_expected, $varname, $value)
-            : $this->_getExists($this->_vars, $varname, $value);
+        return count($this->expected)
+            ? $this->_getExists($this->expected, $varname, $value)
+            : $this->_getExists($this->vars, $varname, $value);
     }
 
     /**
@@ -151,7 +159,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     public function get($varname, $default = null)
     {
-        return $this->_getExists($this->_vars, $varname, $value)
+        return $this->_getExists($this->vars, $varname, $value)
             ? $value
             : $default;
     }
@@ -165,7 +173,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     public function __get($varname)
     {
-        $this->_getExists($this->_vars, $varname, $value);
+        $this->_getExists($this->vars, $varname, $value);
         return $value;
     }
 
@@ -192,7 +200,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     public function getExists($varname, &$exists)
     {
-        $exists = $this->_getExists($this->_vars, $varname, $value);
+        $exists = $this->_getExists($this->vars, $varname, $value);
         return $value;
     }
 
@@ -215,24 +223,24 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
     #[\ReturnTypeWillChange]
     public function __set($varname, $value)
     {
-        $keys = array();
+        $keys = [];
 
-        if (Horde_Array::getArrayParts($varname, $base, $keys)) {
+        if (ArrayUtils::getArrayParts($varname, $base, $keys)) {
             array_unshift($keys, $base);
-            $place = &$this->_vars;
+            $place = &$this->vars;
             $i = count($keys);
 
             while ($i--) {
                 $key = array_shift($keys);
                 if (!isset($place[$key])) {
-                    $place[$key] = array();
+                    $place[$key] = [];
                 }
                 $place = &$place[$key];
             }
 
             $place = $value;
         } else {
-            $this->_vars[$varname] = $value;
+            $this->vars[$varname] = $value;
         }
     }
 
@@ -264,12 +272,12 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     public function __unset($varname)
     {
-        Horde_Array::getArrayParts($varname, $base, $keys);
+        ArrayUtils::getArrayParts($varname, $base, $keys);
 
         if (is_null($base)) {
-            unset($this->_vars[$varname]);
+            unset($this->vars[$varname]);
         } else {
-            $ptr = &$this->_vars[$base];
+            $ptr = &$this->vars[$base];
             $end = count($keys) - 1;
             foreach ($keys as $key => $val) {
                 if (!isset($ptr[$val])) {
@@ -321,28 +329,32 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
             return false;
         }
 
-        $this->_vars[$varname] = $value;
+        $this->vars[$varname] = $value;
         return true;
     }
 
     /**
      * Filters a form value so that it can be used in HTML output.
      *
-     * @param string $varname  The form variable name.
+     * @param string|array $varname  The form variable name.
      *
-     * @return mixed  The filtered variable, or null if it doesn't exist.
+     * @return string|array  The filtered variable, or null if it doesn't exist.
      */
-    public function filter($varname)
+    public function filter(string|array $varname): string|array
     {
         $val = $this->$varname;
-
-        if (is_null($val) || $this->_sanitized) {
+        if (is_null($val) || $this->sanitized) {
             return $val;
         }
 
-        return is_array($val)
-            ? filter_var_array($val, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES)
-            : filter_var($val, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
+        if (is_array($varname)) {
+            $result = [];
+            foreach ($varname as $key => $value) {
+                $result[$key] = htmlspecialchars($value);
+            }
+            return $result;
+        }
+        return htmlspecialchars($val);
     }
 
     /* Protected methods. */
@@ -361,7 +373,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
      */
     protected function _getExists($array, $varname, &$value)
     {
-        if (Horde_Array::getArrayParts($varname, $base, $keys)) {
+        if (ArrayUtils::getArrayParts($varname, $base, $keys)) {
             if (!isset($array[$base])) {
                 $value = null;
                 return false;
@@ -397,14 +409,13 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
     #[\ReturnTypeWillChange]
     public function count()
     {
-        return count($this->_vars);
+        return count($this->vars);
     }
 
     /* IteratorAggregate method. */
     #[\ReturnTypeWillChange]
     public function getIterator()
     {
-        return new ArrayIterator($this->_vars);
+        return new ArrayIterator($this->vars);
     }
-
 }

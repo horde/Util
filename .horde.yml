@@ -26,23 +26,23 @@ authors:
     active: false
     role: developer
 version:
-  release: 2.5.9
-  api: 2.5.0
+  release: 3.0.0alpha7
+  api: 3.0.0alpha1
 state:
-  release: stable
-  api: stable
+  release: alpha
+  api: alpha
 license:
-  identifier: LGPL-2.1
+  identifier: LGPL-2.1-only
   uri: http://www.horde.org/licenses/lgpl21
 dependencies:
   required:
-    php: ^5.3 || ^7
+    php: ^7.4 || ^8
     ext:
       dom: '*'
   optional:
-    pear:
-      pear.horde.org/Horde_Imap_Client: ^2
-      pear.horde.org/Horde_Test: ^2.1
+    composer:
+      horde/imap_client: ^3
+      horde/test: ^3
     ext:
       ctype: '*'
       filter: '*'
@@ -51,3 +51,13 @@ dependencies:
       json: '*'
       mbstring: '*'
       xml: '*'
+  dev:
+    composer:
+      horde/imap_client: ^3
+      horde/test: ^3
+      pear/pear: '*'
+autoload:
+  classmap:
+    - lib/
+  psr-4:
+    Horde\Util\: src/

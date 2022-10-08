@@ -1,18 +1,19 @@
 {
+    "minimum-stability": "dev",
     "name": "horde/util",
     "description": "Utility library",
     "type": "library",
     "homepage": "https://www.horde.org/libraries/Horde_Util",
-    "license": "LGPL-2.1",
+    "license": "LGPL-2.1-only",
     "authors": [
-        {
-            "name": "Chuck Hagenbuch",
-            "email": "chuck@horde.org",
-            "role": "lead"
-        },
         {
             "name": "Jan Schneider",
             "email": "jan@horde.org",
+            "role": "lead"
+        },
+        {
+            "name": "Chuck Hagenbuch",
+            "email": "chuck@horde.org",
             "role": "lead"
         },
         {
@@ -21,21 +22,24 @@
             "role": "developer"
         }
     ],
-    "version": "2.5.9",
-    "time": "2017-11-11",
+    "time": "2022-10-05",
     "repositories": [
         {
-            "type": "pear",
-            "url": "https://pear.horde.org"
+            "type": "composer",
+            "url": "https://horde-satis.maintaina.com"
         }
     ],
     "require": {
-        "php": "^5.3 || ^7",
+        "php": "^7.4 || ^8",
         "ext-dom": "*"
     },
+    "require-dev": {
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+    },
     "suggest": {
-        "pear-pear.horde.org/Horde_Imap_Client": "^2",
-        "pear-pear.horde.org/Horde_Test": "^2.1",
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
@@ -44,13 +48,22 @@
         "ext-mbstring": "*",
         "ext-xml": "*"
     },
-    "replace": {
-        "pear-pear.horde.org/Horde_Util": "2.*",
-        "pear-horde/Horde_Util": "2.*"
-    },
     "autoload": {
-        "psr-0": {
-            "Horde_Util": "lib/"
+        "classmap": [
+            "lib/"
+        ],
+        "psr-4": {
+            "Horde\\Util\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Util\\Test\\": "test/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
         }
     }
 }
