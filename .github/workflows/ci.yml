@@ -1,0 +1,59 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches:
+      - master
+      - main
+      - FRAMEWORK_6_0
+  pull_request:
+    branches:
+      - master
+      - main
+      - FRAMEWORK_6_0
+
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: ['ubuntu-20.04']
+        php-versions: ['7.4', '8.0', '8.1', 'latest']
+        phpunit-versions: ['latest', '9.5']
+    steps:
+    - name: Setup github ssh key
+      run:  mkdir -p ~/.ssh/ && ssh-keyscan -t rsa github.com > ~/.ssh/known_hosts
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-versions }}
+        extensions: bcmath, ctype, curl, dom, gd, gettext, iconv, imagick, json, ldap, mbstring, mysql, opcache, openssl, pcntl, pdo, posix, redis, soap, sockets, sqlite, tokenizer, xmlwriter, apcu
+        ini-values: post_max_size=512M, max_execution_time=360
+        coverage: xdebug
+        tools: php-cs-fixer, phpunit:${{ matrix.phpunit-versions }}, composer:v2, phpstan
+    - name: Setup Github Token as composer credential
+      run: composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+    - name: Install horde/test dependency and other dependencies
+      run: |
+        ## For unclear reasons, github action fails randomly if we do not install twice or add a requirement.
+        COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer config allow-plugins true
+        COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer config minimum-stability dev
+        COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer install
+        #COMPOSER_ROOT_VERSION=dev-FRAMEWORK_6_0 composer require horde/cli "dev-FRAMEWORK_6_0 || ^3"
+    - name: Setup problem matchers for PHPUnit
+      run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+    - name: run phpunit
+      run: phpunit --bootstrap test/bootstrap.php
+    - name: run phpstan
+      run: phpstan analyze src/ --level 1

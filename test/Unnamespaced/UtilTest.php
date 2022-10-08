@@ -6,7 +6,13 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_UtilTest extends PHPUnit_Framework_TestCase
+
+namespace Horde\Util\Test\Unnamespaced;
+
+use PHPUnit\Framework\TestCase;
+use Horde_Util;
+
+class UtilTest extends TestCase
 {
     public function testGetPathInfo()
     {
@@ -67,28 +73,28 @@ class Horde_Util_UtilTest extends PHPUnit_Framework_TestCase
     public function testDispelMagicQuotes()
     {
         Horde_Util_Test::setMagicQuotes(false);
-        $vars = $expected = array('foobar', 'foo\bar', 'foo\\bar', 'foo\"bar');
+        $vars = $expected = ['foobar', 'foo\bar', 'foo\\bar', 'foo\"bar'];
         foreach ($vars as $key => $var) {
             $this->assertEquals($expected[$key], Horde_Util_Test::dispelMagicQuotes($var));
             $this->assertEquals($expected[$key], Horde_Util_Test::dispelMagicQuotes($var));
         }
         foreach ($vars as $key => $var) {
-            $var = array($var);
-            $this->assertEquals(array($expected[$key]), Horde_Util_Test::dispelMagicQuotes($var));
-            $this->assertEquals(array($expected[$key]), Horde_Util_Test::dispelMagicQuotes($var));
+            $var = [$var];
+            $this->assertEquals([$expected[$key]], Horde_Util_Test::dispelMagicQuotes($var));
+            $this->assertEquals([$expected[$key]], Horde_Util_Test::dispelMagicQuotes($var));
         }
 
         Horde_Util_Test::setMagicQuotes(true);
-        $vars = array('foobar', 'foo\bar', 'foo\\\\bar', 'foo\"bar');
-        $expected = array('foobar', 'foobar', 'foo\bar', 'foo"bar');
+        $vars = ['foobar', 'foo\bar', 'foo\\\\bar', 'foo\"bar'];
+        $expected = ['foobar', 'foobar', 'foo\bar', 'foo"bar'];
         foreach ($vars as $key => $var) {
             $this->assertEquals($expected[$key], Horde_Util_Test::dispelMagicQuotes($var));
             $this->assertEquals($expected[$key], Horde_Util_Test::dispelMagicQuotes($var));
         }
         foreach ($vars as $key => $var) {
-            $var = array($var);
-            $this->assertEquals(array($expected[$key]), Horde_Util_Test::dispelMagicQuotes($var));
-            $this->assertEquals(array($expected[$key]), Horde_Util_Test::dispelMagicQuotes($var));
+            $var = [$var];
+            $this->assertEquals([$expected[$key]], Horde_Util_Test::dispelMagicQuotes($var));
+            $this->assertEquals([$expected[$key]], Horde_Util_Test::dispelMagicQuotes($var));
         }
     }
 }
