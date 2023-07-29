@@ -6,6 +6,7 @@
  * @package    Util
  * @subpackage UnitTests
  */
+#[\AllowDynamicProperties]
 class Horde_Util_ArrayTest extends Horde_Test_Case
 {
     public function setUp(): void
