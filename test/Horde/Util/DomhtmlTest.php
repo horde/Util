@@ -6,7 +6,7 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_DomhtmlTest extends PHPUnit_Framework_TestCase
+class Horde_Util_DomhtmlTest extends Horde_Test_Case
 {
     public function testBug9567()
     {
@@ -113,9 +113,7 @@ EOT;
 
         foreach ($dom as $node) {
             if ($node instanceof DOMElement) {
-                if ($node->tagName != reset($tags)) {
-                    $this->fail('Wrong tag name.');
-                }
+                $this->assertEquals($node->tagName, reset($tags));
                 array_shift($tags);
             }
         }

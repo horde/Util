@@ -6,9 +6,9 @@
  * @package    Util
  * @subpackage UnitTests
  */
-class Horde_Util_StringTest extends PHPUnit_Framework_TestCase
+class Horde_Util_StringTest extends Horde_Test_Case
 {
-    public function tearDown()
+    public function tearDown(): void
     {
         setlocale(LC_ALL, '');
     }
@@ -666,7 +666,7 @@ EOT
         $string = str_repeat('1 A B', 10000);
 
         /* Failing test will cause a PHP segfault here. */
-        Horde_String::validUtf8($string);
+        $this->assertTrue(Horde_String::validUtf8($string));
     }
 
     /**
