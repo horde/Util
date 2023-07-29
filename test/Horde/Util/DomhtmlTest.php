@@ -190,7 +190,7 @@ EOT;
     {
         $dom = new Horde_Domhtml('<html><body><div>foo</div></body></html>', 'UTF-8');
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '/"text\/html; charset=utf-8"/',
             $dom->returnHtml(array('metacharset' => true))
         );
