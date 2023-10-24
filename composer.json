@@ -23,19 +23,11 @@
     ],
     "version": "2.5.9",
     "time": "2017-11-11",
-    "repositories": [
-        {
-            "type": "pear",
-            "url": "https://pear.horde.org"
-        }
-    ],
     "require": {
         "php": "^5.3 || ^7",
         "ext-dom": "*"
     },
     "suggest": {
-        "pear-pear.horde.org/Horde_Imap_Client": "^2",
-        "pear-pear.horde.org/Horde_Test": "^2.1",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
@@ -45,8 +37,6 @@
         "ext-xml": "*"
     },
     "replace": {
-        "pear-pear.horde.org/Horde_Util": "2.*",
-        "pear-horde/Horde_Util": "2.*"
     },
     "autoload": {
         "psr-0": {
