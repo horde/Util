@@ -885,6 +885,9 @@ class Horde_String
                 }
 
                 do {
+                    if($i + 1 >= $len) {
+                        return false;
+                    }                    
                     $c = ord($text[++$i]);
                     if (($c < 128) || ($c > 191)) {
                         return false;
