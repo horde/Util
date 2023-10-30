@@ -44,7 +44,7 @@ class Domhtml implements Iterator
     /**
      * Iterator status.
      *
-     * @var array
+     * @var iterable|DOMDocument|null
      */
     protected $_iterator = null;
 

@@ -170,7 +170,7 @@ class Util
      * @param boolean $secure  If deleting the file, should we securely delete
      *                         the file by overwriting it with random data?
      *
-     * @return string   Returns the full path-name to the temporary file.
+     * @return string|false   Returns the full path-name to the temporary file.
      *                  Returns false if a temp file could not be created.
      */
     public static function getTempFile(
@@ -178,7 +178,7 @@ class Util
         $delete = true,
         $dir = '',
         $secure = false
-    )
+    ): string|false
     {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
@@ -211,8 +211,8 @@ class Util
      * @param boolean $secure    If deleting file, should we securely delete
      *                           the file by overwriting it with random data?
      *
-     * @return string   Returns the full path-name to the temporary file.
-     *                  Returns false if a temporary file could not be created.
+     * @return string|false   Returns the full path-name to the temporary file.
+     *                        Returns false if a temporary file could not be created.
      */
     public static function getTempFileWithExtension(
         $extension = '.tmp',
@@ -220,7 +220,7 @@ class Util
         $delete = true,
         $dir = '',
         $secure = false
-    )
+    ): string|false
     {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
@@ -275,10 +275,10 @@ class Util
      * @param string $temp_dir  Use this temporary directory as the directory
      *                          where the temporary directory will be created.
      *
-     * @return string  The pathname to the new temporary directory.
+     * @return string|false  The pathname to the new temporary directory.
      *                 Returns false if directory not created.
      */
-    public static function createTempDir($delete = true, $temp_dir = null)
+    public static function createTempDir($delete = true, $temp_dir = null): string|false
     {
         if (is_null($temp_dir)) {
             $temp_dir = sys_get_temp_dir();

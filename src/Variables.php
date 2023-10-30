@@ -75,7 +75,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Constructor.
      *
-     * @param array $vars       The list of form variables (if null, defaults
+     * @param array|null $vars       The list of form variables (if null, defaults
      *                          to PHP's $_REQUEST value). If '_formvars'
      *                          exists, it must be a JSON encoded array that
      *                          contains the list of allowed form variables.
