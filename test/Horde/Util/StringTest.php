@@ -731,4 +731,61 @@ EOT
         );
     }
 
+    /**
+     * @dataProvider ConvertCharsetIconvProvider
+     */
+    public function testConvertCharsetIconv(string $input, string $from, string $to, $expected): void
+    {
+        $this->assertEquals(
+            $expected,
+            Horde_Util_Mock_String::testConvertCharsetIconv($input, $from, $to)
+        );
+    }
+
+    public function ConvertCharsetIconvProvider()
+    {
+        return [
+            'valid character sequence' => ['This will work.', 'UTF-8', 'ISO-8859-1', 'This will work.'],
+            'illegal character in input string' => ["This is the Euro symbol '€'.", 'UTF-8', 'ISO-8859-1', false]
+        ];
+    }
+
+    /**
+     * @dataProvider posMbstringProvider
+     */
+    public function testPosMbstring(string $haystack, string $needle, int $offset, string $charset, string $func, $expected): void
+    {
+        $this->assertEquals(
+            $expected,
+            Horde_Util_Mock_String::testPosMbstring($haystack, $needle, $offset, $charset, $func)
+        );
+    }
+
+    public function posMbstringProvider()
+    {
+        return [
+            'valid character sequence' => ['Some random string.', 'Some', 0, 'UTF-8', 'strpos', 0],
+            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false]
+        ];
+    }
+
+    /**
+     * @dataProvider posIntlProvider
+     */
+    public function testPosIntl(string $haystack, string $needle, int $offset, string $charset, string $func, $expected): void
+    {
+        $this->assertEquals(
+            $expected,
+            Horde_Util_Mock_String::testPosIntl($haystack, $needle, $offset, $charset, $func)
+        );
+    }
+
+    public function posIntlProvider()
+    {
+        return [
+            'valid character sequence' => ['Some random string.', 'Some', 0, 'UTF-8', 'strpos', 0],
+            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false]
+        ];
+    }
+
 }
