@@ -328,11 +328,15 @@ class Horde_String
 
         /* Try mbstring. */
         if (Horde_Util::extensionExists('mbstring')) {
-            $ret = @mb_substr($string, $start, $length, self::_mbstringCharset($charset));
+            $supported_encodings = mb_list_encodings();
+            if(in_array($charset, $supported_encodings))
+            {
+                $ret = @mb_substr($string, $start, $length, self::_mbstringCharset($charset));
 
-            /* mb_substr() returns empty string on failure. */
-            if (strlen($ret)) {
-                return $ret;
+                /* mb_substr() returns empty string on failure. */
+                if (strlen($ret)) {
+                    return $ret;
+                }
             }
             $error = true;
         }
