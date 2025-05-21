@@ -113,6 +113,35 @@ class ArrayUtils
 
         return $array;
     }
+    /**
+     * Using an array of keys iterate through the $array following the
+     * nested $keys to find the final key's value. If a $value is passed then set
+     * that value. If missing, create array levels along that path.
+     * Existing values in that path will be overwritten even if $value is null.
+     *
+     * @param array &$array  The array to be used.
+     * @param array &$keys   The key path to follow as an array.
+     * @param array $value   Target element will have this value set
+     *                       to it.
+     *
+     * @return mixed  The final value of the key path.
+     */
+    public static function setElement(&$array, array &$keys, $value = null)
+    {
+        if (count($keys)) {
+            $key = array_shift($keys);
+            if (!isset($array[$key])) {
+                $array[$key] = array();
+            }
+            return isset($array[$key])
+                ? self::setElement($array[$key], $keys, $value)
+                : false;
+        }
+
+        $array = $value;
+
+        return $array;
+    }
 
     /**
      * Returns a rectangle of a two-dimensional array.
