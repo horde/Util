@@ -1,28 +1,29 @@
 ---
-3.0.0alpha8:
-  api: 3.0.0alpha1
+3.0.0-alpha8:
+  api: 3.0.0-alpha1
   state:
-    release: alpha
-    api: alpha
-  date: 2022-10-08
+    release: true
+    api: true
+  date: 2025-05-21
   license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
-    
-  [rla] Static analysis: Reach PHPStan Level 2 for src/.
-3.0.0alpha7:
-  api: 3.0.0alpha1
-  state:
-    release: alpha
-    api: alpha
-  date: 2022-10-08
-  license:
-    identifier: LGPL-2.1
+    identifier: LGPL-2.1-only
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    feat: Add ArrayUtils::setElement recursive static method to manipulate deep arrays and create missing key levels from a path list.
+3.0.0-alpha7:
+  api: 3.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2022-10-08
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |-
+    Original version string was 3.0.0alpha7
+    |
   [rla] Static analysis: Reach PHPStan Level 2 for src/.
-3.0.0alpha6:
+3.0.0-alpha6:
   api: 3.0.0alpha1
   state:
     release: alpha
@@ -31,9 +32,11 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |
+  notes: |-
+    Original version string was 3.0.0alpha6
+    |
   [rla] Static analysis: Reach PHPStan Level 2 for src/.
-3.0.0alpha5:
+3.0.0-alpha5:
   api: 3.0.0alpha1
   state:
     release: alpha
@@ -42,8 +45,10 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
-3.0.0alpha4:
+  notes: |-
+    Original version string was 3.0.0alpha5
+    |+
+3.0.0-alpha4:
   api: 3.0.0alpha1
   state:
     release: alpha
@@ -53,8 +58,9 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    Original version string was 3.0.0alpha4
     [rla] Enable PHP 8, add namespaced version
-3.0.0alpha3:
+3.0.0-alpha3:
   api: 3.0.0alpha1
   state:
     release: alpha
@@ -63,8 +69,10 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
-3.0.0alpha2:
+  notes: |-
+    Original version string was 3.0.0alpha3
+    |+
+3.0.0-alpha2:
   api: 3.0.0alpha1
   state:
     release: alpha
@@ -73,8 +81,10 @@
   license:
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
-  notes: |+
-3.0.0alpha1:
+  notes: |-
+    Original version string was 3.0.0alpha2
+    |+
+3.0.0-alpha1:
   api: 3.0.0alpha1
   state:
     release: stable
@@ -84,6 +94,7 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    Original version string was 3.0.0alpha1
     [mjr] PHP 7.4 compatibility fixes (Remi Collet <remi@famillecollet.com>, PR #2).
     [jan] Fix wrapping if the wrapping break adds indention.
 2.5.12:
@@ -347,6 +358,48 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     [mms] Use new Horde_Test layout.
+2.0.0-beta2:
+  api: 2.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-10-12
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Original version string was 2.0.0beta2
+    [mms] Remove Horde_Util::addParameter() and Horde_Util::removeParameter().
+    [mms] Remove Horde_Util::cloneObject().
+2.0.0-beta1:
+  api: 2.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-07-19
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Original version string was 2.0.0beta1
+    First beta release for Horde 5.
+2.0.0-alpha1:
+  api: 2.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2012-07-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Original version string was 2.0.0alpha1
+    First alpha release for Horde 5.
+    [mms] Removed e-mail array manipulation methods (Horde_Mail package now provides this feature).
+    [mms] Removed Horde_Util::getCsv() (moved to Horde_Data package).
+    [mms] Add iteration to Horde_Domhtml object.
+    [jan] Remove Horde_Util::getTempDir().
+    [jan] Remove Horde_Array::replaceRecursive().
 2.0.0:
   api: 2.0.0
   state:
@@ -358,45 +411,6 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
     First stable release for Horde 5.
-2.0.0beta2:
-  api: 2.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-10-12
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    [mms] Remove Horde_Util::addParameter() and Horde_Util::removeParameter().
-    [mms] Remove Horde_Util::cloneObject().
-2.0.0beta1:
-  api: 2.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-07-19
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First beta release for Horde 5.
-2.0.0alpha1:
-  api: 2.0.0alpha1
-  state:
-    release: alpha
-    api: alpha
-  date: 2012-07-06
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First alpha release for Horde 5.
-    [mms] Removed e-mail array manipulation methods (Horde_Mail package now provides this feature).
-    [mms] Removed Horde_Util::getCsv() (moved to Horde_Data package).
-    [mms] Add iteration to Horde_Domhtml object.
-    [jan] Remove Horde_Util::getTempDir().
-    [jan] Remove Horde_Array::replaceRecursive().
 1.4.1:
   api: 1.4.0
   state:
@@ -530,44 +544,7 @@
   notes: |
     [jan] Fix wrapping of several follow-up lines with existing line breaks.
     [jan] Fix creating temporary files with open_basedir restrictions.
-1.0.0:
-  api: 1.0.0
-  state:
-    release: stable
-    api: stable
-  date: 2011-04-06
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First stable release for Horde 4.
-1.0.0RC2:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-29
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    Second release candidate for Horde 4.
-    Fix parsing ISO-8859-15 data with Horde_Domhtml (Bug #9714).
-1.0.0RC1:
-  api: 1.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-22
-  license:
-    identifier: LGPL-2.1
-    uri: http://www.horde.org/licenses/lgpl21
-  notes: |
-    First release candidate for Horde 4.
-    [mms] Tweak loading HTML documents (encodings) in Horde_Domhtml.
-    [mms] Added Horde_Domhtml#returnBody().
-    [mms] Added Domhtml unit tests.
-1.0.0beta1:
+1.0.0-beta1:
   api: 1.0.0
   state:
     release: beta
@@ -577,8 +554,9 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    Original version string was 1.0.0beta1
     First beta release for Horde 4.
-1.0.0alpha1:
+1.0.0-alpha1:
   api: 1.0.0
   state:
     release: alpha
@@ -588,6 +566,7 @@
     identifier: LGPL-2.1
     uri: http://www.horde.org/licenses/lgpl21
   notes: |
+    Original version string was 1.0.0alpha1
     First alpha release for Horde 4.
     Added Horde_String::rpos().
     Renamed Horde_Array::array_merge_recursive_overwrite() to Horde_Array::replaceRecursive().
@@ -601,6 +580,45 @@
     Added Horde_String::convertToUtf8().
     Added Horde_Util::abbreviate().
     Removed Horde_Array::combine() and Horde_Util::hmac().
+1.0.0-RC2:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Original version string was 1.0.0RC2
+    Second release candidate for Horde 4.
+    Fix parsing ISO-8859-15 data with Horde_Domhtml (Bug #9714).
+1.0.0-RC1:
+  api: 1.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-22
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    Original version string was 1.0.0RC1
+    First release candidate for Horde 4.
+    [mms] Tweak loading HTML documents (encodings) in Horde_Domhtml.
+    [mms] Added Horde_Domhtml#returnBody().
+    [mms] Added Domhtml unit tests.
+1.0.0:
+  api: 1.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2011-04-06
+  license:
+    identifier: LGPL-2.1
+    uri: http://www.horde.org/licenses/lgpl21
+  notes: |
+    First stable release for Horde 4.
 0.1.0:
   api: 0.1.0
   state:
