@@ -100,30 +100,25 @@ class Horde_Array
 
     /**
      * Using an array of keys iterate through the array following the
-     * keys to find the final key value. If a value is passed then set
-     * that value.
+     * keys to find the final key value.
      *
-     * @param array &$array  The array to be used.
-     * @param array &$keys   The key path to follow as an array.
-     * @param array $value   If set the target element will have this value set
-     *                       to it.
+     * @param array $array        The array to be used.
+     * @param array|string $keys  The key path to follow as an array.
      *
-     * @return mixed  The final value of the key path.
+     * @return mixed              The final value of the key path.
      */
-    public static function getElement(&$array, array &$keys, $value = null)
+    public static function getElement(array $array, $keys)
     {
-        if (count($keys)) {
-            $key = array_shift($keys);
-            return isset($array[$key])
-                ? self::getElement($array[$key], $keys, $value)
-                : false;
+        $ref = &$array;
+
+        foreach ((array) $keys as $key) {
+            if (!isset($ref[$key])) {
+                return null;
+            }
+            $ref = &$ref[$key];
         }
 
-        if (!is_null($value)) {
-            $array = $value;
-        }
-
-        return $array;
+        return $ref;
     }
 
     /**
