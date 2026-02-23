@@ -38,8 +38,7 @@ class ArrayUtils
         $key = null,
         $dir = 0,
         $assoc = true
-    )
-    {
+    ) {
         /* Return if the array is empty. */
         if (empty($array)) {
             return;
@@ -84,6 +83,27 @@ class ArrayUtils
         $keys[0] = substr($keys[0], 1);
         $keys[count($keys) - 1] = substr($keys[count($keys) - 1], 0, strlen($keys[count($keys) - 1]) - 1);
         return true;
+    }
+
+    /**
+     * Given an HTML type array field "example[key1][key2][key3]" breaks up
+     * the keys into [ 'example', 'key1', 'key2', 'key3' ] so that they could be
+     * used to reference a regular PHP array.
+     *
+     * @param string $field  The field name to be examined.
+     *
+     * @return array|null    Array of keys, null on error.
+     */
+    public static function getFieldParts($field)
+    {
+        if (preg_match('|^([^\[]*)((\[[^\[\]]*\])*)$|', $field, $matches)) {
+            $keys = [ $matches[1] ];
+            if (strlen($matches[2])) {
+                $keys = array_merge($keys, explode('][', substr($matches[2], 1, -1)));
+            }
+            return $keys;
+        }
+        return null;
     }
 
     /**
@@ -160,8 +180,7 @@ class ArrayUtils
         $col,
         $height,
         $width
-    )
-    {
+    ) {
         $rec = [];
         for ($y = $row; $y < $row + $height; $y++) {
             $rec[] = array_slice($array[$y], $col, $width);
