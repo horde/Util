@@ -142,17 +142,26 @@ class ArrayUtils
      * Using an array of keys iterate through the $array following the
      * nested $keys to find the final key's value. If a $value is passed then set
      * that value. If missing, create array levels along that path.
-     * Existing values in that path will be overwritten even if $value is null.
+     * Existing value in that path will be overwritten.
      *
      * @param array &$array       The array to be used.
      * @param array|string $keys  The key path to follow as an array or string.
      * @param mixed $value        Target element will have this value set to it.
+     * @param string $extraKey    Additional key to add at position 1, if any.
      */
-    public static function setElement(array &$array, $keys, $value = null)
+    public static function setElement(array &$array, $keys, $value, $extraKey = null)
     {
         $ref = &$array;
 
-        foreach ((array) $keys as $key) {
+        if (!is_array($keys)) {
+            $keys = [ $keys ];
+        }
+
+        if (isset($extraKey)) {
+            array_splice($keys, 1, 0, $extraKey);
+        }
+
+        foreach ($keys as $key) {
             if (!isset($ref[$key])) {
                 $ref[$key] = [];
             }
