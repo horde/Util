@@ -111,15 +111,24 @@ class ArrayUtils
      * keys to find the final key value.
      *
      * @param array $array        The array to be used.
-     * @param array|string $keys  The key path to follow as an array.
+     * @param array|string $keys  The key path to follow as an array or string.
+     * @param string $extraKey    Additional key to add at position 1, if any.
      *
      * @return mixed              The final value of the key path.
      */
-    public static function getElement(array $array, $keys)
+    public static function getElement(array $array, $keys, $extraKey = null)
     {
         $ref = &$array;
 
-        foreach ((array) $keys as $key) {
+        if (!is_array($keys)) {
+            $keys = [ $keys ];
+        }
+
+        if (isset($extraKey)) {
+            array_splice($keys, 1, 0, $extraKey);
+        }
+
+        foreach ($keys as $key) {
             if (!isset($ref[$key])) {
                 return null;
             }
