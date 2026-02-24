@@ -135,28 +135,22 @@ class ArrayUtils
      * that value. If missing, create array levels along that path.
      * Existing values in that path will be overwritten even if $value is null.
      *
-     * @param array &$array  The array to be used.
-     * @param array &$keys   The key path to follow as an array.
-     * @param array $value   Target element will have this value set
-     *                       to it.
-     *
-     * @return mixed  The final value of the key path.
+     * @param array &$array       The array to be used.
+     * @param array|string $keys  The key path to follow as an array or string.
+     * @param mixed $value        Target element will have this value set to it.
      */
-    public static function setElement(&$array, array &$keys, $value = null)
+    public static function setElement(array &$array, $keys, $value = null)
     {
-        if (count($keys)) {
-            $key = array_shift($keys);
-            if (!isset($array[$key])) {
-                $array[$key] = array();
+        $ref = &$array;
+
+        foreach ((array) $keys as $key) {
+            if (!isset($ref[$key])) {
+                $ref[$key] = [];
             }
-            return isset($array[$key])
-                ? self::setElement($array[$key], $keys, $value)
-                : false;
+            $ref = &$ref[$key];
         }
 
-        $array = $value;
-
-        return $array;
+        $ref = $value;
     }
 
     /**

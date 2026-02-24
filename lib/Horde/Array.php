@@ -32,7 +32,7 @@ class Horde_Array
     public static function arraySort(array &$array, $key = null, $dir = 0, $assoc = true)
     {
         /* Return if the array is empty. */
-        if (empty($array)) {
+        if (!$array) {
             return;
         }
 
@@ -48,9 +48,9 @@ class Horde_Array
         $helper->key = $key;
         $function = $dir ? 'reverseCompare' : 'compare';
         if ($assoc) {
-            uasort($array, array($helper, $function));
+            uasort($array, [ $helper, $function ]);
         } else {
-            usort($array, array($helper, $function));
+            usort($array, [ $helper, $function ]);
         }
     }
 
@@ -62,7 +62,7 @@ class Horde_Array
      * @param string &$base  Will be set to the base element.
      * @param array &$keys   Will be set to the list of keys.
      *
-     * @return boolean  True on sucess, false on error.
+     * @return boolean  True on success, false on error.
      */
     public static function getArrayParts($field, &$base, &$keys)
     {
@@ -127,28 +127,22 @@ class Horde_Array
      * that value. If missing, create array levels along that path.
      * Existing values in that path will be overwritten even if $value is null.
      *
-     * @param array &$array  The array to be used.
-     * @param array &$keys   The key path to follow as an array.
-     * @param array $value   Target element will have this value set
-     *                       to it.
-     *
-     * @return mixed  The final value of the key path.
+     * @param array &$array       The array to be used.
+     * @param array|string $keys  The key path to follow as an array or string.
+     * @param mixed $value        Target element will have this value set to it.
      */
-    public static function setElement(&$array, array &$keys, $value = null)
+    public static function setElement(array &$array, $keys, $value = null)
     {
-        if (count($keys)) {
-            $key = array_shift($keys);
-            if (!isset($array[$key])) {
-                $array[$key] = array();
+        $ref = &$array;
+
+        foreach ((array) $keys as $key) {
+            if (!isset($ref[$key])) {
+                $ref[$key] = [];
             }
-            return isset($array[$key])
-                ? self::setElement($array[$key], $keys, $value)
-                : false;
+            $ref = &$ref[$key];
         }
 
-        $array = $value;
-
-        return $array;
+        $ref = $value;
     }
 
     /**
@@ -164,7 +158,7 @@ class Horde_Array
      */
     public static function getRectangle(array $array, $row, $col, $height, $width)
     {
-        $rec = array();
+        $rec = [];
         for ($y = $row; $y < $row + $height; $y++) {
             $rec[] = array_slice($array[$y], $col, $width);
         }
@@ -175,9 +169,9 @@ class Horde_Array
      * Given an array, returns an associative array with each element key
      * derived from its value.
      * For example:
-     *   array(0 => 'foo', 1 => 'bar')
+     *   [ 0 => 'foo', 1 => 'bar' ]
      * would become:
-     *   array('foo' => 'foo', 'bar' => 'bar')
+     *   [ 'foo' => 'foo', 'bar' => 'bar' ]
      *
      * @param array $array  An array of values.
      *
@@ -187,6 +181,6 @@ class Horde_Array
     {
         return $array
             ? array_combine($array, $array)
-            : array();
+            : [];
     }
 }
