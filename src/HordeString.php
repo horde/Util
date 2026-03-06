@@ -129,12 +129,12 @@ class HordeString
              !Util::extensionExists('mbstring'))) {
             if (($to == 'utf-8') &&
                 in_array($from, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return utf8_encode($input);
+                return mb_convert_encoding($input, 'UTF-8', 'ISO-8859-1');
             }
 
             if (($from == 'utf-8') &&
                 in_array($to, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return utf8_decode($input);
+                return mb_convert_encoding($input, 'ISO-8859-1', 'UTF-8');
             }
         }
 
@@ -397,7 +397,7 @@ class HordeString
         $charset = self::lower($charset);
 
         if ($charset == 'utf-8' || $charset == 'utf8') {
-            return strlen(utf8_decode($string));
+            return strlen(mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8'));
         }
 
         if (Util::extensionExists('mbstring')) {
