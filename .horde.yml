@@ -26,7 +26,7 @@ authors:
     active: false
     role: developer
 version:
-  release: 3.0.0-alpha8
+  release: 3.0.0-alpha9
   api: 3.0.0alpha1
 state:
   release: alpha
@@ -61,3 +61,4 @@ autoload:
     - lib/
   psr-4:
     Horde\Util\: src/
+vendor: horde

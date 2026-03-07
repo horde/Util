@@ -21,20 +21,20 @@
             "role": "developer"
         }
     ],
-    "time": "2025-05-21",
+    "time": "2026-03-07",
     "repositories": [],
     "require": {
         "php": "^7.4 || ^8",
         "ext-dom": "*"
     },
     "require-dev": {
-        "horde/imap_client": "^3",
-        "horde/test": "^3",
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "pear/pear": "*"
     },
     "suggest": {
-        "horde/imap_client": "^3",
-        "horde/test": "^3",
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
+        "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
@@ -53,12 +53,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Horde\\Util\\Test\\": "test/"
+            "Horde\\Util\\Test\\": "test/",
+            "Horde\\Util\\Test\\Fixtures\\": "test/fixtures/"
         }
     },
     "config": {
-        "allow-plugins": {
-            "horde/horde-installer-plugin": true
+        "allow-plugins": {}
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-FRAMEWORK_6_0": "3.x-dev"
         }
     }
 }

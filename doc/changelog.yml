@@ -1,4 +1,21 @@
 ---
+3.0.0-alpha9:
+  api: 3.0.0-alpha9
+  state:
+    release: alpha
+    api: alpha
+  date: 2026-03-07
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    Fix deprecation warnings with utf8_encode/decode
+    Merge pull request #16 from amulet1/improve_array_utils
+    feat: Add support for extra key in setElement() method
+    feat: Add support for extra key in getElement() method
+    fix: Reimplement setElement()   * Make it non-recursive   * Do not modify $keys   * Do not return value
+    fix: Reimplement getElement()  * Make it non-recursive  * Drop $value parameter (setElement can be used instead)  * Do not modify $array or $keys  * Return null on error
+    feat: Add getFieldParts() to split field into path
 3.0.0-alpha8:
   api: 3.0.0-alpha1
   state:
