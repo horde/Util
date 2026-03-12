@@ -9,9 +9,11 @@
 
 namespace Horde\Util\Test;
 
+use AllowDynamicProperties;
 use PHPUnit\Framework\TestCase;
 use Horde\Util\ArrayUtils;
 
+#[AllowDynamicProperties]
 class ArrayUtilsTest extends TestCase
 {
     public function setUp(): void
