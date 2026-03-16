@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Michael Slusarz <slusarz@horde.org>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -15,20 +16,23 @@ use PHPUnit\Framework\TestCase;
 use Horde_Domhtml;
 use Horde_String;
 
+/**
+ * @coversNothing
+ */
 class DomhtmlTest extends TestCase
 {
     public function testBug9567()
     {
         $text = <<<EOT
-<html>
- <head>
-  <meta http-equiv=3DContent-Type content=3D"text/html; charset=3Diso-8859-1">
- </head>
- <body>
-  pr=E9parer =E0 vendre d&#8217;ao=FBt&nbsp;;
- </body>
-</html>
-EOT;
+            <html>
+             <head>
+              <meta http-equiv=3DContent-Type content=3D"text/html; charset=3Diso-8859-1">
+             </head>
+             <body>
+              pr=E9parer =E0 vendre d&#8217;ao=FBt&nbsp;;
+             </body>
+            </html>
+            EOT;
 
         $expected = "préparer à vendre d’août ;";
 
@@ -117,7 +121,7 @@ EOT;
             'body',
             'div',
             'head',
-            'title'
+            'title',
         ];
 
         foreach ($dom as $node) {
@@ -134,18 +138,18 @@ EOT;
     public function testHrefSpaces()
     {
         $text = <<<EOT
-<html>
- <body>
-  <a href="  http://foo.example.com/">Foo</a>
- </body>
-</html>
-EOT;
+            <html>
+             <body>
+              <a href="  http://foo.example.com/">Foo</a>
+             </body>
+            </html>
+            EOT;
 
         $dom = new Horde_Domhtml($text, 'UTF-8');
 
         foreach ($dom as $val) {
-            if (($val instanceof DOMElement) &&
-                ($val->tagName == 'a')) {
+            if (($val instanceof DOMElement)
+                && ($val->tagName == 'a')) {
                 $this->assertEquals(
                     '  http://foo.example.com/',
                     $val->getAttribute('href')
@@ -190,7 +194,7 @@ EOT;
 
     public function testReturnHtmlCharset()
     {
-        $dom = new Horde_DomHtml('<html><body><div>préparer à vendre d’août</div></body></html>', 'UTF-8');
+        $dom = new Horde_Domhtml('<html><body><div>préparer à vendre d’août</div></body></html>', 'UTF-8');
 
         $this->assertEquals(
             $dom->returnHtml(),

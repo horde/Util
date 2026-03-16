@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Michael Slusarz <slusarz@horde.org>
  * @category   Horde
@@ -13,6 +14,9 @@ use PHPUnit\Framework\TestCase;
 use Transliterator;
 use Horde\Util\Test\Mock\Transliterate;
 
+/**
+ * @coversNothing
+ */
 class TransliterateTest extends TestCase
 {
     /**
@@ -34,7 +38,7 @@ class TransliterateTest extends TestCase
             // Non-ascii can all be transliterated
             ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            ['AÀ黾BÞ', 'AA黾BTH']
+            ['AÀ黾BÞ', 'AA黾BTH'],
         ];
     }
 
@@ -61,7 +65,7 @@ class TransliterateTest extends TestCase
             // Non-ascii can all be transliterated
             ['AÀBÞEÉSß', 'AABTHEESss'],
             // Some non-ascii cannot be transliterated
-            ['AÀ黾BÞ', 'AA mianBTH']
+            ['AÀ黾BÞ', 'AA mianBTH'],
         ];
     }
 
@@ -111,7 +115,7 @@ class TransliterateTest extends TestCase
     {
         return [
             // Some non-ascii cannot be transliterated
-            ['AÀ黾B', 'AA?B']
+            ['AÀ黾B', 'AA?B'],
         ];
     }
 }

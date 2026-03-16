@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -12,6 +13,9 @@ namespace Horde\Util\Test\Unnamespaced;
 use PHPUnit\Framework\TestCase;
 use Horde_String;
 
+/**
+ * @coversNothing
+ */
 class StringTest extends TestCase
 {
     public function tearDown(): void
@@ -250,7 +254,7 @@ class StringTest extends TestCase
             ['Schöne Neue Welt', 'N', 7],
             ['Schöne Neue Welt', 'e', 5],
             ['Schöne Neue Welt', ' ', 6],
-            ['Schöne Neue Welt', 'a', false]
+            ['Schöne Neue Welt', 'a', false],
         ];
     }
 
@@ -272,7 +276,7 @@ class StringTest extends TestCase
             ['Schöne Neue Welt', 'N', 4],
             ['Schöne Neue Welt', 'E', 5],
             ['Schöne Neue Welt', ' ', 6],
-            ['Schöne Neue Welt', 'a', false]
+            ['Schöne Neue Welt', 'a', false],
         ];
     }
 
@@ -294,7 +298,7 @@ class StringTest extends TestCase
             ['Schöne Neue Welt', 'N', 7],
             ['Schöne Neue Welt', 'e', 13],
             ['Schöne Neue Welt', ' ', 11],
-            ['Schöne Neue Welt', 'a', false]
+            ['Schöne Neue Welt', 'a', false],
         ];
     }
 
@@ -316,7 +320,7 @@ class StringTest extends TestCase
             ['Schöne Neue Welt', 'N', 7],
             ['Schöne Neue Welt', 'E', 13],
             ['Schöne Neue Welt', ' ', 11],
-            ['Schöne Neue Welt', 'a', false]
+            ['Schöne Neue Welt', 'a', false],
         ];
     }
 
@@ -425,98 +429,98 @@ class StringTest extends TestCase
                 't ämet',
                 "Lörem ipsüm dölör sit ämet",
                 20,
-                null
+                null,
             ],
             [
                 't ämet',
                 "Lörem ipsüm dölör sit ämet",
                 -6,
-                null
+                null,
             ],
             [
                 'Lörem',
                 "Lörem ipsüm dölör sit ämet",
                 0,
-                5
+                5,
             ],
             [
                 'Lörem',
                 "Lörem ipsüm dölör sit ämet",
                 0,
-                -21
+                -21,
             ],
             [
                 'ipsüm',
                 "Lörem ipsüm dölör sit ämet",
                 6,
-                5
+                5,
             ],
             /* These are illegal UTF-8 encodings. */
             [
                 '',
                 base64_decode('2KvYpw=='),
                 2,
-                2
+                2,
             ],
             [
                 '',
                 base64_decode('2KU='),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('2KvYpw=='),
                 2,
-                2
+                2,
             ],
             [
                 '',
                 base64_decode('2KI='),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('5L6L'),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('5rWL'),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('5ris'),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('0L/RgNC40LzQtQ=='),
                 5,
-                5
+                5,
             ],
             [
                 '',
                 base64_decode('0LA='),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('4KSJ'),
                 1,
-                1
+                1,
             ],
             [
                 '',
                 base64_decode('4KSq4KSw4KSV'),
                 3,
-                3
+                3,
             ],
         ];
     }
@@ -527,30 +531,27 @@ class StringTest extends TestCase
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
-söllicitüdin fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
+                söllicitüdin fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string)
         );
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet,
-  cönsectetüer ädipiscing elit.
-  Aliqüäm söllicitüdin fäücibüs
-  mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet,
+                  cönsectetüer ädipiscing elit.
+                  Aliqüäm söllicitüdin fäücibüs
+                  mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n  ")
         );
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet,
-  cönsectetüer ädipiscing
-  elit. Aliqüäm söllicitüdin
-  fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet,
+                  cönsectetüer ädipiscing
+                  elit. Aliqüäm söllicitüdin
+                  fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 29, "\n  ")
         );
 
@@ -558,41 +559,37 @@ EOT
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit.\nAliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit.
-Aliqüäm söllicitüdin fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit.
+                Aliqüäm söllicitüdin fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string)
         );
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm\nsöllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
-söllicitüdin fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
+                söllicitüdin fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string)
         );
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm söllicitüdin\nfäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
-söllicitüdin
-fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
+                söllicitüdin
+                fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string)
         );
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm söllicitüdin fäücibüs mäüris ämet.\nLörem ipsüm dölör sit ämet.\nLörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
-söllicitüdin fäücibüs mäüris ämet.
-Lörem ipsüm dölör sit ämet.
-Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
-söllicitüdin fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
+                söllicitüdin fäücibüs mäüris ämet.
+                Lörem ipsüm dölör sit ämet.
+                Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing elit. Aliqüäm
+                söllicitüdin fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string)
         );
 
@@ -600,21 +597,19 @@ EOT
         $string = "Löremipsümdölörsitämet, cönsectetüerädipiscingelit.";
         $this->assertEquals(
             <<<EOT
-Löremipsümdölörsitämet,
-cönsectetüerädipiscingelit.
-EOT
-            ,
+                Löremipsümdölörsitämet,
+                cönsectetüerädipiscingelit.
+                EOT,
             Horde_String::wordwrap($string, 15)
         );
         $string = "Löremipsümdölörsitämet, cönsectetüerädipiscingelit.";
         $this->assertEquals(
             <<<EOT
-Löremipsümdölör
-sitämet,
-cönsectetüerädi
-piscingelit.
-EOT
-            ,
+                Löremipsümdölör
+                sitämet,
+                cönsectetüerädi
+                piscingelit.
+                EOT,
             Horde_String::wordwrap($string, 15, "\n", true)
         );
 
@@ -622,18 +617,16 @@ EOT
         $string = "Lörem ipsüm dölör sit ämet, cönsectetüer ädipiscing";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet,
-cönsectetüer ädipiscing
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet,
+                cönsectetüer ädipiscing
+                EOT,
             Horde_String::wordwrap($string, 27)
         );
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet,
-cönsectetüer ädipiscing
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet,
+                cönsectetüer ädipiscing
+                EOT,
             Horde_String::wordwrap($string, 28)
         );
 
@@ -641,79 +634,72 @@ EOT
         $string = "Löremipsümdölörsitämet, cönsectetüerädipiscingelit.";
         $this->assertEquals(
             <<<EOT
-Löremipsümdölör
-sitämet,
- cönsectetüeräd
-ipiscingelit.
-EOT
-            ,
+                Löremipsümdölör
+                sitämet,
+                 cönsectetüeräd
+                ipiscingelit.
+                EOT,
             Horde_String::wordwrap($string, 15, "\n", true, true)
         );
         $string = "Lörem ipsüm dölör sit ämet,  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit ämet,
-  cönsectetüer ädipiscing elit.
-  Aliqüäm söllicitüdin fäücibüs
- mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit ämet,
+                  cönsectetüer ädipiscing elit.
+                  Aliqüäm söllicitüdin fäücibüs
+                 mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n", false, true)
         );
         $string = "Lörem ipsüm dölör sit; ämet:  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit;
- ämet:
-  cönsectetüer ädipiscing elit.
-  Aliqüäm söllicitüdin fäücibüs
- mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit;
+                 ämet:
+                  cönsectetüer ädipiscing elit.
+                  Aliqüäm söllicitüdin fäücibüs
+                 mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n", false, true)
         );
         $string = "Lörem ipsüm dölör sit; ämet:cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit;
- ämet:cönsectetüer ädipiscing
- elit.  Aliqüäm söllicitüdin
- fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit;
+                 ämet:cönsectetüer ädipiscing
+                 elit.  Aliqüäm söllicitüdin
+                 fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n", false, true)
         );
         $string = "Lörem ipsüm dölör sit; ämet;  cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit;
- ämet;
-  cönsectetüer ädipiscing elit.
-  Aliqüäm söllicitüdin fäücibüs
- mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit;
+                 ämet;
+                  cönsectetüer ädipiscing elit.
+                  Aliqüäm söllicitüdin fäücibüs
+                 mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n", false, true)
         );
         $string = "Lörem ipsüm dölör sit; ämet;cönsectetüer ädipiscing elit.  Aliqüäm söllicitüdin fäücibüs mäüris ämet.";
         $this->assertEquals(
             <<<EOT
-Lörem ipsüm dölör sit;
- ämet;cönsectetüer ädipiscing
- elit.  Aliqüäm söllicitüdin
- fäücibüs mäüris ämet.
-EOT
-            ,
+                Lörem ipsüm dölör sit;
+                 ämet;cönsectetüer ädipiscing
+                 elit.  Aliqüäm söllicitüdin
+                 fäücibüs mäüris ämet.
+                EOT,
             Horde_String::wordwrap($string, 31, "\n", false, true)
         );
 
         $string = 'the path to the configuration file for the components script (default : /Users/janschneider/Source/horde/components/lib/Components/../../config/conf.php)."';
         $this->assertEquals(
             <<<EOT
-the path to the configuration file for the components script (default :
-      /Users/janschneider/Source/horde/components/lib/Components/../../config/conf.php)."
-EOT
-            ,
+                the path to the configuration file for the components script (default :
+                      /Users/janschneider/Source/horde/components/lib/Components/../../config/conf.php)."
+                EOT,
             Horde_String::wordwrap($string, 75, "\n      ")
         );
     }
@@ -765,7 +751,7 @@ EOT
             // Bug #11930
             ['ö ä ü ß\n\nMit freundlichen Grüßen'],
             // Bug #11930-2
-            ['öäüß']
+            ['öäüß'],
         ];
     }
 
@@ -799,7 +785,7 @@ EOT
             // Valid 5 Octet Sequence (but not Unicode!)
             ["\xf8\xa1\xa1\xa1\xa1"],
             // Valid 6 Octet Sequence (but not Unicode!)
-            ["\xfc\xa1\xa1\xa1\xa1\xa1"]
+            ["\xfc\xa1\xa1\xa1\xa1\xa1"],
         ];
     }
 
@@ -818,7 +804,7 @@ EOT
     {
         return [
             'valid character sequence' => ['This will work.', 'UTF-8', 'ISO-8859-1', 'This will work.'],
-            'illegal character in input string' => ["This is the Euro symbol '€'.", 'UTF-8', 'ISO-8859-1', false]
+            'illegal character in input string' => ["This is the Euro symbol '€'.", 'UTF-8', 'ISO-8859-1', false],
         ];
     }
 
@@ -837,7 +823,7 @@ EOT
     {
         return [
             'valid character sequence' => ['Some random string.', 'Some', 0, 'UTF-8', 'strpos', 0],
-            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false]
+            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false],
         ];
     }
 
@@ -856,7 +842,7 @@ EOT
     {
         return [
             'valid character sequence' => ['Some random string.', 'Some', 0, 'UTF-8', 'strpos', 0],
-            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false]
+            'invalid search offset' => ['Some random string', 'Some', 50, 'UTF-8', 'strpos', false],
         ];
     }
 

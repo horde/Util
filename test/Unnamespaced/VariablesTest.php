@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -12,21 +13,24 @@ namespace Horde\Util\Test\Unnamespaced;
 use PHPUnit\Framework\TestCase;
 use Horde_Variables;
 
+/**
+ * @coversNothing
+ */
 class VariablesTest extends TestCase
 {
     public function testRemove()
     {
         $vars = new Horde_Variables([
-           'a' => 'a',
-           'b' => 'b',
-           'c' => [1, 2, 3],
-           'd' => [
-               'z' => 'z',
-               'y' => [
-                   'f' => 'f',
-                   'g' => 'g'
-               ]
-           ]
+            'a' => 'a',
+            'b' => 'b',
+            'c' => [1, 2, 3],
+            'd' => [
+                'z' => 'z',
+                'y' => [
+                    'f' => 'f',
+                    'g' => 'g',
+                ],
+            ],
         ]);
 
         $vars->remove('a');
@@ -37,7 +41,7 @@ class VariablesTest extends TestCase
         $this->assertEquals([1, 2, 3], $vars->c);
         $this->assertEquals(
             ['z' => 'z',
-                  'y' => ['f' => 'f']],
+                'y' => ['f' => 'f']],
             $vars->d
         );
     }

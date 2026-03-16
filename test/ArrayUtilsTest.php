@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -13,6 +14,9 @@ use AllowDynamicProperties;
 use PHPUnit\Framework\TestCase;
 use Horde\Util\ArrayUtils;
 
+/**
+ * @coversNothing
+ */
 #[AllowDynamicProperties]
 class ArrayUtilsTest extends TestCase
 {

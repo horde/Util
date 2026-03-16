@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Wrapper to test internal Horde_String methods.
  *

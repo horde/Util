@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/lgpl21 LGPL 2.1
@@ -12,6 +13,9 @@ namespace Horde\Util\Test;
 use PHPUnit\Framework\TestCase;
 use Horde\Util\Util;
 
+/**
+ * @coversNothing
+ */
 class UtilTest extends TestCase
 {
     public function testGetPathInfo()
