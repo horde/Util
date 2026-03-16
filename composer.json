@@ -21,20 +21,17 @@
             "role": "developer"
         }
     ],
-    "time": "2026-03-07",
+    "time": "2026-03-16",
     "repositories": [],
     "require": {
         "php": "^7.4 || ^8",
         "ext-dom": "*"
     },
     "require-dev": {
-        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
-        "horde/test": "^3 || dev-FRAMEWORK_6_0",
-        "pear/pear": "*"
+        "horde/imap_client": "^3 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
         "horde/imap_client": "^3 || dev-FRAMEWORK_6_0",
-        "horde/test": "^3 || dev-FRAMEWORK_6_0",
         "ext-ctype": "*",
         "ext-filter": "*",
         "ext-iconv": "*",
@@ -58,7 +55,9 @@
         }
     },
     "config": {
-        "allow-plugins": {}
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
+        }
     },
     "extra": {
         "branch-alias": {

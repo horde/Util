@@ -1,4 +1,22 @@
 ---
+3.0.0-beta1:
+  api: 3.0.0-beta1
+  state:
+    release: beta
+    api: beta
+  date: 2026-03-16
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    style: Apply php-cs-fixer
+    fix: Modernize test suite, drop horde/test
+    test(string): modernize PSR-4 tests and improve coverage
+    fix(string): prevent out-of-bounds access in validUtf8()
+    fix(string): validate charset before mb_substr in PSR-4 version
+    Fix deprecated $php_errormsg in PHP 7.2
+    Merge pull request #18 from powercycle/remove_deprecations_in_tests
+    Fixed deprecation warnings in test files for php 8.3
 3.0.0-alpha9:
   api: 3.0.0-alpha9
   state:
