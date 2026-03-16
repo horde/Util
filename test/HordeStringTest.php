@@ -10,8 +10,11 @@
 namespace Horde\Util\Test;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Horde\Util\HordeString;
 
+#[CoversClass(HordeString::class)]
 class HordeStringTest extends TestCase
 {
     public function tearDown(): void
@@ -232,9 +235,7 @@ class HordeStringTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider posProvider
-     */
+    #[DataProvider('posProvider')]
     public function testPos($str, $search, $pos)
     {
         $this->assertEquals(
@@ -254,9 +255,7 @@ class HordeStringTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider iposProvider
-     */
+    #[DataProvider('iposProvider')]
     public function testIpos($str, $search, $pos)
     {
         $this->assertEquals(
@@ -276,9 +275,7 @@ class HordeStringTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider rposProvider
-     */
+    #[DataProvider('rposProvider')]
     public function testRpos($str, $search, $pos)
     {
         $this->assertEquals(
@@ -298,9 +295,7 @@ class HordeStringTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider riposProvider
-     */
+    #[DataProvider('riposProvider')]
     public function testRipos($str, $search, $pos)
     {
         $this->assertEquals(
@@ -407,9 +402,7 @@ class HordeStringTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider substrProvider
-     */
+    #[DataProvider('substrProvider')]
     public function testSubstr($match, $string, $start, $length)
     {
         $this->assertEquals(
@@ -519,6 +512,17 @@ class HordeStringTest extends TestCase
                 3
             ],
         ];
+    }
+
+    public function testSubstrWithUnsupportedCharset()
+    {
+        // Test that substr gracefully handles unsupported charsets
+        // This validates the fix from commit 63d0ea4
+        $result = HordeString::substr('test string', 0, 4, 'UNSUPPORTED-CHARSET-12345');
+
+        // Should fall back to other methods or return empty string
+        // rather than throwing an error
+        $this->assertIsString($result);
     }
 
     public function testWordwrap()
@@ -741,9 +745,7 @@ EOT
         $this->assertTrue(HordeString::validUtf8($string));
     }
 
-    /**
-     * @dataProvider validUtf8Provider
-     */
+    #[DataProvider('validUtf8Provider')]
     public function testValidUtf8($in)
     {
         $this->assertTrue(HordeString::validUtf8($in));
@@ -769,9 +771,7 @@ EOT
         ];
     }
 
-    /**
-     * @dataProvider invalidUtf8Provider
-     */
+    #[DataProvider('invalidUtf8Provider')]
     public function testInvalidUtf8($in)
     {
         $this->assertFalse(HordeString::validUtf8($in));
@@ -799,7 +799,120 @@ EOT
             // Valid 5 Octet Sequence (but not Unicode!)
             ["\xf8\xa1\xa1\xa1\xa1"],
             // Valid 6 Octet Sequence (but not Unicode!)
-            ["\xfc\xa1\xa1\xa1\xa1\xa1"]
+            ["\xfc\xa1\xa1\xa1\xa1\xa1"],
+            // Truncated 2-byte sequence (PR #4 - out of bounds bug)
+            ["\xc2"],
+            // Truncated 3-byte sequence
+            ["\xe2\x82"],
+            // Truncated 4-byte sequence (missing 1 byte)
+            ["\xf0\x90\x8c"],
+            // Truncated 4-byte sequence (missing 2 bytes)
+            ["\xf0\x90"],
+            // Truncated 4-byte sequence (missing 3 bytes)
+            ["\xf0"]
         ];
+    }
+
+    public function testConvertCharset()
+    {
+        // Test basic charset conversion
+        $this->assertEquals(
+            'test',
+            HordeString::convertCharset('test', 'UTF-8', 'ISO-8859-1')
+        );
+
+        // Test that identical charsets return input unchanged
+        $this->assertEquals(
+            'test',
+            HordeString::convertCharset('test', 'UTF-8', 'UTF-8')
+        );
+
+        // Test numeric input returns unchanged
+        $this->assertEquals(
+            123,
+            HordeString::convertCharset(123, 'UTF-8', 'ISO-8859-1')
+        );
+
+        // Test array conversion
+        $input = ['key' => 'tëst', 'ümläüt' => 'välüe'];
+        $result = HordeString::convertCharset($input, 'UTF-8', 'ISO-8859-1');
+        $this->assertIsArray($result);
+    }
+
+    public function testTrimUtf8Bom()
+    {
+        // Test removing UTF-8 BOM
+        $withBom = "\xEF\xBB\xBF" . "test string";
+        $this->assertEquals(
+            'test string',
+            HordeString::trimUtf8Bom($withBom)
+        );
+
+        // Test string without BOM unchanged
+        $withoutBom = "test string";
+        $this->assertEquals(
+            'test string',
+            HordeString::trimUtf8Bom($withoutBom)
+        );
+    }
+
+    public function testIsAlpha()
+    {
+        $this->assertTrue(HordeString::isAlpha('abcdef', 'UTF-8'));
+        $this->assertTrue(HordeString::isAlpha('ABCDEF', 'UTF-8'));
+        $this->assertFalse(HordeString::isAlpha('abc123', 'UTF-8'));
+        $this->assertFalse(HordeString::isAlpha('abc def', 'UTF-8'));
+    }
+
+    public function testTruncate()
+    {
+        // Test basic truncation
+        $text = 'This is a long string that should be truncated';
+        $result = HordeString::truncate($text, 20);
+        $this->assertLessThanOrEqual(23, strlen($result)); // 20 + "..."
+
+        // Test short string unchanged
+        $short = 'Short';
+        $this->assertEquals($short, HordeString::truncate($short, 100));
+    }
+
+    public function testAbbreviate()
+    {
+        $text = 'This is a long string';
+        $result = HordeString::abbreviate($text, 10);
+        $this->assertLessThanOrEqual(13, strlen($result)); // 10 + "..."
+
+        $short = 'Short';
+        $this->assertEquals($short, HordeString::abbreviate($short, 100));
+    }
+
+    public function testRegexMatch()
+    {
+        $text = 'Test string 123';
+        $regex = ['\d+'];
+        $matches = HordeString::regexMatch($text, $regex);
+        $this->assertNotEmpty($matches);
+        $this->assertEquals('123', $matches[0]);
+    }
+
+    public function testWrap()
+    {
+        $text = 'This is a test string that needs wrapping';
+        $result = HordeString::wrap($text, 10);
+        $this->assertIsString($result);
+        // Should contain line breaks
+        $this->assertStringContainsString("\n", $result);
+    }
+
+    public function testConvertToUtf8()
+    {
+        // Test UTF-8 input (should return unchanged)
+        $utf8 = 'Hello UTF-8';
+        $this->assertEquals($utf8, HordeString::convertToUtf8($utf8));
+
+        // Test ISO-8859-1 input
+        $iso = mb_convert_encoding('tëst', 'ISO-8859-1', 'UTF-8');
+        $result = HordeString::convertToUtf8($iso);
+        $this->assertEquals('tëst', $result);
     }
 }
