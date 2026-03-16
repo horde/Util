@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -21,7 +22,6 @@ use DOMElement;
 use DOMNode;
 use DOMXPath;
 use ReturnTypeWillChange;
-use PEAR_Error;
 
 /**
  * Parse DOM data from HTML strings.
@@ -99,8 +99,8 @@ class Domhtml implements Iterator
                 $this->_xmlencoding . HordeString::convertCharset($text, $charset, 'UTF-8')
             );
 
-            if ($this->dom->encoding &&
-                (HordeString::lower($this->dom->encoding) != 'utf-8')) {
+            if ($this->dom->encoding
+                && (HordeString::lower($this->dom->encoding) != 'utf-8')) {
                 /* Convert charset to what the HTML document says it SHOULD
                  * be. */
                 $this->_loadHTML(
@@ -212,8 +212,8 @@ class Domhtml implements Iterator
             $text = HordeString::convertCharset($text, $curr_charset, $charset);
         }
 
-        if (!$this->_xmlencoding ||
-            (($pos = strpos($text, $this->_xmlencoding)) === false)) {
+        if (!$this->_xmlencoding
+            || (($pos = strpos($text, $this->_xmlencoding)) === false)) {
             return $text;
         }
 
@@ -317,14 +317,14 @@ class Domhtml implements Iterator
             $node = $curr['list']->item($curr['i']);
         }
 
-        if (empty($curr['child']) &&
-            ($node instanceof DOMNode) &&
-            $node->hasChildNodes()) {
+        if (empty($curr['child'])
+            && ($node instanceof DOMNode)
+            && $node->hasChildNodes()) {
             $curr['child'] = true;
             $this->_iterator[] = [
                 'child' => false,
                 'i' => $node->childNodes->length - 1,
-                'list' => $node->childNodes
+                'list' => $node->childNodes,
             ];
         } elseif (--$curr['i'] < 0) {
             array_pop($this->_iterator);

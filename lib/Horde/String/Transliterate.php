@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2014-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2014-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -52,14 +53,14 @@ class Horde_String_Transliterate
      */
     public static function toAscii($str)
     {
-        $methods = array(
+        $methods = [
             '_intlToAscii',
             '_iconvToAscii',
-            '_fallbackToAscii'
-        );
+            '_fallbackToAscii',
+        ];
 
         foreach ($methods as $val) {
-            if (($out = call_user_func(array(__CLASS__, $val), $str)) !== false) {
+            if (($out = call_user_func([__CLASS__, $val], $str)) !== false) {
                 return $out;
             }
         }
@@ -117,7 +118,7 @@ class Horde_String_Transliterate
     protected static function _fallbackToAscii($str)
     {
         if (!isset(self::$_map)) {
-            self::$_map = array(
+            self::$_map = [
                 'À' => 'A',
                 'Á' => 'A',
                 'Â' => 'A',
@@ -185,8 +186,8 @@ class Horde_String_Transliterate
                 'ý' => 'y',
                 'ÿ' => 'y',
                 'Ž' => 'Z',
-                'ž' => 'z'
-            );
+                'ž' => 'z',
+            ];
         }
 
         /* This should never return false. */

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2014-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2014-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -60,7 +61,7 @@ class StringTransliterate
         $methods = [
             '_intlToAscii',
             '_iconvToAscii',
-            '_fallbackToAscii'
+            '_fallbackToAscii',
         ];
 
         foreach ($methods as $val) {
@@ -190,7 +191,7 @@ class StringTransliterate
                 'ý' => 'y',
                 'ÿ' => 'y',
                 'Ž' => 'Z',
-                'ž' => 'z'
+                'ž' => 'z',
             ];
         }
 

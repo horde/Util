@@ -11,7 +11,7 @@ use UnexpectedValueException;
 /**
  * The Util:: class provides generally useful methods.
  *
- * Copyright 1999-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 1999-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -36,7 +36,7 @@ class Util
         "\x00", "\x11", "\x22", "\x33", "\x44", "\x55", "\x66", "\x77",
         "\x88", "\x99", "\xaa", "\xbb", "\xcc", "\xdd", "\xee", "\xff",
         "\x92\x49\x24", "\x49\x24\x92", "\x24\x92\x49", "\x6d\xb6\xdb",
-        "\xb6\xdb\x6d", "\xdb\x6d\xb6"
+        "\xb6\xdb\x6d", "\xdb\x6d\xb6",
     ];
 
     /**
@@ -46,7 +46,7 @@ class Util
      */
     protected static array $shutdowndata = [
         'paths' => [],
-        'secure' => []
+        'secure' => [],
     ];
 
     /**
@@ -79,7 +79,7 @@ class Util
     {
         return (isset($_GET[$varname]) || isset($_POST[$varname]) || isset($_COOKIE[$varname]))
             ? $default
-            : (isset($GLOBALS[$varname]) ? $GLOBALS[$varname] : $default);
+            : ($GLOBALS[$varname] ?? $default);
     }
 
     /**
@@ -178,8 +178,7 @@ class Util
         $delete = true,
         $dir = '',
         $secure = false
-    ): string|false
-    {
+    ): string|false {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
             : $dir;
@@ -220,8 +219,7 @@ class Util
         $delete = true,
         $dir = '',
         $secure = false
-    ): string|false
-    {
+    ): string|false {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
             : $dir;
@@ -294,8 +292,8 @@ class Util
             $new_dir = $temp_dir . '/' . substr(base_convert(uniqid((string) mt_rand()), 16, 36), 0, 8);
         } while (file_exists($new_dir));
 
-        $old_umask = umask(0000);
-        if (!mkdir($new_dir, 0700)) {
+        $old_umask = umask(0o000);
+        if (!mkdir($new_dir, 0o700)) {
             $new_dir = false;
         } elseif ($delete) {
             self::deleteAtShutdown($new_dir);
@@ -376,8 +374,7 @@ class Util
         $filename,
         $register = true,
         $secure = false
-    )
-    {
+    ) {
         /* Initialization of variables and shutdown functions. */
         if (!self::$shutdownreg) {
             register_shutdown_function([__CLASS__, 'shutdown']);
@@ -403,7 +400,7 @@ class Util
      * automatically at the end of the request.
      *
      * Contains code from gpg_functions.php.
-     * Copyright 2002-2003 Braverock Ventures
+     * Copyright 2002-2026 Braverock Ventures
      */
     public static function shutdown()
     {
@@ -486,11 +483,11 @@ class Util
      */
     public static function getPathInfo()
     {
-        if (isset($_SERVER['PATH_INFO']) &&
-            (strpos($_SERVER['SERVER_SOFTWARE'], 'lighttpd') === false)) {
+        if (isset($_SERVER['PATH_INFO'])
+            && (strpos($_SERVER['SERVER_SOFTWARE'], 'lighttpd') === false)) {
             return $_SERVER['PATH_INFO'];
-        } elseif (isset($_SERVER['REQUEST_URI']) &&
-                  isset($_SERVER['SCRIPT_NAME'])) {
+        } elseif (isset($_SERVER['REQUEST_URI'])
+                  && isset($_SERVER['SCRIPT_NAME'])) {
             $search = HordeString::common($_SERVER['SCRIPT_NAME'], $_SERVER['REQUEST_URI']);
             if (substr($search, -1) == '/') {
                 $search = substr($search, 0, -1);

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright 2009-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2009-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -18,6 +19,7 @@ use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use ReturnTypeWillChange;
 
 /**
  * An OO-way to access form variables.
@@ -130,7 +132,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @return boolean  Does $varname form variable exist?
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function __isset($varname)
     {
         return count($this->expected)
@@ -143,7 +145,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __isset()
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetExists($field)
     {
         return $this->__isset($field);
@@ -182,7 +184,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __get()
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetGet($field)
     {
         return $this->__get($field);
@@ -220,7 +222,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      * @param string $varname  The form variable name.
      * @param mixed $value     The value to set.
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function __set($varname, $value)
     {
         $keys = [];
@@ -249,7 +251,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __set()
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetSet($field, $value)
     {
         $this->__set($field, $value);
@@ -297,7 +299,7 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
      *
      * @see __unset()
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetUnset($field)
     {
         $this->__unset($field);
@@ -395,9 +397,8 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
             return true;
         }
 
-        $value = isset($array[$varname])
-            ? $array[$varname]
-            : null;
+        $value = $array[$varname]
+            ?? null;
 
         return !is_null($value);
     }
@@ -406,14 +407,14 @@ class Variables implements ArrayAccess, Countable, IteratorAggregate
 
     /**
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->vars);
     }
 
     /* IteratorAggregate method. */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator($this->vars);

@@ -15,7 +15,7 @@ use Stringable as StringableInterface;
 /**
  * Provides static methods for charset and locale safe string manipulation.
  *
- * Copyright 2003-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2003-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -89,8 +89,8 @@ class HordeString
             // PEAR_Error/Exception objects are almost guaranteed to contain
             // recursion, which will cause a segfault in PHP. We should never
             // reach this line, but add a check.
-            if (($input instanceof Exception) ||
-                ($input instanceof PEAR_Error)) {
+            if (($input instanceof Exception)
+                || ($input instanceof PEAR_Error)) {
                 return '';
             }
 
@@ -123,17 +123,17 @@ class HordeString
         /* Use utf8_[en|de]code() if possible and if the string isn't too
          * large (less than 16 MB = 16 * 1024 * 1024 = 16777216 bytes) - these
          * functions use more memory. */
-        if (Util::extensionExists('xml') &&
-            ((strlen($input) < 16777216) ||
-             !Util::extensionExists('iconv') ||
-             !Util::extensionExists('mbstring'))) {
-            if (($to == 'utf-8') &&
-                in_array($from, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
+        if (Util::extensionExists('xml')
+            && ((strlen($input) < 16777216)
+             || !Util::extensionExists('iconv')
+             || !Util::extensionExists('mbstring'))) {
+            if (($to == 'utf-8')
+                && in_array($from, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
                 return mb_convert_encoding($input, 'UTF-8', 'ISO-8859-1');
             }
 
-            if (($from == 'utf-8') &&
-                in_array($to, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
+            if (($from == 'utf-8')
+                && in_array($to, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
                 return mb_convert_encoding($input, 'ISO-8859-1', 'UTF-8');
             }
         }
@@ -325,8 +325,7 @@ class HordeString
         $start,
         ?int $length = null,
         $charset = 'UTF-8'
-    )
-    {
+    ) {
         if (is_null($length)) {
             $length = self::length($string, $charset) - $start;
         }
@@ -566,8 +565,7 @@ class HordeString
         $pad = ' ',
         $type = STR_PAD_RIGHT,
         $charset = 'UTF-8'
-    )
-    {
+    ) {
         $output = $input;
         $mb_length = self::length($input, $charset);
         $sb_length = strlen($input);
@@ -592,9 +590,9 @@ class HordeString
             case STR_PAD_BOTH:
                 $left = (int) floor(($length - $mb_length) / 2);
                 $right = (int) ceil(($length - $mb_length) / 2);
-                $output = self::substr(str_repeat($pad, (int) ceil($left / $pad_length)), 0, $left, $charset) .
-                    $input .
-                    self::substr(str_repeat($pad, (int) ceil($right / $pad_length)), 0, $right, $charset);
+                $output = self::substr(str_repeat($pad, (int) ceil($left / $pad_length)), 0, $left, $charset)
+                    . $input
+                    . self::substr(str_repeat($pad, (int) ceil($right / $pad_length)), 0, $right, $charset);
                 break;
 
             case STR_PAD_RIGHT:
@@ -628,8 +626,7 @@ class HordeString
         $break = "\n",
         $cut = false,
         $line_folding = false
-    )
-    {
+    ) {
         $breakRegex = '(?:' . preg_quote($break) . ')';
         $rpos = self::rpos($break, "\n");
         if ($rpos === false) {
@@ -662,8 +659,8 @@ class HordeString
 
             // Wrap at the last colon or semicolon followed by a whitespace if
             // doing line folding.
-            if ($line_folding &&
-                preg_match('/^(.*?)(;|:)(\s+.*)$/us', $line, $match)) {
+            if ($line_folding
+                && preg_match('/^(.*?)(;|:)(\s+.*)$/us', $line, $match)) {
                 $wrapped .= $match[1] . $match[2];
                 $string = $break . $match[3] . $string;
                 $hasWrapped = true;
@@ -716,8 +713,7 @@ class HordeString
         $length = 80,
         $break_char = "\n",
         $quote = false
-    )
-    {
+    ) {
         $paragraphs = [];
 
         foreach (preg_split('/\r?\n/', $text) as $input) {
@@ -828,8 +824,8 @@ class HordeString
      */
     public static function isLower($string, $charset)
     {
-        return ((self::lower($string, true, $charset) === $string) &&
-                self::isAlpha($string, $charset));
+        return ((self::lower($string, true, $charset) === $string)
+                && self::isAlpha($string, $charset));
     }
 
     /**
@@ -843,8 +839,8 @@ class HordeString
      */
     public static function isUpper($string, $charset)
     {
-        return ((self::upper($string, true, $charset) === $string) &&
-                self::isAlpha($string, $charset));
+        return ((self::upper($string, true, $charset) === $string)
+                && self::isAlpha($string, $charset));
     }
 
     /**
@@ -971,7 +967,7 @@ class HordeString
      *
      * @param string $string The string to convert
      * @return string The string in UTF-8
-     * 
+     *
      * @throws Exception If the source encoding can not be detected
      * @throws Exception If the iconv extension is not installed
      * @throws Exception If the conversion via iconv fails

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * The Horde_Util:: class provides generally useful methods.
  *
- * Copyright 1999-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 1999-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (LGPL). If you
  * did not receive this file, see http://www.horde.org/licenses/lgpl21.
@@ -22,13 +23,13 @@ class Horde_Util
      *
      * @var array
      */
-    public static $patterns = array(
+    public static $patterns = [
         "\x55", "\xaa", "\x92\x49\x24", "\x49\x24\x92", "\x24\x92\x49",
         "\x00", "\x11", "\x22", "\x33", "\x44", "\x55", "\x66", "\x77",
         "\x88", "\x99", "\xaa", "\xbb", "\xcc", "\xdd", "\xee", "\xff",
         "\x92\x49\x24", "\x49\x24\x92", "\x24\x92\x49", "\x6d\xb6\xdb",
-        "\xb6\xdb\x6d", "\xdb\x6d\xb6"
-    );
+        "\xb6\xdb\x6d", "\xdb\x6d\xb6",
+    ];
 
     /**
      * Are magic quotes in use?
@@ -42,10 +43,10 @@ class Horde_Util
      *
      * @var array
      */
-    protected static $_shutdowndata = array(
-        'paths' => array(),
-        'secure' => array()
-    );
+    protected static $_shutdowndata = [
+        'paths' => [],
+        'secure' => [],
+    ];
 
     /**
      * Has the shutdown method been registered?
@@ -59,7 +60,7 @@ class Horde_Util
      *
      * @var array
      */
-    protected static $_cache = array();
+    protected static $_cache = [];
 
     /**
      * Checks to see if a value has been set by the script and not by GET,
@@ -77,7 +78,7 @@ class Horde_Util
     {
         return (isset($_GET[$varname]) || isset($_POST[$varname]) || isset($_COOKIE[$varname]))
             ? $default
-            : (isset($GLOBALS[$varname]) ? $GLOBALS[$varname] : $default);
+            : ($GLOBALS[$varname] ?? $default);
     }
 
     /**
@@ -119,7 +120,7 @@ class Horde_Util
 
         if (self::$_magicquotes) {
             $var = is_array($var)
-                ? array_map(array(__CLASS__, 'dispelMagicQuotes'), $var)
+                ? array_map([__CLASS__, 'dispelMagicQuotes'], $var)
                 : stripslashes($var);
         }
 
@@ -193,9 +194,12 @@ class Horde_Util
      * @return string   Returns the full path-name to the temporary file.
      *                  Returns false if a temp file could not be created.
      */
-    public static function getTempFile($prefix = '', $delete = true, $dir = '',
-                                       $secure = false)
-    {
+    public static function getTempFile(
+        $prefix = '',
+        $delete = true,
+        $dir = '',
+        $secure = false
+    ) {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
             : $dir;
@@ -230,11 +234,13 @@ class Horde_Util
      * @return string   Returns the full path-name to the temporary file.
      *                  Returns false if a temporary file could not be created.
      */
-    public static function getTempFileWithExtension($extension = '.tmp',
-                                                    $prefix = '',
-                                                    $delete = true, $dir = '',
-                                                    $secure = false)
-    {
+    public static function getTempFileWithExtension(
+        $extension = '.tmp',
+        $prefix = '',
+        $delete = true,
+        $dir = '',
+        $secure = false
+    ) {
         $tempDir = (empty($dir) || !is_dir($dir))
             ? sys_get_temp_dir()
             : $dir;
@@ -307,8 +313,8 @@ class Horde_Util
             $new_dir = $temp_dir . '/' . substr(base_convert(uniqid(mt_rand()), 16, 36), 0, 8);
         } while (file_exists($new_dir));
 
-        $old_umask = umask(0000);
-        if (!mkdir($new_dir, 0700)) {
+        $old_umask = umask(0o000);
+        if (!mkdir($new_dir, 0o700)) {
             $new_dir = false;
         } elseif ($delete) {
             self::deleteAtShutdown($new_dir);
@@ -338,7 +344,7 @@ class Horde_Util
 
         /* xx////xx -> xx/xx
          * xx/././xx -> xx/xx */
-        $path = preg_replace(array("|/+|", "@(/\.)+(/|\Z(?!\n))@"), array('/', '/'), $path);
+        $path = preg_replace(["|/+|", "@(/\.)+(/|\Z(?!\n))@"], ['/', '/'], $path);
 
         /* ./xx -> xx */
         if ($path != './') {
@@ -385,12 +391,14 @@ class Horde_Util
      * @param boolean $secure    If deleting file, should we securely delete
      *                           the file?
      */
-    public static function deleteAtShutdown($filename, $register = true,
-                                            $secure = false)
-    {
+    public static function deleteAtShutdown(
+        $filename,
+        $register = true,
+        $secure = false
+    ) {
         /* Initialization of variables and shutdown functions. */
         if (!self::$_shutdownreg) {
-            register_shutdown_function(array(__CLASS__, 'shutdown'));
+            register_shutdown_function([__CLASS__, 'shutdown']);
             self::$_shutdownreg = true;
         }
 
@@ -413,7 +421,7 @@ class Horde_Util
      * automatically at the end of the request.
      *
      * Contains code from gpg_functions.php.
-     * Copyright 2002-2003 Braverock Ventures
+     * Copyright 2002-2026 Braverock Ventures
      */
     public static function shutdown()
     {
@@ -508,9 +516,9 @@ class Horde_Util
 
         /* See if we can call dl() at all, by the current ini settings.
          * dl() has been removed in some PHP 5.3 SAPIs. */
-        if ((ini_get('enable_dl') != 1) ||
-            (ini_get('safe_mode') == 1) ||
-            !function_exists('dl')) {
+        if ((ini_get('enable_dl') != 1)
+            || (ini_get('safe_mode') == 1)
+            || !function_exists('dl')) {
             return false;
         }
 
@@ -518,20 +526,20 @@ class Horde_Util
             $suffix = 'dll';
         } else {
             switch (PHP_OS) {
-            case 'HP-UX':
-                $suffix = 'sl';
-                break;
+                case 'HP-UX':
+                    $suffix = 'sl';
+                    break;
 
-            case 'AIX':
-                $suffix = 'a';
-                break;
+                case 'AIX':
+                    $suffix = 'a';
+                    break;
 
-            case 'OSX':
-                $suffix = 'bundle';
-                break;
+                case 'OSX':
+                    $suffix = 'bundle';
+                    break;
 
-            default:
-                $suffix = 'so';
+                default:
+                    $suffix = 'so';
             }
         }
 
@@ -545,16 +553,16 @@ class Horde_Util
      */
     public static function getPathInfo()
     {
-        if (isset($_SERVER['PATH_INFO']) &&
-            (strpos($_SERVER['SERVER_SOFTWARE'], 'lighttpd') === false)) {
+        if (isset($_SERVER['PATH_INFO'])
+            && (strpos($_SERVER['SERVER_SOFTWARE'], 'lighttpd') === false)) {
             return $_SERVER['PATH_INFO'];
-        } elseif (isset($_SERVER['REQUEST_URI']) &&
-                  isset($_SERVER['SCRIPT_NAME'])) {
+        } elseif (isset($_SERVER['REQUEST_URI'])
+                  && isset($_SERVER['SCRIPT_NAME'])) {
             $search = Horde_String::common($_SERVER['SCRIPT_NAME'], $_SERVER['REQUEST_URI']);
             if (substr($search, -1) == '/') {
                 $search = substr($search, 0, -1);
             }
-            $search = array($search);
+            $search = [$search];
             if (!empty($_SERVER['QUERY_STRING'])) {
                 // We can't use QUERY_STRING directly because URL rewriting
                 // might add more parameters to the query string than those
