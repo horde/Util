@@ -550,7 +550,12 @@ class Horde_String
             }
         }
 
-        return $func($haystack, $needle, $offset);
+        try {
+            return $func($haystack, $needle, $offset);
+        } catch (ValueError $e) {
+            // Invalid offset in native PHP functions (PHP 8.0+)
+            return false;
+        }
     }
 
     /**
@@ -571,10 +576,14 @@ class Horde_String
         $charset,
         $func
     ) {
-        error_clear_last();
-        $ret = @call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
-        if (is_null(error_get_last())) {
-            return $ret;
+        try {
+            error_clear_last();
+            $ret = @call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
+            if (is_null(error_get_last())) {
+                return $ret;
+            }
+        } catch (ValueError $e) {
+            // Invalid offset in PHP 8.0+
         }
 
         return false;
@@ -598,19 +607,23 @@ class Horde_String
         $charset,
         $func
     ) {
-        error_clear_last();
-        $ret = self::convertCharset(
-            @call_user_func(
-                'grapheme_' . $func,
-                self::convertCharset($haystack, $charset, 'UTF-8'),
-                self::convertCharset($needle, $charset, 'UTF-8'),
-                $offset
-            ),
-            'UTF-8',
-            $charset
-        );
-        if (is_null(error_get_last())) {
-            return $ret;
+        try {
+            error_clear_last();
+            $ret = self::convertCharset(
+                @call_user_func(
+                    'grapheme_' . $func,
+                    self::convertCharset($haystack, $charset, 'UTF-8'),
+                    self::convertCharset($needle, $charset, 'UTF-8'),
+                    $offset
+                ),
+                'UTF-8',
+                $charset
+            );
+            if (is_null(error_get_last())) {
+                return $ret;
+            }
+        } catch (ValueError $e) {
+            // Invalid offset in PHP 8.0+
         }
 
         return false;

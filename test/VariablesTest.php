@@ -11,11 +11,10 @@
 namespace Horde\Util\Test;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Horde_Variables;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Horde_Variables::class)]
 class VariablesTest extends TestCase
 {
     public function testRemove()

@@ -921,4 +921,32 @@ class HordeStringTest extends TestCase
             }
         }
     }
+
+    /**
+     * Test that invalid offset returns false instead of throwing ValueError.
+     */
+    public function testPosWithInvalidOffset()
+    {
+        // Offset 50 is invalid for a string of length 18
+        $result = HordeString::pos('Some random string', 'Some', 50, 'UTF-8');
+        $this->assertFalse($result);
+    }
+
+    public function testIposWithInvalidOffset()
+    {
+        $result = HordeString::ipos('Some random string', 'some', 50, 'UTF-8');
+        $this->assertFalse($result);
+    }
+
+    public function testRposWithInvalidOffset()
+    {
+        $result = HordeString::rpos('Some random string', 'Some', 50, 'UTF-8');
+        $this->assertFalse($result);
+    }
+
+    public function testRiposWithInvalidOffset()
+    {
+        $result = HordeString::ripos('Some random string', 'some', 50, 'UTF-8');
+        $this->assertFalse($result);
+    }
 }

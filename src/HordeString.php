@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Horde\Util;
 
 use Exception;
-use PEAR_Error;
-use Horde_Imap_Client_Utf7imap;
-use Horde_Imap_Client_Exception;
 use ValueError;
 use InvalidArgumentException;
 use Stringable as StringableInterface;
@@ -86,11 +83,12 @@ class HordeString
         }
 
         if (is_object($input)) {
-            // PEAR_Error/Exception objects are almost guaranteed to contain
+            // Exception objects are almost guaranteed to contain
             // recursion, which will cause a segfault in PHP. We should never
             // reach this line, but add a check.
+            // Also check for legacy PEAR_Error if the class exists.
             if (($input instanceof Exception)
-                || ($input instanceof PEAR_Error)) {
+                || (class_exists('PEAR_Error', false) && $input instanceof \PEAR_Error)) {
                 return '';
             }
 
@@ -140,19 +138,24 @@ class HordeString
 
         /* Try UTF7-IMAP conversions. */
         if (($from == 'utf7-imap') || ($to == 'utf7-imap')) {
-            try {
-                if ($from == 'utf7-imap') {
-                    return self::convertCharset(Horde_Imap_Client_Utf7imap::Utf7ImapToUtf8($input), 'UTF-8', $to);
-                } else {
-                    if ($from == 'utf-8') {
-                        $conv = $input;
+            if (class_exists('Horde_Imap_Client_Utf7imap', true)) {
+                try {
+                    if ($from == 'utf7-imap') {
+                        return self::convertCharset(\Horde_Imap_Client_Utf7imap::Utf7ImapToUtf8($input), 'UTF-8', $to);
                     } else {
-                        $conv = self::convertCharset($input, $from, 'UTF-8');
+                        if ($from == 'utf-8') {
+                            $conv = $input;
+                        } else {
+                            $conv = self::convertCharset($input, $from, 'UTF-8');
+                        }
+                        return \Horde_Imap_Client_Utf7imap::Utf8ToUtf7Imap($conv);
                     }
-                    return Horde_Imap_Client_Utf7imap::Utf8ToUtf7Imap($conv);
+                } catch (\Horde_Imap_Client_Exception $e) {
+                    return $input;
+                } catch (Exception $e) {
+                    // Class doesn't exist or other error
+                    return $input;
                 }
-            } catch (Horde_Imap_Client_Exception $e) {
-                return $input;
             }
         }
 
@@ -558,17 +561,21 @@ class HordeString
     ) {
         // Try iconv for case-sensitive variants
         if (Util::extensionExists('iconv')) {
-            if ($func === 'strpos') {
-                $ret = @iconv_strpos($haystack, $needle, $offset, $charset);
-                if ($ret !== false) {
-                    return $ret;
+            try {
+                if ($func === 'strpos') {
+                    $ret = @iconv_strpos($haystack, $needle, $offset, $charset);
+                    if ($ret !== false) {
+                        return $ret;
+                    }
+                } elseif ($func === 'strrpos' && $offset === 0) {
+                    // iconv_strrpos doesn't support offset parameter
+                    $ret = @iconv_strrpos($haystack, $needle, $charset);
+                    if ($ret !== false) {
+                        return $ret;
+                    }
                 }
-            } elseif ($func === 'strrpos' && $offset === 0) {
-                // iconv_strrpos doesn't support offset parameter
-                $ret = @iconv_strrpos($haystack, $needle, $charset);
-                if ($ret !== false) {
-                    return $ret;
-                }
+            } catch (ValueError $e) {
+                // Invalid offset in PHP 8.0+, fall through to next method
             }
         }
 
@@ -588,20 +595,29 @@ class HordeString
         }
 
         if (Util::extensionExists('intl')) {
-            $ret = self::convertCharset(
-                @call_user_func(
-                    'grapheme_' . $func,
-                    self::convertCharset($haystack, $charset, 'UTF-8'),
-                    self::convertCharset($needle, $charset, 'UTF-8'),
-                    $offset
-                ),
-                'UTF-8',
-                $charset
-            );
-            return $ret;
+            try {
+                $ret = self::convertCharset(
+                    call_user_func(
+                        'grapheme_' . $func,
+                        self::convertCharset($haystack, $charset, 'UTF-8'),
+                        self::convertCharset($needle, $charset, 'UTF-8'),
+                        $offset
+                    ),
+                    'UTF-8',
+                    $charset
+                );
+                return $ret;
+            } catch (ValueError $e) {
+                // Invalid offset, fall through to native
+            }
         }
 
-        return $func($haystack, $needle, $offset);
+        try {
+            return $func($haystack, $needle, $offset);
+        } catch (ValueError $e) {
+            // Invalid offset in native PHP functions (PHP 8.0+)
+            return false;
+        }
     }
 
     /**

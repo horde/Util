@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Horde\Util;
 
-use Exception;
-use PEAR_Error;
-use Horde_Imap_Client_Utf7imap;
-use Horde_Imap_Client_Exception;
-use ValueError;
-use InvalidArgumentException;
 use Stringable as StringableInterface;
 
 /**

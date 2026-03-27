@@ -13,12 +13,11 @@ namespace Horde\Util\Test\Unnamespaced;
 use DOMElement;
 use DOMNode;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Horde_Domhtml;
 use Horde_String;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Horde_Domhtml::class)]
 class DomhtmlTest extends TestCase
 {
     public function testBug9567()

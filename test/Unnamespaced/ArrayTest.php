@@ -12,11 +12,10 @@ namespace Horde\Util\Test\Unnamespaced;
 
 use AllowDynamicProperties;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Horde_Array;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Horde_Array::class)]
 #[AllowDynamicProperties]
 class ArrayTest extends TestCase
 {

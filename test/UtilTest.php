@@ -11,11 +11,10 @@
 namespace Horde\Util\Test;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 use Horde\Util\Util;
 
-/**
- * @coversNothing
- */
+#[CoversClass(Util::class)]
 class UtilTest extends TestCase
 {
     public function testGetPathInfo()
