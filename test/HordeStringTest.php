@@ -898,4 +898,27 @@ class HordeStringTest extends TestCase
         $result = HordeString::convertToUtf8($iso);
         $this->assertEquals('tëst', $result);
     }
+
+    public function testLengthWithWindows1256()
+    {
+        // Test that windows-1256 charset works despite not being supported by mbstring
+        // This charset is supported by iconv but NOT by mbstring
+        $text = 'Hello World';
+
+        // Should not throw ValueError
+        $length = HordeString::length($text, 'windows-1256');
+        $this->assertIsInt($length);
+        $this->assertEquals(11, $length);
+
+        // Test with actual Arabic text if iconv available
+        if (function_exists('iconv')) {
+            $arabic = 'مرحبا'; // "Hello" in Arabic (5 characters in UTF-8)
+            $converted = iconv('UTF-8', 'windows-1256', $arabic);
+            if ($converted !== false) {
+                $arabicLength = HordeString::length($converted, 'windows-1256');
+                $this->assertIsInt($arabicLength);
+                $this->assertGreaterThan(0, $arabicLength);
+            }
+        }
+    }
 }

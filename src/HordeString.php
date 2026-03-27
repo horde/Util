@@ -200,9 +200,22 @@ class HordeString
                 if (is_null($charset)) {
                     throw new InvalidArgumentException('$charset argument must not be null');
                 }
-                $ret = @mb_strtolower($string, self::_mbstringCharset($charset));
-                if (!empty($ret)) {
-                    return $ret;
+                $supported = array_map('strtolower', mb_list_encodings());
+                if (in_array(self::lower($charset), $supported)) {
+                    try {
+                        return mb_strtolower($string, self::_mbstringCharset($charset));
+                    } catch (ValueError $e) {
+                        // Fall through to fallback
+                    }
+                }
+
+                // Fallback: convert to UTF-8, lowercase, convert back
+                try {
+                    $utf8 = self::convertCharset($string, $charset, 'UTF-8');
+                    $lower = mb_strtolower($utf8, 'UTF-8');
+                    return self::convertCharset($lower, 'UTF-8', $charset);
+                } catch (Exception $e) {
+                    // Fall through to strtolower
                 }
             }
             return strtolower($string);
@@ -240,9 +253,22 @@ class HordeString
                 if (is_null($charset)) {
                     throw new InvalidArgumentException('$charset argument must not be null');
                 }
-                $ret = @mb_strtoupper($string, self::_mbstringCharset($charset));
-                if (!empty($ret)) {
-                    return $ret;
+                $supported = array_map('strtolower', mb_list_encodings());
+                if (in_array(self::lower($charset), $supported)) {
+                    try {
+                        return mb_strtoupper($string, self::_mbstringCharset($charset));
+                    } catch (ValueError $e) {
+                        // Fall through to fallback
+                    }
+                }
+
+                // Fallback: convert to UTF-8, uppercase, convert back
+                try {
+                    $utf8 = self::convertCharset($string, $charset, 'UTF-8');
+                    $upper = mb_strtoupper($utf8, 'UTF-8');
+                    return self::convertCharset($upper, 'UTF-8', $charset);
+                } catch (Exception $e) {
+                    // Fall through to strtoupper
                 }
             }
             return strtoupper($string);
@@ -402,10 +428,20 @@ class HordeString
             return strlen(mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8'));
         }
 
-        if (Util::extensionExists('mbstring')) {
-            $ret = @mb_strlen($string, self::_mbstringCharset($charset));
-            if (!empty($ret)) {
+        if (Util::extensionExists('iconv')) {
+            $ret = @iconv_strlen($string, $charset);
+            if ($ret !== false) {
                 return $ret;
+            }
+        }
+        if (Util::extensionExists('mbstring')) {
+            $supported = array_map('strtolower', mb_list_encodings());
+            if (in_array(self::lower($charset), $supported)) {
+                try {
+                    return mb_strlen($string, self::_mbstringCharset($charset));
+                } catch (ValueError $e) {
+                    // Charset validation passed but still failed, fall through
+                }
             }
         }
         if (Util::extensionExists('intl')) {
@@ -520,10 +556,34 @@ class HordeString
         $charset,
         $func
     ) {
+        // Try iconv for case-sensitive variants
+        if (Util::extensionExists('iconv')) {
+            if ($func === 'strpos') {
+                $ret = @iconv_strpos($haystack, $needle, $offset, $charset);
+                if ($ret !== false) {
+                    return $ret;
+                }
+            } elseif ($func === 'strrpos' && $offset === 0) {
+                // iconv_strrpos doesn't support offset parameter
+                $ret = @iconv_strrpos($haystack, $needle, $charset);
+                if ($ret !== false) {
+                    return $ret;
+                }
+            }
+        }
+
         if (Util::extensionExists('mbstring')) {
-            $ret = @call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
-            if (empty(error_get_last())) {
-                return $ret;
+            $supported = array_map('strtolower', mb_list_encodings());
+            if (in_array(self::lower($charset), $supported)) {
+                try {
+                    error_clear_last();
+                    $ret = call_user_func('mb_' . $func, $haystack, $needle, $offset, self::_mbstringCharset($charset));
+                    if (is_null(error_get_last())) {
+                        return $ret;
+                    }
+                } catch (ValueError $e) {
+                    // Fall through to intl
+                }
             }
         }
 
@@ -762,7 +822,7 @@ class HordeString
     public static function abbreviate($text, $length = 20)
     {
         return (self::length($text) > $length)
-            ? rtrim(self::substr($text, 0, round(($length - 3) / 2))) . '...' . ltrim(self::substr($text, (($length - 3) / 2) * -1))
+            ? rtrim(self::substr($text, 0, (int) round(($length - 3) / 2))) . '...' . ltrim(self::substr($text, (int) round((($length - 3) / 2) * -1)))
             : $text;
     }
 
@@ -803,11 +863,20 @@ class HordeString
         $old_charset = mb_regex_encoding();
 
         if ($charset != $old_charset) {
-            @mb_regex_encoding($charset);
+            try {
+                mb_regex_encoding($charset);
+            } catch (ValueError $e) {
+                // Charset not supported by mb_regex, convert to UTF-8 and check
+                $utf8_string = self::convertCharset($string, $charset, 'UTF-8');
+                mb_regex_encoding('UTF-8');
+                $alpha = mb_ereg_match('^[[:alpha:]]+$', $utf8_string);
+                mb_regex_encoding($old_charset);
+                return $alpha;
+            }
         }
-        $alpha = !@mb_ereg_match('[^[:alpha:]]', $string);
+        $alpha = mb_ereg_match('^[[:alpha:]]+$', $string);
         if ($charset != $old_charset) {
-            @mb_regex_encoding($old_charset);
+            mb_regex_encoding($old_charset);
         }
 
         return $alpha;
