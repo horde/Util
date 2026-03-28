@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Horde_String;
+use Horde_Util_Mock_String;
 
 #[CoversClass(Horde_String::class)]
 class StringTest extends TestCase
@@ -802,7 +803,7 @@ class StringTest extends TestCase
     #[DataProvider('ConvertCharsetIconvProvider')]
     public function testConvertCharsetIconv(string $input, string $from, string $to, $expected): void
     {
-        $result = \Horde_Util_Mock_String::testConvertCharsetIconv($input, $from, $to);
+        $result = Horde_Util_Mock_String::testConvertCharsetIconv($input, $from, $to);
 
         if ($expected === null) {
             // Test expects either false or successful conversion (iconv behavior varies)
@@ -832,7 +833,7 @@ class StringTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            \Horde_Util_Mock_String::testPosMbstring($haystack, $needle, $offset, $charset, $func)
+            Horde_Util_Mock_String::testPosMbstring($haystack, $needle, $offset, $charset, $func)
         );
     }
 
@@ -852,7 +853,7 @@ class StringTest extends TestCase
     {
         $this->assertEquals(
             $expected,
-            \Horde_Util_Mock_String::testPosIntl($haystack, $needle, $offset, $charset, $func)
+            Horde_Util_Mock_String::testPosIntl($haystack, $needle, $offset, $charset, $func)
         );
     }
 

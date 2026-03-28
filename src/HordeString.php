@@ -8,6 +8,12 @@ use Exception;
 use ValueError;
 use InvalidArgumentException;
 use Stringable as StringableInterface;
+use Error;
+use Horde_Imap_Client_Exception;
+use Horde_Imap_Client_Utf7imap;
+use PEAR_Error;
+use RuntimeException;
+use UConverter;
 
 /**
  * Provides static methods for charset and locale safe string manipulation.
@@ -88,7 +94,7 @@ class HordeString
             // reach this line, but add a check.
             // Also check for legacy PEAR_Error if the class exists.
             if (($input instanceof Exception)
-                || (class_exists('PEAR_Error', false) && $input instanceof \PEAR_Error)) {
+                || (class_exists('PEAR_Error', false) && $input instanceof PEAR_Error)) {
                 return '';
             }
 
@@ -115,42 +121,36 @@ class HordeString
      * @param string $to     See self::convertCharset().
      *
      * @return string  The converted string.
+     * @throws RuntimeException  If charset conversion fails.
      */
     protected static function _convertCharset($input, $from, $to)
     {
-        /* Use utf8_[en|de]code() if possible and if the string isn't too
-         * large (less than 16 MB = 16 * 1024 * 1024 = 16777216 bytes) - these
-         * functions use more memory. */
-        if (Util::extensionExists('xml')
-            && ((strlen($input) < 16777216)
-             || !Util::extensionExists('iconv')
-             || !Util::extensionExists('mbstring'))) {
-            if (($to == 'utf-8')
-                && in_array($from, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return mb_convert_encoding($input, 'UTF-8', 'ISO-8859-1');
-            }
-
-            if (($from == 'utf-8')
-                && in_array($to, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return mb_convert_encoding($input, 'ISO-8859-1', 'UTF-8');
-            }
+        /* Early return for same charset (should already be handled by caller). */
+        $fromLower = self::lower($from);
+        $toLower = self::lower($to);
+        if ($fromLower == $toLower) {
+            return $input;
         }
+
+        $attemptedMethods = [];
+        $failureReasons = [];
 
         /* Try UTF7-IMAP conversions. */
         if (($from == 'utf7-imap') || ($to == 'utf7-imap')) {
             if (class_exists('Horde_Imap_Client_Utf7imap', true)) {
+                $attemptedMethods[] = 'utf7-imap';
                 try {
                     if ($from == 'utf7-imap') {
-                        return self::convertCharset(\Horde_Imap_Client_Utf7imap::Utf7ImapToUtf8($input), 'UTF-8', $to);
+                        return self::convertCharset(Horde_Imap_Client_Utf7imap::Utf7ImapToUtf8($input), 'UTF-8', $to);
                     } else {
                         if ($from == 'utf-8') {
                             $conv = $input;
                         } else {
                             $conv = self::convertCharset($input, $from, 'UTF-8');
                         }
-                        return \Horde_Imap_Client_Utf7imap::Utf8ToUtf7Imap($conv);
+                        return Horde_Imap_Client_Utf7imap::Utf8ToUtf7Imap($conv);
                     }
-                } catch (\Horde_Imap_Client_Exception $e) {
+                } catch (Horde_Imap_Client_Exception $e) {
                     return $input;
                 } catch (Exception $e) {
                     // Class doesn't exist or other error
@@ -161,28 +161,65 @@ class HordeString
 
         /* Try iconv with transliteration. */
         if (Util::extensionExists('iconv')) {
+            $attemptedMethods[] = 'iconv';
             $out = @iconv($from, $to . '//TRANSLIT', $input);
             $errmsg = error_get_last();
             if (!$errmsg && $out !== false) {
                 return $out;
             }
+            $failureReasons[] = 'iconv failed or does not support charset';
         }
 
         /* Try mbstring. */
         if (Util::extensionExists('mbstring')) {
+            $attemptedMethods[] = 'mbstring';
             $mbTo = CharacterSets::toMbstring($to);
             $mbFrom = CharacterSets::toMbstring($from);
             try {
-                $out = @mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
+                $out = mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
                 if (!empty($out)) {
                     return $out;
                 }
+                $failureReasons[] = 'mbstring returned empty result';
             } catch (ValueError $e) {
-                // catch error thrown under PHP 8.0, if mbstring does not support the encoding
+                $failureReasons[] = 'mbstring: ' . $e->getMessage();
+            } catch (Error $e) {
+                $failureReasons[] = 'mbstring: ' . $e->getMessage();
             }
         }
 
-        return $input;
+        /* Try intl UConverter as last resort. */
+        if (class_exists('UConverter')) {
+            $attemptedMethods[] = 'UConverter';
+            try {
+                $conv = new UConverter($to, $from);
+                $out = $conv->convert($input);
+                if ($out !== false && $out !== '') {
+                    return $out;
+                }
+                $failureReasons[] = 'UConverter returned empty/false result';
+            } catch (Exception $e) {
+                $failureReasons[] = 'UConverter: ' . $e->getMessage();
+            }
+        }
+
+        /* All conversion methods failed. */
+        $message = sprintf(
+            'Unable to convert character set from "%s" to "%s". ',
+            $from,
+            $to
+        );
+
+        if (empty($attemptedMethods)) {
+            $message .= 'No conversion methods available (install mbstring, iconv, or intl extension).';
+        } else {
+            $message .= 'Attempted methods: ' . implode(', ', $attemptedMethods) . '. ';
+            if (!empty($failureReasons)) {
+                $message .= 'Failures: ' . implode('; ', $failureReasons) . '.';
+            }
+        }
+
+        throw new RuntimeException($message);
     }
 
     /**

@@ -96,7 +96,7 @@ class TransliterateTest extends TestCase
             $this->markTestSkipped('iconv extension not installed');
         }
 
-        set_error_handler(function() {});
+        set_error_handler(function () {});
         $result = Transliterate::testIconv($str);
         restore_error_handler();
 
