@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Simple test to verify PHPUnit setup
  */
@@ -7,6 +8,7 @@ namespace Horde\Util\Test;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversNothing;
+use Horde_Util;
 
 #[CoversNothing]
 class SimpleTest extends TestCase
@@ -33,7 +35,7 @@ class SimpleTest extends TestCase
 
     public function testCanInstantiateHordeUtil()
     {
-        $util = new \Horde_Util();
+        $util = new Horde_Util();
         $this->assertInstanceOf('Horde_Util', $util);
     }
 }

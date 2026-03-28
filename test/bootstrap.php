@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHPUnit bootstrap file for Horde\Util
  */

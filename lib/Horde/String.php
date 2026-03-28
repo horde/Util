@@ -111,31 +111,23 @@ class Horde_String
      * @param string $to     See self::convertCharset().
      *
      * @return string  The converted string.
+     * @throws RuntimeException  If charset conversion fails.
      */
     protected static function _convertCharset($input, $from, $to)
     {
-        /* Use utf8_[en|de]code() if possible and if the string isn't too
-         * large (less than 16 MB = 16 * 1024 * 1024 = 16777216 bytes) - these
-         * functions use more memory. */
-        if (Horde_Util::extensionExists('xml')
-            && ((strlen($input) < 16777216)
-             || !Horde_Util::extensionExists('iconv')
-             || !Horde_Util::extensionExists('mbstring'))) {
-            if (($to == 'utf-8')
-                && function_exists('utf8_encode')
-                && in_array($from, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return @utf8_encode($input);
-            }
-
-            if (($from == 'utf-8')
-                && function_exists('utf8_decode')
-                && in_array($to, ['iso-8859-1', 'us-ascii', 'utf-8'])) {
-                return @utf8_decode($input);
-            }
+        /* Early return for same charset (should already be handled by caller). */
+        $fromLower = self::lower($from);
+        $toLower = self::lower($to);
+        if ($fromLower == $toLower) {
+            return $input;
         }
+
+        $attemptedMethods = [];
+        $failureReasons = [];
 
         /* Try UTF7-IMAP conversions. */
         if (($from == 'utf7-imap') || ($to == 'utf7-imap')) {
+            $attemptedMethods[] = 'utf7-imap';
             try {
                 if ($from == 'utf7-imap') {
                     return self::convertCharset(Horde_Imap_Client_Utf7imap::Utf7ImapToUtf8($input), 'UTF-8', $to);
@@ -154,26 +146,64 @@ class Horde_String
 
         /* Try iconv with transliteration. */
         if (Horde_Util::extensionExists('iconv')) {
-            if (($out = self::_convertCharsetIconv($input, $from, $to)) !== false) {
+            $attemptedMethods[] = 'iconv';
+            $out = self::_convertCharsetIconv($input, $from, $to);
+            if ($out !== false) {
                 return $out;
             }
+            $failureReasons[] = 'iconv failed or does not support charset';
         }
 
         /* Try mbstring. */
         if (Horde_Util::extensionExists('mbstring')) {
+            $attemptedMethods[] = 'mbstring';
             $mbTo = CharacterSets::toMbstring($to);
             $mbFrom = CharacterSets::toMbstring($from);
             try {
-                $out = @mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
+                $out = mb_convert_encoding($input, $mbTo, self::_mbstringCharset($mbFrom));
                 if (!empty($out)) {
                     return $out;
                 }
+                $failureReasons[] = 'mbstring returned empty result';
             } catch (ValueError $e) {
-                // catch error thrown under PHP 8.0, if mbstring does not support the encoding
+                $failureReasons[] = 'mbstring: ' . $e->getMessage();
+            } catch (Error $e) {
+                $failureReasons[] = 'mbstring: ' . $e->getMessage();
             }
         }
 
-        return $input;
+        /* Try intl UConverter as last resort. */
+        if (class_exists('UConverter')) {
+            $attemptedMethods[] = 'UConverter';
+            try {
+                $conv = new UConverter($to, $from);
+                $out = $conv->convert($input);
+                if ($out !== false && $out !== '') {
+                    return $out;
+                }
+                $failureReasons[] = 'UConverter returned empty/false result';
+            } catch (Exception $e) {
+                $failureReasons[] = 'UConverter: ' . $e->getMessage();
+            }
+        }
+
+        /* All conversion methods failed. */
+        $message = sprintf(
+            'Unable to convert character set from "%s" to "%s". ',
+            $from,
+            $to
+        );
+
+        if (empty($attemptedMethods)) {
+            $message .= 'No conversion methods available (install mbstring, iconv, or intl extension).';
+        } else {
+            $message .= 'Attempted methods: ' . implode(', ', $attemptedMethods) . '. ';
+            if (!empty($failureReasons)) {
+                $message .= 'Failures: ' . implode('; ', $failureReasons) . '.';
+            }
+        }
+
+        throw new RuntimeException($message);
     }
 
     /**
@@ -414,9 +444,6 @@ class Horde_String
         if ($charset == 'utf-8' || $charset == 'utf8') {
             if (Horde_Util::extensionExists('mbstring')) {
                 return strlen(mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8'));
-
-            } elseif (function_exists('utf8_decode')) {
-                return strlen(@utf8_decode($string));
             }
         }
 

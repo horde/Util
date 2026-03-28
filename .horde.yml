@@ -59,3 +59,7 @@ autoload:
   psr-4:
     Horde\Util\: src/
 vendor: horde
+
+quality:
+  phpstan:
+    level: 2

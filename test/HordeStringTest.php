@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Horde\Util\HordeString;
+use RuntimeException;
 
 #[CoversClass(HordeString::class)]
 class HordeStringTest extends TestCase
@@ -517,13 +518,12 @@ class HordeStringTest extends TestCase
 
     public function testSubstrWithUnsupportedCharset()
     {
-        // Test that substr gracefully handles unsupported charsets
-        // This validates the fix from commit 63d0ea4
-        $result = HordeString::substr('test string', 0, 4, 'UNSUPPORTED-CHARSET-12345');
+        // Test that substr throws exception for unsupported charsets
+        // Updated after removing deprecated utf8_encode/utf8_decode
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to convert character set');
 
-        // Should fall back to other methods or return empty string
-        // rather than throwing an error
-        $this->assertIsString($result);
+        HordeString::substr('test string', 0, 4, 'UNSUPPORTED-CHARSET-12345');
     }
 
     public function testWordwrap()
