@@ -70,7 +70,10 @@ class Horde_String
         if (is_array($input)) {
             $tmp = [];
             foreach ($input as $key => $val) {
-                $tmp[self::_convertCharset($key, $from, $to)] = self::convertCharset($val, $from, $to, $force);
+                $convertedKey = is_string($key)
+                    ? self::_convertCharset($key, $from, $to)
+                    : $key;
+                $tmp[$convertedKey] = self::convertCharset($val, $from, $to, $force);
             }
             return $tmp;
         }

@@ -816,10 +816,35 @@ class HordeStringTest extends TestCase
             HordeString::convertCharset(123, 'UTF-8', 'ISO-8859-1')
         );
 
-        // Test array conversion
+        // Test array conversion with string keys
         $input = ['key' => 'tëst', 'ümläüt' => 'välüe'];
         $result = HordeString::convertCharset($input, 'UTF-8', 'ISO-8859-1');
         $this->assertIsArray($result);
+
+        // Test array conversion with integer keys (indexed array)
+        $input = [0 => 'hello', 1 => 'world', 2 => 'test'];
+        $result = HordeString::convertCharset($input, 'UTF-8', 'ISO-8859-1');
+        $this->assertIsArray($result);
+        $this->assertEquals('hello', $result[0]);
+        $this->assertEquals('world', $result[1]);
+        $this->assertEquals('test', $result[2]);
+
+        // Test array conversion with mixed keys
+        $input = [0 => 'indexed', 'name' => 'value', 1 => 'another'];
+        $result = HordeString::convertCharset($input, 'UTF-8', 'ISO-8859-1');
+        $this->assertIsArray($result);
+        $this->assertEquals('indexed', $result[0]);
+        $this->assertEquals('value', $result['name']);
+        $this->assertEquals('another', $result[1]);
+
+        // Test nested array with integer keys
+        $input = [0 => 'first', 'nested' => [0 => 'inner', 1 => 'values']];
+        $result = HordeString::convertCharset($input, 'UTF-8', 'ISO-8859-1');
+        $this->assertIsArray($result);
+        $this->assertEquals('first', $result[0]);
+        $this->assertIsArray($result['nested']);
+        $this->assertEquals('inner', $result['nested'][0]);
+        $this->assertEquals('values', $result['nested'][1]);
     }
 
     public function testTrimUtf8Bom()
@@ -948,5 +973,26 @@ class HordeStringTest extends TestCase
     {
         $result = HordeString::ripos('Some random string', 'some', 50, 'UTF-8');
         $this->assertFalse($result);
+    }
+
+    /**
+     * Test that convertCharset doesn't throw TypeError when array has integer keys.
+     *
+     * This test ensures that arrays with integer keys (indexed arrays) are
+     * handled correctly. Previously, the code called _convertCharset() on
+     * array keys without checking if they were strings, causing TypeError
+     * when integer keys were passed to a method expecting string.
+     */
+    public function testConvertCharsetWithIntegerArrayKeysDoesNotThrowTypeError()
+    {
+        // This would throw TypeError before the fix due to strict_types
+        $arr = [0 => 'tëst', 1 => 'wörld', 2 => 'dätä'];
+        $result = HordeString::convertCharset($arr, 'UTF-8', 'ISO-8859-1');
+
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        $this->assertArrayHasKey(0, $result);
+        $this->assertArrayHasKey(1, $result);
+        $this->assertArrayHasKey(2, $result);
     }
 }
