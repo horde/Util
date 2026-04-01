@@ -1,4 +1,18 @@
 ---
+3.0.0-beta4:
+  api: 3.0.0-beta4
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-01
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    fix: backend character set name to iconv/mbstring name equivalent in one more place
+    Merge pull request #24 from horde/fix/convertcharset-integer-keys
+    fix: properly deal with numerically keyed arrays of strings in convertCharset.
+    docs: Add upgrading notes
 3.0.0-beta3:
   api: 3.0.0-beta3
   state:
