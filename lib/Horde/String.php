@@ -118,6 +118,10 @@ class Horde_String
      */
     protected static function _convertCharset($input, $from, $to)
     {
+        /* Normalize charset identifiers to handle common aliases (e.g., utf8mb4 → utf-8). */
+        $from = CharacterSets::normalize($from);
+        $to = CharacterSets::normalize($to);
+
         /* Early return for same charset (should already be handled by caller). */
         $fromLower = self::lower($from);
         $toLower = self::lower($to);

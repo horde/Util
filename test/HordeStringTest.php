@@ -995,4 +995,47 @@ class HordeStringTest extends TestCase
         $this->assertArrayHasKey(1, $result);
         $this->assertArrayHasKey(2, $result);
     }
+
+    /**
+     * Test conversion from MySQL utf8mb4 charset.
+     *
+     * MySQL reports its connection charset as 'utf8mb4' (UTF-8 with full
+     * 4-byte character support). This should be normalized to 'utf-8' and
+     * recognized as the same charset, requiring no conversion.
+     */
+    public function testConvertCharsetFromUtf8mb4()
+    {
+        $testString = 'Hello World 👋 emoji test';
+
+        // utf8mb4 → utf-8 should return unchanged (same charset after normalization)
+        $result = HordeString::convertCharset($testString, 'utf8mb4', 'utf-8');
+        $this->assertEquals($testString, $result);
+
+        // utf8mb4 → UTF-8 (case insensitive) should also work
+        $result = HordeString::convertCharset($testString, 'UTF8MB4', 'UTF-8');
+        $this->assertEquals($testString, $result);
+
+        // utf-8 → utf8mb4 should also return unchanged
+        $result = HordeString::convertCharset($testString, 'utf-8', 'utf8mb4');
+        $this->assertEquals($testString, $result);
+    }
+
+    /**
+     * Test conversion from utf8mb3 charset.
+     *
+     * MySQL's utf8mb3 is UTF-8 with 3-byte character limit (excludes 4-byte
+     * emoji and some rare characters). Should also normalize to 'utf-8'.
+     */
+    public function testConvertCharsetFromUtf8mb3()
+    {
+        $testString = 'Hello World';
+
+        // utf8mb3 → utf-8 should return unchanged
+        $result = HordeString::convertCharset($testString, 'utf8mb3', 'utf-8');
+        $this->assertEquals($testString, $result);
+
+        // Case insensitive
+        $result = HordeString::convertCharset($testString, 'UTF8MB3', 'UTF-8');
+        $this->assertEquals($testString, $result);
+    }
 }
