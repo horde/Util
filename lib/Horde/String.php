@@ -258,14 +258,12 @@ class Horde_String
             return strtolower($string);
         }
 
+        $string = $string ?? '';
+
         if (!isset(self::$_lowers[$string])) {
             $language = setlocale(LC_CTYPE, 0);
             setlocale(LC_CTYPE, 'C');
-            if ($string === null) {
-                self::$_lowers[$string] = '';
-            } else {
-                self::$_lowers[$string] = strtolower($string);
-            }
+            self::$_lowers[$string] = strtolower($string);
             setlocale(LC_CTYPE, $language);
         }
 
@@ -1052,6 +1050,10 @@ class Horde_String
      */
     protected static function _mbstringCharset($charset)
     {
+        if ($charset === "") {
+            return null;
+        }
+
         /* mbstring functions do not handle the 'ks_c_5601-1987' &
          * 'ks_c_5601-1989' charsets. However, these charsets are used, for
          * example, by various versions of Outlook to send Korean characters.
