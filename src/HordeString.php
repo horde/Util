@@ -269,7 +269,7 @@ class HordeString
         }
 
         if (!isset(self::$_lowers[$string])) {
-            $language = setlocale(LC_CTYPE, 0);
+            $language = setlocale(LC_CTYPE, '0');
             setlocale(LC_CTYPE, 'C');
             if ($string === null) {
                 self::$_lowers[$string] = '';
@@ -322,7 +322,7 @@ class HordeString
         }
 
         if (!isset(self::$_uppers[$string])) {
-            $language = setlocale(LC_CTYPE, 0);
+            $language = setlocale(LC_CTYPE, '0');
             setlocale(LC_CTYPE, 'C');
             self::$_uppers[$string] = strtoupper($string);
             setlocale(LC_CTYPE, $language);
