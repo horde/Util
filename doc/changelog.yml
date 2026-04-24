@@ -1,4 +1,16 @@
 ---
+3.0.0-beta5:
+  api: 3.0.0-beta5
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-24
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    fix setlocale to provide proper type
+    fix: backport community fixes from bytestream fork
 3.0.0-beta4:
   api: 3.0.0-beta4
   state:
