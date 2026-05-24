@@ -30,6 +30,9 @@ class CharacterSets
         'utf8mb3' => 'utf-8',
         'utf8mb4' => 'utf-8',
         'utf8' => 'utf-8',
+        // Non-standard charset used when 8-bit body data has no declared
+        // encoding (common in older mail software). Treat as Latin-1.
+        'unknown-8bit' => 'iso-8859-1',
     ];
 
     /**
