@@ -60,6 +60,12 @@ class CharacterSetsTest extends TestCase
         $this->assertEquals('windows-1252', CharacterSets::normalize('windows-1252'));
     }
 
+    public function testNormalizeUnknown8bit(): void
+    {
+        $this->assertEquals('iso-8859-1', CharacterSets::normalize('unknown-8bit'));
+        $this->assertEquals('iso-8859-1', CharacterSets::normalize('UNKNOWN-8BIT'));
+    }
+
     public function testToMbstring(): void
     {
         // toMbstring should normalize utf8mb4 → utf-8
