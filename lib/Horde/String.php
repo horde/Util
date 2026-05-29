@@ -17,6 +17,7 @@
  * @package  Util
  */
 use Horde\Util\CharacterSets;
+use Horde\Util\Util;
 
 class Horde_String
 {
@@ -152,7 +153,7 @@ class Horde_String
         }
 
         /* Try iconv with transliteration. */
-        if (Horde_Util::extensionExists('iconv')) {
+        if (Util::extensionExists('iconv')) {
             $attemptedMethods[] = 'iconv';
             $out = self::_convertCharsetIconv($input, $from, $to);
             if ($out !== false) {
@@ -162,7 +163,7 @@ class Horde_String
         }
 
         /* Try mbstring. */
-        if (Horde_Util::extensionExists('mbstring')) {
+        if (Util::extensionExists('mbstring')) {
             $attemptedMethods[] = 'mbstring';
             $mbTo = CharacterSets::toMbstring($to);
             $mbFrom = CharacterSets::toMbstring($from);
@@ -249,7 +250,7 @@ class Horde_String
     public static function lower($string, $locale = false, $charset = null)
     {
         if ($locale) {
-            if (Horde_Util::extensionExists('mbstring')) {
+            if (Util::extensionExists('mbstring')) {
                 if (is_null($charset)) {
                     throw new InvalidArgumentException('$charset argument must not be null');
                 }
@@ -261,7 +262,7 @@ class Horde_String
             return strtolower($string);
         }
 
-        $string = $string ?? '';
+        $string ??= '';
 
         if (!isset(self::$_lowers[$string])) {
             $language = setlocale(LC_CTYPE, '0');
@@ -287,7 +288,7 @@ class Horde_String
     public static function upper($string, $locale = false, $charset = null)
     {
         if ($locale) {
-            if (Horde_Util::extensionExists('mbstring')) {
+            if (Util::extensionExists('mbstring')) {
                 if (is_null($charset)) {
                     throw new InvalidArgumentException('$charset argument must not be null');
                 }
@@ -388,7 +389,7 @@ class Horde_String
         $error = false;
 
         /* Try mbstring. */
-        if (Horde_Util::extensionExists('mbstring')) {
+        if (Util::extensionExists('mbstring')) {
             $supported_encodings = mb_list_encodings();
             if (in_array($charset, $supported_encodings)) {
                 $ret = @mb_substr($string, $start, $length, self::_mbstringCharset($charset));
@@ -402,7 +403,7 @@ class Horde_String
         }
 
         /* Try iconv. */
-        if (Horde_Util::extensionExists('iconv')) {
+        if (Util::extensionExists('iconv')) {
             $ret = @iconv_substr($string, $start, $length, $charset);
 
             /* iconv_substr() returns false on failure. */
@@ -413,7 +414,7 @@ class Horde_String
         }
 
         /* Try intl. */
-        if (Horde_Util::extensionExists('intl')) {
+        if (Util::extensionExists('intl')) {
             $ret = self::convertCharset(
                 @grapheme_substr(
                     self::convertCharset($string, $charset, 'UTF-8'),
@@ -450,18 +451,18 @@ class Horde_String
         $charset = self::lower($charset);
 
         if ($charset == 'utf-8' || $charset == 'utf8') {
-            if (Horde_Util::extensionExists('mbstring')) {
+            if (Util::extensionExists('mbstring')) {
                 return strlen(mb_convert_encoding($string, 'ISO-8859-1', 'UTF-8'));
             }
         }
 
-        if (Horde_Util::extensionExists('mbstring')) {
+        if (Util::extensionExists('mbstring')) {
             $ret = @mb_strlen($string, self::_mbstringCharset($charset));
             if (!empty($ret)) {
                 return $ret;
             }
         }
-        if (Horde_Util::extensionExists('intl')) {
+        if (Util::extensionExists('intl')) {
             return grapheme_strlen(
                 self::convertCharset($string, $charset, 'UTF-8')
             );
@@ -573,13 +574,13 @@ class Horde_String
         $charset,
         $func
     ) {
-        if (Horde_Util::extensionExists('mbstring')) {
+        if (Util::extensionExists('mbstring')) {
             if (($out = @self::_posMbstring($haystack, $needle, $offset, $charset, $func)) !== false) {
                 return $out;
             }
         }
 
-        if (Horde_Util::extensionExists('intl')) {
+        if (Util::extensionExists('intl')) {
             if (($out = @self::_posIntl($haystack, $needle, $offset, $charset, $func)) !== false) {
                 return $out;
             }
@@ -914,7 +915,7 @@ class Horde_String
      */
     public static function isAlpha($string, $charset)
     {
-        if (!Horde_Util::extensionExists('mbstring')) {
+        if (!Util::extensionExists('mbstring')) {
             return ctype_alpha($string);
         }
 

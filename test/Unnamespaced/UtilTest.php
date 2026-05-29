@@ -13,64 +13,65 @@ namespace Horde\Util\Test\Unnamespaced;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Horde_Util;
+use Horde\Util\Util;
 
 #[CoversClass(Horde_Util::class)]
 class UtilTest extends TestCase
 {
     public function testGetPathInfo()
     {
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
 
         $_SERVER['SERVER_SOFTWARE'] = '';
         $_SERVER['PATH_INFO'] = '';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
 
         $_SERVER['PATH_INFO'] = '/foo/bar';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
 
         $_SERVER['SERVER_SOFTWARE'] = 'lighttpd/1.4.26';
         $_SERVER['PATH_INFO'] = '';
         $_SERVER['REQUEST_URI'] = '/horde/path.php';
         $_SERVER['SCRIPT_NAME'] = '/horde/path.php';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
         $_SERVER['REQUEST_URI'] = '/horde/path.php?baz';
         $_SERVER['QUERY_STRING'] = 'baz';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
 
         $_SERVER['REQUEST_URI'] = '/horde/path.php/foo/bar';
         $_SERVER['SCRIPT_NAME'] = '/horde/path.php';
         $_SERVER['QUERY_STRING'] = '';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
         $_SERVER['REQUEST_URI'] = '/horde/path.php/foo/bar?baz';
         $_SERVER['QUERY_STRING'] = 'baz';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
         $_SERVER['REQUEST_URI'] = '/horde/foo/bar?baz';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
 
         $_SERVER['REQUEST_URI'] = '/horde/';
         $_SERVER['SCRIPT_NAME'] = '/horde/index.php';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
 
         $_SERVER['REQUEST_URI'] = '/horde/index.php';
         $_SERVER['SCRIPT_NAME'] = '/horde/index.php';
         $_SERVER['QUERY_STRING'] = '';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
         $_SERVER['REQUEST_URI'] = '/horde/index.php?baz';
         $_SERVER['QUERY_STRING'] = 'baz';
-        $this->assertEquals('', Horde_Util::getPathInfo());
+        $this->assertEquals('', Util::getPathInfo());
 
         $_SERVER['REQUEST_URI'] = '/horde/index.php/foo/bar';
         $_SERVER['SCRIPT_NAME'] = '/horde/index.php';
         $_SERVER['QUERY_STRING'] = '';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
         $_SERVER['REQUEST_URI'] = '/horde/index.php/foo/bar?baz';
         $_SERVER['QUERY_STRING'] = 'baz';
-        $this->assertEquals('/foo/bar', Horde_Util::getPathInfo());
+        $this->assertEquals('/foo/bar', Util::getPathInfo());
 
         $_SERVER['REQUEST_URI'] = '/test/42?id=42';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
         $_SERVER['QUERY_STRING'] = 'id=42&id=42';
-        $this->assertEquals('/42', Horde_Util::getPathInfo());
+        $this->assertEquals('/42', Util::getPathInfo());
     }
 
     public function testDispelMagicQuotes()
