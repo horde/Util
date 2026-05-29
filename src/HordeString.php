@@ -199,7 +199,10 @@ class HordeString
         if (class_exists('UConverter')) {
             $attemptedMethods[] = 'UConverter';
             try {
-                $conv = new UConverter($to, $from);
+                $conv = new UConverter(
+                    CharacterSets::toUConverter($to),
+                    CharacterSets::toUConverter($from)
+                );
                 $out = $conv->convert($input);
                 if ($out !== false && $out !== '') {
                     return $out;
