@@ -36,6 +36,24 @@ class CharacterSets
     ];
 
     /**
+     * Map charset aliases to unambiguous ICU canonical names for UConverter.
+     *
+     * PHP's UConverter emits "Ambiguous encoding specified" warnings for names
+     * that map to multiple ICU converters (e.g. windows-1258 → ibm-5354 or
+     * cp1258). Use the canonical name PHP would pick anyway.
+     *
+     * @see https://www.php.net/manual/en/class.uconverter.php
+     */
+    private static array $uconverterMap = [
+        'big5-hkscs' => 'ibm-1375_P100-2008',
+        'shift_jis' => 'ibm-943_P15A-2003',
+        'tis-620' => 'windows-874-2000',
+        'windows-1258' => 'cp1258',
+        'windows-936' => 'windows-936-2000',
+        'windows-950' => 'windows-950-2000',
+    ];
+
+    /**
      * Normalize a character set identifier to a canonical name.
      *
      * This should be called before passing charset names to any conversion
@@ -64,5 +82,20 @@ class CharacterSets
     {
         // TODO: Check against mb_list_encoding
         return self::normalize($identifier);
+    }
+
+    /**
+     * Convert charset identifier to an unambiguous UConverter/ICU name.
+     *
+     * @param string $identifier  The charset identifier.
+     *
+     * @return string  The UConverter-compatible charset name.
+     */
+    public static function toUConverter(string $identifier): string
+    {
+        $identifier = self::normalize($identifier);
+        $lower = strtolower($identifier);
+
+        return self::$uconverterMap[$lower] ?? $identifier;
     }
 }
