@@ -78,4 +78,16 @@ class CharacterSetsTest extends TestCase
         // Non-normalized charsets should pass through
         $this->assertEquals('iso-8859-1', CharacterSets::toMbstring('iso-8859-1'));
     }
+
+    public function testToUConverterWindows1258(): void
+    {
+        $this->assertEquals('cp1258', CharacterSets::toUConverter('windows-1258'));
+        $this->assertEquals('cp1258', CharacterSets::toUConverter('Windows-1258'));
+    }
+
+    public function testToUConverterPreservesUnambiguousCharsets(): void
+    {
+        $this->assertEquals('iso-8859-1', CharacterSets::toUConverter('iso-8859-1'));
+        $this->assertEquals('utf-8', CharacterSets::toUConverter('utf8mb4'));
+    }
 }
