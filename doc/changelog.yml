@@ -1,4 +1,22 @@
 ---
+3.0.0-beta6:
+  api: 3.0.0-beta6
+  state:
+    release: beta
+    api: beta
+  date: 2026-05-29
+  license:
+    identifier: LGPL-2.1-only
+    uri: https://spdx.org/licenses/LGPL-2.1-only.html
+  notes: |-
+    refactor: Use modern util class
+    Refactor UConverter instantiation with CharacterSets
+    Add tests for CharacterSets toUConverter method
+    Implement UConverter mapping for charset aliases
+    Refactor UConverter instantiation with CharacterSets
+    Add test for unknown 8-bit normalization
+    Add charset mapping for unknown-8bit
+    chore: Update workflow dependency
 3.0.0-beta5:
   api: 3.0.0-beta5
   state:
