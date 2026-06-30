@@ -82,7 +82,7 @@ class Horde_Variables implements ArrayAccess, Countable, IteratorAggregate
              * WARNING: Horde_Util::dispelMagicQuotes() removed in PSR-4 version
              * Magic quotes are obsolete in PHP 8+. Remove this call.
              */
-$vars = Horde_Util::dispelMagicQuotes($request_copy);
+            $vars = Horde_Util::dispelMagicQuotes($request_copy);
         }
 
         if (isset($vars['_formvars'])) {
