@@ -123,8 +123,7 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |-
     Original version string was 3.0.0alpha7
-    |
-  [rla] Static analysis: Reach PHPStan Level 2 for src/.
+    [rla] Static analysis: Reach PHPStan Level 2 for src/.
 3.0.0-alpha6:
   api: 3.0.0alpha1
   state:
@@ -136,8 +135,7 @@
     uri: http://www.horde.org/licenses/lgpl21
   notes: |-
     Original version string was 3.0.0alpha6
-    |
-  [rla] Static analysis: Reach PHPStan Level 2 for src/.
+    [rla] Static analysis: Reach PHPStan Level 2 for src/.
 3.0.0-alpha5:
   api: 3.0.0alpha1
   state:
