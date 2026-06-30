@@ -23,10 +23,10 @@ authors:
     active: false
     role: developer
 version:
-  release: 3.0.0-beta6
+  release: 3.0.0
   api: 3.0.0alpha1
 state:
-  release: beta
+  release: stable
   api: alpha
 license:
   identifier: LGPL-2.1-only

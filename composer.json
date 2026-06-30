@@ -21,7 +21,7 @@
             "role": "developer"
         }
     ],
-    "time": "2026-05-29",
+    "time": "2026-06-30",
     "repositories": [],
     "require": {
         "php": "^7.4 || ^8",
@@ -55,7 +55,9 @@
         }
     },
     "config": {
-        "allow-plugins": {}
+        "allow-plugins": {
+            "horde/horde-installer-plugin": true
+        }
     },
     "extra": {
         "branch-alias": {
