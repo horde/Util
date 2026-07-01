@@ -85,6 +85,18 @@ class CharacterSetsTest extends TestCase
         $this->assertEquals('cp1258', CharacterSets::toUConverter('Windows-1258'));
     }
 
+    public function testToUConverterWindows1252(): void
+    {
+        $this->assertEquals('cp1252', CharacterSets::toUConverter('windows-1252'));
+        $this->assertEquals('cp1252', CharacterSets::toUConverter('Windows-1252'));
+    }
+
+    public function testToUConverterTis620(): void
+    {
+        $this->assertEquals('windows-874-2000', CharacterSets::toUConverter('tis620'));
+        $this->assertEquals('windows-874-2000', CharacterSets::toUConverter('TIS-620'));
+    }
+
     public function testToUConverterPreservesUnambiguousCharsets(): void
     {
         $this->assertEquals('iso-8859-1', CharacterSets::toUConverter('iso-8859-1'));
