@@ -48,6 +48,8 @@ class CharacterSets
         'big5-hkscs' => 'ibm-1375_P100-2008',
         'shift_jis' => 'ibm-943_P15A-2003',
         'tis-620' => 'windows-874-2000',
+        'tis620' => 'windows-874-2000',
+        'windows-1252' => 'cp1252',
         'windows-1258' => 'cp1258',
         'windows-936' => 'windows-936-2000',
         'windows-950' => 'windows-950-2000',
